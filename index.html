@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GATE Test Series</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f2f4f7;
+    color:#222;
+}
+
+.header{
+    background:#17365d;
+    color:white;
+    padding:18px;
+    text-align:center;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.container{
+    max-width:600px;
+    margin:25px auto;
+    padding:15px;
+}
+
+.card{
+    background:white;
+    padding:22px;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.12);
+}
+
+label{
+    display:block;
+    margin-top:18px;
+    margin-bottom:7px;
+    font-weight:bold;
+}
+
+input,select,button{
+    width:100%;
+    padding:13px;
+    font-size:16px;
+    border-radius:8px;
+}
+
+input,select{
+    border:1px solid #bbb;
+}
+
+button{
+    margin-top:20px;
+    border:none;
+    background:#17365d;
+    color:white;
+    font-weight:bold;
+}
+
+button:active{
+    transform:scale(.98);
+}
+
+#testScreen{
+    display:none;
+}
+
+.timer{
+    background:#111;
+    color:#fff;
+    text-align:center;
+    padding:15px;
+    border-radius:10px;
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.pdfBox{
+    background:#eee;
+    padding:20px;
+    text-align:center;
+    border-radius:10px;
+    margin-top:15px;
+}
+
+.warning{
+    color:#c00;
+    font-size:14px;
+    margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    GATE TEST SERIES
+</div>
+
+<div class="container">
+
+    <!-- SETUP SCREEN -->
+    <div class="card" id="setupScreen">
+
+        <h2>Test Setup</h2>
+
+        <label>Question PDF</label>
+        <input type="file" id="questionPDF" accept=".pdf">
+
+        <label>Test Time (Minutes)</label>
+        <input type="number" id="timeInput" value="180" min="1">
+
+        <label>Negative Marking</label>
+        <select id="negativeMarking">
+            <option value="on">ON</option>
+            <option value="off">OFF</option>
+        </select>
+
+        <label>1 Mark Question Negative</label>
+        <select id="oneMarkNegative">
+            <option value="1/3">1/3</option>
+            <option value="0">0</option>
+        </select>
+
+        <label>2 Mark Question Negative</label>
+        <select id="twoMarkNegative">
+            <option value="2/3">2/3</option>
+            <option value="0">0</option>
+        </select>
+
+        <button onclick="startTest()">START TEST</button>
+
+    </div>
+
+
+    <!-- TEST SCREEN -->
+    <div id="testScreen">
+
+        <div class="timer" id="timer">
+            03:00:00
+        </div>
+
+        <div class="card">
+
+            <h2>Test Started</h2>
+
+            <div class="pdfBox">
+                <p>Question PDF selected:</p>
+                <strong id="pdfName"></strong>
+
+                <br><br>
+
+                <button onclick="openPDF()">
+                    OPEN QUESTION PDF
+                </button>
+            </div>
+
+            <button onclick="submitTest()">
+                SUBMIT TEST
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let totalSeconds = 0;
+let timerInterval = null;
+let pdfFile = null;
+
+function startTest(){
+
+    pdfFile = document.getElementById("questionPDF").files[0];
+
+    if(!pdfFile){
+        alert("Please upload Question PDF first.");
+        return;
+    }
+
+    let minutes =
+        parseInt(document.getElementById("timeInput").value);
+
+    if(!minutes || minutes <= 0){
+        alert("Please enter valid test time.");
+        return;
+    }
+
+    totalSeconds = minutes * 60;
+
+    document.getElementById("setupScreen").style.display="none";
+    document.getElementById("testScreen").style.display="block";
+
+    document.getElementById("pdfName").innerText =
+        pdfFile.name;
+
+    updateTimer();
+
+    timerInterval = setInterval(function(){
+
+        totalSeconds--;
+
+        updateTimer();
+
+        if(totalSeconds <= 0){
+
+            clearInterval(timerInterval);
+
+            alert("Time Over! Test submitted automatically.");
+
+            submitTest();
+        }
+
+    },1000);
+}
+
+
+function updateTimer(){
+
+    let hours =
+        Math.floor(totalSeconds / 3600);
+
+    let minutes =
+        Math.floor((totalSeconds % 3600) / 60);
+
+    let seconds =
+        totalSeconds % 60;
+
+    document.getElementById("timer").innerText =
+        String(hours).padStart(2,"0") + ":" +
+        String(minutes).padStart(2,"0") + ":" +
+        String(seconds).padStart(2,"0");
+}
+
+
+function openPDF(){
+
+    if(!pdfFile){
+        alert("PDF not found.");
+        return;
+    }
+
+    let url = URL.createObjectURL(pdfFile);
+
+    window.open(url,"_blank");
+}
+
+
+function submitTest(){
+
+    if(timerInterval){
+        clearInterval(timerInterval);
+    }
+
+    alert("Test submitted.");
+
+}
+
+</script>
+
+</body>
+          </html>
