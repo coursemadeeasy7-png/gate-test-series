@@ -124,9 +124,10 @@ button:active{transform:scale(.98)}
 </div>
 
 <script>
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-
+if (window.pdfjsLib) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+}
 let pdf=null, questions=[], current=0, answers={}, reviews=new Set();
 let totalSeconds=0,timerInterval=null,submitted=false;
 
