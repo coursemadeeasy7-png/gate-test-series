@@ -1,239 +1,1903 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
 <title>GATE TEST SERIES</title>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f3f5f8;color:#17202a}header{background:#123c69;color:#fff;text-align:center;padding:15px;font-size:22px;font-weight:700}.wrap{max-width:1100px;margin:auto;padding:14px}.card{background:#fff;border-radius:12px;padding:18px;margin-top:14px;box-shadow:0 3px 12px rgba(0,0,0,.09)}label{display:block;font-weight:700;margin:14px 0 6px}input,select{width:100%;padding:11px;border:1px solid #bbb;border-radius:7px;background:#fff;font-size:15px}button{border:0;border-radius:7px;padding:11px 15px;font-size:15px;cursor:pointer}.start{width:100%;margin-top:20px;background:#16803c;color:#fff;font-weight:700;font-size:17px}.hidden{display:none!important}.status{margin-top:10px;padding:10px;border-radius:7px;background:#eef4ff;color:#123c69}.status.error{background:#ffe7e7;color:#9d0000}.top{position:sticky;top:0;z-index:10;background:#fff;padding:10px;border-radius:0 0 9px 9px;box-shadow:0 2px 8px rgba(0,0,0,.12)}.toprow{display:flex;justify-content:space-between;align-items:center;gap:10px}.timer{background:#111;color:#fff;padding:9px 13px;border-radius:7px;font-weight:700;min-width:105px;text-align:center}.layout{display:grid;grid-template-columns:1fr 260px;gap:14px;margin-top:14px}.qcard,.palette{background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.08)}.qtitle{font-weight:700;color:#123c69;margin-bottom:10px}.pdfview{width:100%;overflow:hidden;background:#eee;border-radius:8px}.pdfcanvas{display:block;width:100%;height:auto;background:#fff;margin-bottom:8px}.answerbox{margin-top:14px}.opt{display:flex;align-items:flex-start;gap:9px;border:1px solid #ccd3da;border-radius:8px;padding:11px;margin:8px 0;background:#fff}.opt.selected{background:#eaf2ff;border:2px solid #123c69}.opt input{width:auto;margin-top:3px}.natinput{width:100%;font-size:18px}.buttons{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}.prev{background:#6c757d;color:#fff}.next{background:#123c69;color:#fff}.review{background:#f0ad00;color:#fff}.clear{background:#dc3545;color:#fff}.submit{background:#16803c;color:#fff}.palette h3{margin-top:0}.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.pbtn{padding:8px 3px;background:#e9ecef}.pbtn.answered{background:#198754;color:#fff}.pbtn.reviewed{outline:3px solid #f0ad00}.pbtn.current{box-shadow:0 0 0 3px #123c69}.legend{font-size:12px;line-height:1.8;margin-top:10px}.result{font-size:30px;font-weight:700;color:#123c69}.row{display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding:9px 0}.loading{text-align:center;padding:30px}.small{font-size:12px;color:#555}@media(max-width:760px){header{font-size:19px}.layout{grid-template-columns:1fr}.palette{order:2}.buttons button{flex:1;min-width:105px}.qcard{padding:10px}.toprow{font-size:13px}}
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f1f3f6;
+    color:#17202a;
+}
+
+header{
+    background:#123f68;
+    color:white;
+    text-align:center;
+    padding:13px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.wrap{
+    max-width:1200px;
+    margin:auto;
+    padding:12px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:16px;
+    margin-bottom:12px;
+    box-shadow:0 2px 10px #0002;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin:14px 0 7px;
+}
+
+input,select{
+    width:100%;
+    padding:12px;
+    border:1px solid #bbb;
+    border-radius:8px;
+    background:white;
+    font-size:16px;
+}
+
+button{
+    border:0;
+    border-radius:7px;
+    padding:11px 15px;
+    cursor:pointer;
+    font-weight:bold;
+    color:white;
+}
+
+button:disabled{
+    opacity:.6;
+}
+
+.start{
+    width:100%;
+    background:#123f68;
+    margin-top:18px;
+    font-size:18px;
+}
+
+.hidden{
+    display:none!important;
+}
+
+.status{
+    font-size:14px;
+    margin-top:7px;
+    color:#555;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+}
+
+.timer{
+    background:#111;
+    color:white;
+    padding:9px 13px;
+    border-radius:6px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.examgrid{
+    display:grid;
+    grid-template-columns:1fr 280px;
+    gap:14px;
+}
+
+.questionbox{
+    min-height:300px;
+}
+
+.questionhead{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    border-bottom:1px solid #ddd;
+    padding-bottom:10px;
+    margin-bottom:10px;
+}
+
+.badge{
+    font-weight:bold;
+    color:#123f68;
+}
+
+.questiontext{
+    white-space:pre-wrap;
+    line-height:1.5;
+    font-size:16px;
+}
+
+.option{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:11px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    margin:9px 0;
+    cursor:pointer;
+}
+
+.option:hover{
+    background:#f5f8fb;
+}
+
+.option input{
+    width:auto;
+    margin-top:3px;
+}
+
+.natinput{
+    width:100%;
+    padding:12px;
+    border:1px solid #aaa;
+    border-radius:8px;
+    font-size:17px;
+    margin-top:12px;
+}
+
+.buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.prev{background:#6c757d}
+.clear{background:#dc3545}
+.review{background:#f0ad00}
+.next{background:#123f68}
+.submit{background:#198754}
+
+.palette{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:6px;
+    margin-top:10px;
+}
+
+.pbtn{
+    color:#222;
+    background:#e9ecef;
+    padding:9px 3px;
+}
+
+.pbtn.answered{
+    background:#63b43b;
+    color:white;
+}
+
+.pbtn.reviewed{
+    background:#f5bd18;
+    color:#111;
+}
+
+.pbtn.current{
+    outline:3px solid #145da0;
+}
+
+.legend{
+    font-size:12px;
+    line-height:1.8;
+    margin-top:12px;
+}
+
+.green{color:#63b43b}
+.yellow{color:#e0aa00}
+.grey{color:#777}
+
+.loading{
+    text-align:center;
+    padding:25px;
+    font-weight:bold;
+}
+
+.result{
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.resultitem{
+    background:#f7f7f7;
+    border-left:5px solid #123f68;
+    padding:12px;
+    margin:10px 0;
+    border-radius:5px;
+}
+
+.correct{
+    color:#16803c;
+    font-weight:bold;
+}
+
+.wrong{
+    color:#c62828;
+    font-weight:bold;
+}
+
+.solution{
+    background:#fff8df;
+    border:1px solid #e7cf72;
+    padding:12px;
+    margin-top:8px;
+    border-radius:7px;
+    white-space:pre-wrap;
+}
+
+@media(max-width:800px){
+    .examgrid{
+        grid-template-columns:1fr;
+    }
+
+    .palette{
+        grid-template-columns:repeat(5,1fr);
+    }
+}
 </style>
 </head>
+
 <body>
+
 <header>GATE TEST SERIES</header>
+
 <div class="wrap">
+
+<!-- SETUP -->
 <section id="setup" class="card">
+
 <h2>Test Setup</h2>
+
 <label>Question PDF</label>
-<input id="questionPDF" type="file" accept="application/pdf,.pdf">
+<input id="questionPDF" type="file" accept=".pdf,application/pdf">
 <div id="pdfStatus" class="status">Question PDF select karo.</div>
+
 <label>Test Time (Minutes)</label>
 <input id="timeInput" type="number" min="1" value="180">
+
 <label>Negative Marking</label>
-<select id="negativeMarking"><option value="on">ON</option><option value="off">OFF</option></select>
-<label>1 Mark MCQ Negative</label>
-<select id="neg1"><option value="0.3333333333">1/3</option><option value="0">0</option></select>
-<label>2 Mark MCQ Negative</label>
-<select id="neg2"><option value="0.6666666667">2/3</option><option value="0">0</option></select>
-<label>Answer Key (optional — test ke baad bhi upload kar sakte ho)</label>
-<input id="answerKey" type="file" accept="application/pdf,.pdf,.txt,.csv">
-<div id="keyStatus" class="status">Answer key optional hai.</div>
-<button id="startBtn" class="start" type="button">START TEST</button>
-</section>
+<select id="negativeMarking">
+<option value="on">ON</option>
+<option value="off">OFF</option>
+</select>
 
-<section id="test" class="hidden">
-<div class="top"><div class="toprow"><div><b>GATE TEST</b><div id="progress">Question 0 of 0</div></div><div id="timer" class="timer">00:00:00</div></div></div>
-<div id="load" class="card loading">PDF read ho raha hai...</div>
-<div id="exam" class="hidden">
-<div class="layout">
-<div class="qcard">
-<div id="qtitle" class="qtitle"></div>
-<div id="pdfView" class="pdfview"></div>
-<div id="answerBox" class="answerbox"></div>
-<div class="buttons">
-<button id="prev" class="prev" type="button">PREVIOUS</button>
-<button id="clear" class="clear" type="button">CLEAR RESPONSE</button>
-<button id="review" class="review" type="button">MARK FOR REVIEW</button>
-<button id="next" class="next" type="button">SAVE & NEXT</button>
-<button id="submit" class="submit" type="button">SUBMIT TEST</button>
-</div></div>
-<div class="palette"><h3>Question Palette</h3><div id="palette" class="grid"></div><div class="legend">🟩 Answered<br>🟨 Marked for Review<br>⬜ Not Answered<br>🔵 Current</div></div>
-</div></div></div>
-</section>
+<label>1 Mark Question Negative</label>
+<select id="neg1">
+<option value="0.3333333333">1/3</option>
+<option value="0">0</option>
+</select>
 
-<section id="result" class="hidden">
-<div class="card"><h2>Test Result</h2><div id="score" class="result"></div><div id="details"></div><div id="keyAfter"></div><button id="restart" class="start" type="button">RESTART TEST</button></div>
-</section>
+<label>2 Mark Question Negative</label>
+<select id="neg2">
+<option value="0.6666666667">2/3</option>
+<option value="0">0</option>
+</select>
+
+<label>Answer Key (optional - test ke baad bhi upload kar sakte ho)</label>
+<input id="answerKey" type="file"
+accept=".txt,.csv,.json,.pdf,application/pdf">
+<div id="keyStatus" class="status">
+Answer key optional hai.
 </div>
 
+<button id="startBtn" class="start" type="button">
+START TEST
+</button>
+
+</section>
+
+
+<!-- EXAM -->
+<section id="test" class="hidden">
+
+<div class="topbar">
+    <div>
+        <b>GATE TEST</b>
+        <div id="progress">Question 0 of 0</div>
+    </div>
+
+    <div id="timer" class="timer">00:00:00</div>
+</div>
+
+<div id="loading" class="card loading">
+    PDF read ho raha hai...
+</div>
+
+<div id="examArea" class="examgrid hidden">
+
+<div>
+
+<div class="card questionbox">
+
+<div class="questionhead">
+    <div id="questionTitle" class="badge">
+        Question
+    </div>
+
+    <div id="attemptStatus" class="status">
+        Not attempted
+    </div>
+</div>
+
+<div id="questionText" class="questiontext"></div>
+
+<div id="options"></div>
+
+<div id="buttons" class="buttons">
+
+<button id="prevBtn" class="prev" type="button">
+PREVIOUS
+</button>
+
+<button id="clearBtn" class="clear" type="button">
+CLEAR RESPONSE
+</button>
+
+<button id="reviewBtn" class="review" type="button">
+MARK FOR REVIEW
+</button>
+
+<button id="nextBtn" class="next" type="button">
+SAVE & NEXT
+</button>
+
+<button id="submitBtn" class="submit" type="button">
+SUBMIT TEST
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- PALETTE -->
+<div class="card">
+
+<h3>Question Palette</h3>
+
+<div id="palette" class="palette"></div>
+
+<div class="legend">
+<span class="green">■</span> Answered<br>
+<span class="yellow">■</span> Marked for Review<br>
+<span class="grey">■</span> Not Answered
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- RESULT -->
+<section id="resultSection" class="hidden">
+
+<div class="card">
+
+<h2>Test Result</h2>
+
+<div id="score" class="result"></div>
+
+<div id="resultDetails"></div>
+
+<div id="answerKeyAfter"></div>
+
+</div>
+
+</section>
+
+</div>
+
+
 <script>
-'use strict';
-if(window.pdfjsLib){pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';}
 
-const $=id=>document.getElementById(id);
-let sourceFile=null,keyFile=null,pdf=null,questions=[],answers=[],reviewed=[],current=0,seconds=0,timerId=null,submitted=false,answerKey={};
+"use strict";
 
-$('questionPDF').addEventListener('change',e=>{sourceFile=e.target.files[0]||null;$('pdfStatus').innerHTML=sourceFile?'Selected: <b>'+esc(sourceFile.name)+'</b>':'Question PDF select karo.';});
-$('answerKey').addEventListener('change',e=>{keyFile=e.target.files[0]||null;$('keyStatus').innerHTML=keyFile?'Answer key selected: <b>'+esc(keyFile.name)+'</b>':'Answer key optional hai.';});
-$('startBtn').addEventListener('click',startTest);
+/* PDF.JS */
+if(window.pdfjsLib){
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+}
+
+
+/* VARIABLES */
+
+let sourceFile = null;
+let keyFile = null;
+
+let questions = [];
+let answers = [];
+let reviewed = [];
+
+let current = 0;
+
+let seconds = 0;
+let timerId = null;
+
+let submitted = false;
+
+let answerKey = {};
+
+
+/* ELEMENT HELPER */
+
+function $(id){
+    return document.getElementById(id);
+}
+
+
+/* PDF SELECT */
+
+$("questionPDF").addEventListener("change", function(e){
+
+    sourceFile =
+        e.target.files && e.target.files.length
+        ? e.target.files[0]
+        : null;
+
+    if(sourceFile){
+
+        $("pdfStatus").textContent =
+            "Selected: " + sourceFile.name;
+
+    }else{
+
+        $("pdfStatus").textContent =
+            "Question PDF select karo.";
+
+    }
+
+});
+
+
+/* ANSWER KEY SELECT */
+
+$("answerKey").addEventListener("change", function(e){
+
+    keyFile =
+        e.target.files && e.target.files.length
+        ? e.target.files[0]
+        : null;
+
+    if(keyFile){
+
+        $("keyStatus").textContent =
+            "Selected: " + keyFile.name;
+
+    }else{
+
+        $("keyStatus").textContent =
+            "Answer key optional hai.";
+
+    }
+
+});
+
+
+/* START */
+
+$("startBtn").addEventListener("click", startTest);
+
 
 async function startTest(){
-  try{
-    if(!sourceFile){alert('Question PDF select karo.');return;}
-    const mins=parseInt($('timeInput').value,10); if(!mins||mins<1){alert('Valid test time enter karo.');return;}
-    if(!window.pdfjsLib){alert('PDF reader load nahi hui. Internet ON karke page refresh karo.');return;}
-    $('startBtn').disabled=true;$('startBtn').textContent='LOADING...';
-    $('setup').classList.add('hidden');$('test').classList.remove('hidden');$('load').classList.remove('hidden');$('exam').classList.add('hidden');
-    seconds=mins*60;updateTimer();
-    if(keyFile) answerKey=await parseAnswerKeyFile(keyFile);
-    pdf=await pdfjsLib.getDocument({data:await sourceFile.arrayBuffer()}).promise;
-    questions=await buildQuestions(pdf);
-    if(!questions.length) throw new Error('PDF me Q1, Q2... question markers detect nahi hue.');
-    answers=questions.map(q=>q.type==='MSQ'?[]:null); reviewed=questions.map(()=>false); current=0;submitted=false;
-    buildPalette();await showQuestion();$('load').classList.add('hidden');$('exam').classList.remove('hidden');startTimer();
-  }catch(err){console.error(err);alert('Test start nahi hua:\n'+err.message);$('setup').classList.remove('hidden');$('test').classList.add('hidden');$('startBtn').disabled=false;$('startBtn').textContent='START TEST';}
-}
 
-async function buildQuestions(pdfDoc){
-  const pages=[];
-  for(let p=1;p<=pdfDoc.numPages;p++) pages.push(await pageInfo(pdfDoc,p));
-  const starts=[];
-  for(let i=0;i<pages.length;i++){
-    const m=pages[i].text.match(/\bQ\s*(\d+)\b/i);
-    if(m) starts.push({page:i+1,num:parseInt(m[1],10)});
-  }
-  const out=[];
-  for(let i=0;i<starts.length;i++){
-    const start=starts[i].page;
-    const end=(i+1<starts.length?starts[i+1].page-1:pages.length);
-    let combined='';
-    for(let p=start;p<=end;p++) combined+='\n'+pages[p-1].text;
-    const q=parseMeta(combined,starts[i].num);
-    if(!q) continue;
-    q.pages=[];
-    for(let p=start;p<=end;p++){
-      const info=pages[p-1];
-      if(/\bQ\s*\d+\b/i.test(info.text) && p!==start) break;
-      let crop=null;
-      const sol=findCutY(info.items);
-      if(sol!==null) crop=sol;
-      if(crop===null || crop>35) q.pages.push({page:p,cropY:crop});
+    try{
+
+        if(!sourceFile){
+
+            alert("Question PDF select karo.");
+            return;
+
+        }
+
+        let mins =
+            parseInt($("timeInput").value,10);
+
+        if(!Number.isFinite(mins) || mins <= 0){
+
+            alert("Valid test time enter karo.");
+            return;
+
+        }
+
+        if(!window.pdfjsLib){
+
+            alert("PDF reader load nahi hua. Internet ON karke page refresh karo.");
+            return;
+
+        }
+
+        $("startBtn").disabled = true;
+        $("startBtn").textContent = "PDF READING...";
+
+        $("setup").classList.add("hidden");
+        $("test").classList.remove("hidden");
+
+        $("loading").classList.remove("hidden");
+        $("examArea").classList.add("hidden");
+
+        questions = await readPDF(sourceFile);
+
+        if(!questions.length){
+
+            throw new Error(
+                "PDF se questions detect nahi ho paaye."
+            );
+
+        }
+
+        answers =
+            new Array(questions.length).fill(null);
+
+        reviewed =
+            new Array(questions.length).fill(false);
+
+        current = 0;
+
+        seconds = mins * 60;
+
+        submitted = false;
+
+        buildPalette();
+
+        renderQuestion();
+
+        $("loading").classList.add("hidden");
+        $("examArea").classList.remove("hidden");
+
+        startTimer();
+
+    }catch(err){
+
+        console.error(err);
+
+        $("test").classList.add("hidden");
+        $("setup").classList.remove("hidden");
+
+        $("startBtn").disabled = false;
+        $("startBtn").textContent = "START TEST";
+
+        alert(
+            "PDF read karne me problem hui.\n\n" +
+            (err && err.message ? err.message : "Unknown error")
+        );
+
     }
-    q.pages=q.pages.filter(x=>x.page>=start && x.page<=end);
-    if(q.pages.length) out.push(q);
-  }
-  return out;
+
 }
 
-async function pageInfo(pdfDoc,n){
-  const page=await pdfDoc.getPage(n),tc=await page.getTextContent();
-  const items=tc.items.map(it=>({str:it.str||'',transform:it.transform||[]}));
-  return {text:tc.items.map(it=>it.str||'').join(' '),items,view:page.getViewport({scale:1})};
-}
 
-function findCutY(items){
-  let y=null;
-  for(const it of items){
-    if(/^(Correct\s+answer|Solution)\b/i.test((it.str||'').trim())){
-      const base=it.transform&&it.transform.length>=6?it.transform[5]:null;
-      if(base!==null){
-        const approx=792-base-8;
-        if(y===null||approx<y)y=approx;
-      }
+/* READ PDF */
+
+async function readPDF(file){
+
+    const buffer =
+        await file.arrayBuffer();
+
+    const pdf =
+        await pdfjsLib.getDocument({
+            data:buffer
+        }).promise;
+
+    let allPages = [];
+
+    for(let p=1; p<=pdf.numPages; p++){
+
+        const page =
+            await pdf.getPage(p);
+
+        const content =
+            await page.getTextContent();
+
+        let text =
+            content.items
+            .map(x => x.str || "")
+            .join(" ");
+
+        text =
+            cleanText(text);
+
+        if(text.trim()){
+
+            allPages.push({
+                page:p,
+                text:text
+            });
+
+        }
+
     }
-  }
-  return y;
+
+    return extractQuestions(allPages);
+
 }
 
-function parseMeta(text,num){
-  const head=text.replace(/\s+/g,' ').trim();
-  const m=head.match(new RegExp('Q\\s*'+num+'\\b[\\s\\S]*?\\+\\s*(1|2)\\s*[/]\\s*-(\\s*0(?:\\.\\d+)?)','i'));
-  let marks=m?parseInt(m[1],10):(/\\+\\s*2/.test(head)?2:1);
-  const nat=/Type\s+your\s+answer\s+(?:NAT|Numerical)/i.test(head)||/\bNAT\b/i.test(head);
-  const ca=head.match(/Correct\s+answer\s*:\s*([^\s]+(?:\s*,\s*[^\s]+)*)/i);
-  const sol=head.match(/Solution\s+(.+)$/i);
-  let type='MCQ';
-  if(nat) type='NAT';
-  else if((ca&&/,/.test(ca[1]))||(sol&&/,/.test(sol[1]))||/statement\(s\)\s+is\/are\s+correct/i.test(head)) type='MSQ';
-  return {number:num,marks,type};
+
+/* CLEAN TEXT */
+
+function cleanText(text){
+
+    return String(text || "")
+        .replace(/\u00a0/g," ")
+        .replace(/[ \t]+/g," ")
+        .replace(/\s+\n\s+/g,"\n")
+        .trim();
+
 }
 
-async function renderPage(part){
-  const page=await pdf.getPage(part.page); const base=page.getViewport({scale:1});
-  const maxW=Math.min(900,window.innerWidth-35); const scale=Math.max(.8,Math.min(1.8,maxW/base.width));
-  const vp=page.getViewport({scale}); const c=document.createElement('canvas'); c.className='pdfcanvas'; c.width=Math.floor(vp.width); c.height=Math.floor(vp.height);
-  const ctx=c.getContext('2d'); await page.render({canvasContext:ctx,viewport:vp}).promise;
-  if(part.cropY!==null){const crop=Math.max(50,Math.min(c.height,Math.floor(part.cropY*scale)));const out=document.createElement('canvas');out.className='pdfcanvas';out.width=c.width;out.height=crop;out.getContext('2d').drawImage(c,0,0,c.width,crop,0,0,c.width,crop);return out;}
-  return c;
+
+/* QUESTION EXTRACTION */
+
+function extractQuestions(pages){
+
+    let full = "";
+
+    for(const pg of pages){
+
+        full +=
+            "\n\n[PAGE " +
+            pg.page +
+            "]\n" +
+            pg.text;
+
+    }
+
+
+    /*
+      Different PDF formats me Q1, Q.1, Question 1,
+      1. etc mil sakta hai.
+    */
+
+    let matches = [];
+
+    const re =
+        /(?:^|\n|\s)(?:Q(?:uestion)?\.?\s*)(\d{1,3})(?:\s|[.:)-])/gi;
+
+    let m;
+
+    while((m = re.exec(full)) !== null){
+
+        matches.push({
+            number:parseInt(m[1],10),
+            start:m.index,
+            end:re.lastIndex
+        });
+
+    }
+
+
+    /* Duplicate question numbers ko avoid karo */
+
+    let unique = [];
+    let seen = new Set();
+
+    for(const item of matches){
+
+        if(!seen.has(item.number)){
+
+            seen.add(item.number);
+            unique.push(item);
+
+        }
+
+    }
+
+
+    /*
+      Agar Q1/Q2 format nahi mila to fallback:
+      page-wise numbered questions.
+    */
+
+    if(unique.length < 1){
+
+        return fallbackQuestions(pages);
+
+    }
+
+
+    let result = [];
+
+    for(let i=0; i<unique.length; i++){
+
+        const start =
+            unique[i].end;
+
+        const end =
+            i+1 < unique.length
+            ? unique[i+1].start
+            : full.length;
+
+        let block =
+            full.slice(start,end).trim();
+
+        if(block.length < 10)
+            continue;
+
+
+        let q =
+            parseQuestionBlock(
+                unique[i].number,
+                block
+            );
+
+        if(q){
+
+            q.number =
+                unique[i].number;
+
+            result.push(q);
+
+        }
+
+    }
+
+
+    return result;
+
 }
 
-async function showQuestion(){
-  const q=questions[current]; $('qtitle').textContent='Question '+q.number+'  •  '+q.type+'  •  '+q.marks+' Mark'; $('progress').textContent='Question '+(current+1)+' of '+questions.length;
-  $('pdfView').innerHTML='';
-  for(const part of q.pages){try{$('pdfView').appendChild(await renderPage(part));}catch(e){const d=document.createElement('div');d.className='status error';d.textContent='Question image render error.';$('pdfView').appendChild(d);}}
-  renderAnswerBox(q); $('prev').disabled=current===0; $('next').disabled=current===questions.length-1; updatePalette();
+
+/* FALLBACK */
+
+function fallbackQuestions(pages){
+
+    let result = [];
+
+    let n = 1;
+
+    for(const pg of pages){
+
+        let blocks =
+            pg.text.split(
+                /\n(?=\d{1,3}[.)]\s)/
+            );
+
+        for(const b of blocks){
+
+            let t =
+                b.trim();
+
+            if(t.length < 20)
+                continue;
+
+            let q =
+                parseQuestionBlock(n,t);
+
+            if(q){
+
+                q.number=n;
+                result.push(q);
+                n++;
+
+            }
+
+        }
+
+    }
+
+    return result;
+
 }
 
-function renderAnswerBox(q){
-  const box=$('answerBox');box.innerHTML='';
-  if(q.type==='NAT'){
-    const inp=document.createElement('input');inp.className='natinput';inp.type='text';inp.inputMode='decimal';inp.placeholder='Enter numerical answer';inp.value=answers[current]??'';inp.addEventListener('input',()=>answers[current]=inp.value.trim());box.appendChild(inp);return;
-  }
-  const letters=['A','B','C','D'];
-  letters.forEach(letter=>{
-    const lab=document.createElement('label');lab.className='opt';
-    const inp=document.createElement('input');inp.type=q.type==='MSQ'?'checkbox':'radio';inp.name='ans';inp.value=letter;
-    inp.checked=q.type==='MSQ'?answers[current].includes(letter):answers[current]===letter;
-    if(inp.checked)lab.classList.add('selected');
-    inp.addEventListener('change',()=>{if(q.type==='MSQ'){let a=answers[current]||[];if(inp.checked&&!a.includes(letter))a.push(letter);if(!inp.checked)a=a.filter(x=>x!==letter);answers[current]=a;}else answers[current]=letter;renderAnswerBox(q);updatePalette();});
-    lab.appendChild(inp);const span=document.createElement('span');span.textContent='Option '+letter;lab.appendChild(span);box.appendChild(lab);
-  });
-  const note=document.createElement('div');note.className='small';note.textContent=q.type==='MSQ'?'Multiple options select kar sakte ho.':'Ek option select karo.';box.appendChild(note);
+
+/* PARSE QUESTION */
+
+function parseQuestionBlock(number, block){
+
+    let text =
+        cleanText(block);
+
+
+    /*
+      Remove page markers
+    */
+
+    text =
+        text.replace(
+            /\[PAGE\s+\d+\]/gi,
+            ""
+        );
+
+
+    /*
+      Detect options
+    */
+
+    let optionRegex =
+        /(?:^|\s)(?:\(?([A-D])\)?)[\s.:)-]+/gi;
+
+    let positions = [];
+
+    let m;
+
+    while((m = optionRegex.exec(text)) !== null){
+
+        positions.push({
+            letter:m[1].toUpperCase(),
+            start:m.index,
+            end:optionRegex.lastIndex
+        });
+
+    }
+
+
+    /*
+      Need at least two options for MCQ.
+    */
+
+    let options = [];
+
+    if(positions.length >= 2){
+
+        for(let i=0;i<positions.length;i++){
+
+            let s =
+                positions[i].end;
+
+            let e =
+                i+1 < positions.length
+                ? positions[i+1].start
+                : text.length;
+
+            let opt =
+                text.slice(s,e).trim();
+
+            /*
+              Solution text ko option me jaane se roko
+            */
+
+            opt =
+                removeSolution(opt);
+
+            if(opt){
+
+                options.push({
+                    label:positions[i].letter,
+                    text:opt
+                });
+
+            }
+
+        }
+
+    }
+
+
+    /*
+      Question text:
+      first option se pehle ka part
+    */
+
+    let questionText;
+
+    if(positions.length){
+
+        questionText =
+            text.slice(
+                0,
+                positions[0].start
+            ).trim();
+
+    }else{
+
+        questionText = text;
+
+    }
+
+
+    questionText =
+        removeSolution(questionText);
+
+
+    /*
+      Detect NAT
+    */
+
+    let upper =
+        questionText.toUpperCase();
+
+    let type =
+        "MCQ";
+
+    if(
+        upper.includes("NAT") ||
+        upper.includes("NUMERICAL") ||
+        options.length < 2
+    ){
+
+        type = "NAT";
+
+    }
+
+
+    /*
+      Detect marks
+    */
+
+    let marks = 1;
+
+    if(
+        upper.includes("2 MARK") ||
+        upper.includes("2-MARK") ||
+        upper.includes("2 MARKS")
+    ){
+
+        marks = 2;
+
+    }
+
+
+    /*
+      Clean metadata
+    */
+
+    questionText =
+        questionText
+        .replace(
+            /^.*?INTERMEDIATE\s*[:\-]/i,
+            ""
+        )
+        .trim();
+
+
+    if(!questionText){
+
+        return null;
+
+    }
+
+
+    return {
+        number:number,
+        text:questionText,
+        options:options,
+        type:type,
+        marks:marks,
+        solution:""
+    };
+
 }
 
-function buildPalette(){const p=$('palette');p.innerHTML='';questions.forEach((q,i)=>{const b=document.createElement('button');b.type='button';b.className='pbtn';b.textContent=i+1;b.onclick=()=>{current=i;showQuestion();};p.appendChild(b);});updatePalette();}
-function updatePalette(){[...$('palette').children].forEach((b,i)=>{b.classList.toggle('current',i===current);b.classList.toggle('reviewed',reviewed[i]);const a=answers[i];b.classList.toggle('answered',Array.isArray(a)?a.length>0:!!a);});}
-$('prev').onclick=async()=>{if(current>0){current--;await showQuestion();}};
-$('next').onclick=async()=>{if(current<questions.length-1){current++;await showQuestion();}};
-$('clear').onclick=()=>{answers[current]=questions[current].type==='MSQ'?[]:null;showQuestion();};
-$('review').onclick=()=>{reviewed[current]=!reviewed[current];updatePalette();};
-$('submit').onclick=()=>{if(confirm('Test submit karein?')) submitTest();};
 
-function startTimer(){clearInterval(timerId);timerId=setInterval(()=>{if(submitted)return;seconds--;updateTimer();if(seconds<=0){clearInterval(timerId);alert('Time over. Test submit ho raha hai.');submitTest();}},1000);}
-function updateTimer(){const s=Math.max(0,seconds),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;$('timer').textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(x).padStart(2,'0');}
+/* REMOVE SOLUTION */
 
-async function parseAnswerKeyFile(file){
-  let text='';
-  if(file.type==='application/pdf'||/\.pdf$/i.test(file.name)){const d=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;for(let i=1;i<=d.numPages;i++){const p=await d.getPage(i),tc=await p.getTextContent();text+='\n'+tc.items.map(x=>x.str||'').join(' ');}}
-  else text=await file.text();
-  return parseKeyText(text);
-}
-function parseKeyText(text){
-  const key={};
-  const s=text.replace(/\r/g,'\n');
-  const blocks=[...s.matchAll(/Q\s*(\d+)\b([\s\S]*?)(?=Q\s*\d+\b|$)/gi)];
-  if(blocks.length){for(const m of blocks){const n=+m[1],b=m[2];const ca=b.match(/Correct\s+answer\s*:\s*([^\n\r]+)/i);if(ca){const v=ca[1].trim();if(!/^N\/A$/i.test(v))key[n]=normKey(v);else{const sol=b.match(/Solution\s+\(?([A-D](?:\s*[,/]\s*[A-D])*)\)?/i);if(sol)key[n]=normKey(sol[1]);}continue;}const a=b.match(/(?:^|[\n\s])(?:answer|ans)\s*[:\-]?\s*([A-D](?:\s*[,/]\s*[A-D])?|[-+]?\d+(?:\.\d+)?)/i);if(a)key[n]=normKey(a[1]);}}
-  const simple=[...s.matchAll(/(?:^|[\n,;])\s*(?:Q\s*)?(\d{1,4})\s*[.):-]?\s*([A-D](?:\s*[,/]\s*[A-D])?|[-+]?\d+(?:\.\d+)?)(?=\s|$)/gi)];
-  for(const m of simple)if(!key[m[1]])key[m[1]]=normKey(m[2]);
-  return key;
-}
-function normKey(v){return v.replace(/[()]/g,'').replace(/\s+/g,'').toUpperCase();}
+function removeSolution(text){
 
-function submitTest(){
-  if(submitted)return;submitted=true;clearInterval(timerId);$('test').classList.add('hidden');$('result').classList.remove('hidden');showResult();}
-function showResult(){
-  let correct=0,wrong=0,unanswered=0,score=0,gradable=0;
-  const negOn=$('negativeMarking').value==='on',n1=parseFloat($('neg1').value),n2=parseFloat($('neg2').value);
-  for(let i=0;i<questions.length;i++){
-    const q=questions[i],u=answers[i],k=answerKey[q.number];
-    if(q.type==='MSQ'&&(!u||!u.length)){unanswered++;continue;}
-    if(q.type!=='MSQ'&&!u){unanswered++;continue;}
-    if(k==null)continue;
-    gradable++;
-    if(isCorrect(q,u,k)){correct++;score+=q.marks;}else{wrong++;if(negOn&&q.type==='MCQ')score-=q.marks===2?n2:n1;}
-  }
-  score=Math.round(score*100)/100;
-  $('score').textContent=gradable?'Score: '+score:'Score: —';
-  $('details').innerHTML='<div class="row"><span>Total Questions</span><b>'+questions.length+'</b></div><div class="row"><span>Correct</span><b>'+correct+'</b></div><div class="row"><span>Wrong</span><b>'+wrong+'</b></div><div class="row"><span>Unanswered</span><b>'+unanswered+'</b></div><div class="row"><span>Questions with answer key</span><b>'+gradable+'</b></div><div class="status">Negative marking MCQ par apply ki gayi hai. MSQ/NAT par nahi.</div>';
-  if(!gradable){$('keyAfter').innerHTML='<div class="card"><h3>Answer Key Upload</h3><p>Ab answer key upload karo; result automatically calculate ho jayega.</p><input id="keyLate" type="file" accept="application/pdf,.pdf,.txt,.csv"><button id="calcLate" class="start" type="button">UPLOAD KEY & CALCULATE</button></div>';$('calcLate').onclick=async()=>{const f=$('keyLate').files[0];if(!f){alert('Answer key select karo.');return;}try{answerKey=await parseAnswerKeyFile(f);showResult();}catch(e){alert('Answer key read nahi hui: '+e.message);}};}else $('keyAfter').innerHTML='';
+    let patterns = [
+        /\bSOLUTION\b[\s\S]*$/i,
+        /\bSOL\.\b[\s\S]*$/i,
+        /\bANSWER\s*[:\-][\s\S]*$/i,
+        /\bEXPLANATION\b[\s\S]*$/i
+    ];
+
+    let out = text;
+
+    for(const p of patterns){
+
+        out =
+            out.replace(p,"");
+
+    }
+
+    return out.trim();
+
 }
-function isCorrect(q,u,k){
-  if(q.type==='MSQ'){const a=(Array.isArray(u)?u:[]).map(normKey).sort().join(',');const b=normKey(k).split(/[,/]/).sort().join(',');return a===b;}
-  if(q.type==='NAT'){const un=parseFloat(String(u).replace(/,/g,''));const ks=String(k).trim();const range=ks.match(/^(-?\d+(?:\.\d+)?)\s*\-\s*(-?\d+(?:\.\d+)?)$/);if(range){const lo=+range[1],hi=+range[2];return Number.isFinite(un)&&un>=Math.min(lo,hi)&&un<=Math.max(lo,hi);}const kn=parseFloat(ks);return Number.isFinite(un)&&Number.isFinite(kn)&&Math.abs(un-kn)<=Math.max(0.01,Math.abs(kn)*1e-3);}
-  return normKey(u)===normKey(k);
+
+
+/* TIMER */
+
+function startTimer(){
+
+    stopTimer();
+
+    updateTimer();
+
+    timerId =
+        setInterval(function(){
+
+            if(seconds <= 0){
+
+                stopTimer();
+
+                alert(
+                    "Time Over! Test automatically submit ho raha hai."
+                );
+
+                finishTest();
+
+                return;
+
+            }
+
+            seconds--;
+
+            updateTimer();
+
+        },1000);
+
 }
-$('restart').onclick=()=>location.reload();
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));}
+
+
+function stopTimer(){
+
+    if(timerId !== null){
+
+        clearInterval(timerId);
+        timerId = null;
+
+    }
+
+}
+
+
+function updateTimer(){
+
+    let h =
+        Math.floor(seconds/3600);
+
+    let m =
+        Math.floor((seconds%3600)/60);
+
+    let s =
+        seconds%60;
+
+    $("timer").textContent =
+        String(h).padStart(2,"0") +
+        ":" +
+        String(m).padStart(2,"0") +
+        ":" +
+        String(s).padStart(2,"0");
+
+}
+
+
+/* RENDER QUESTION */
+
+function renderQuestion(){
+
+    if(!questions.length)
+        return;
+
+    const q =
+        questions[current];
+
+    $("progress").textContent =
+        "Question " +
+        (current+1) +
+        " of " +
+        questions.length;
+
+    $("questionTitle").textContent =
+        "Question " +
+        q.number +
+        " • " +
+        q.type +
+        " • " +
+        q.marks +
+        " Mark" +
+        (q.marks === 2 ? "s" : "");
+
+    $("questionText").textContent =
+        q.text;
+
+
+    const box =
+        $("options");
+
+    box.innerHTML = "";
+
+
+    if(q.type === "NAT"){
+
+        const input =
+            document.createElement("input");
+
+        input.className =
+            "natinput";
+
+        input.type =
+            "text";
+
+        input.placeholder =
+            "Enter numerical answer";
+
+        input.value =
+            answers[current] === null
+            ? ""
+            : answers[current];
+
+        input.addEventListener(
+            "input",
+            function(){
+
+                answers[current] =
+                    input.value.trim() === ""
+                    ? null
+                    : input.value.trim();
+
+                updateStatus();
+                buildPalette();
+
+            }
+        );
+
+        box.appendChild(input);
+
+    }else{
+
+        if(!q.options.length){
+
+            const msg =
+                document.createElement("div");
+
+            msg.className="status";
+
+            msg.textContent =
+                "Options PDF se detect nahi hue.";
+
+            box.appendChild(msg);
+
+        }
+
+
+        q.options.forEach(function(opt){
+
+            const label =
+                document.createElement("label");
+
+            label.className =
+                "option";
+
+
+            const radio =
+                document.createElement("input");
+
+            radio.type =
+                "radio";
+
+            radio.name =
+                "question_" + current;
+
+            radio.value =
+                opt.label;
+
+
+            if(answers[current] === opt.label){
+
+                radio.checked = true;
+
+            }
+
+
+            radio.addEventListener(
+                "change",
+                function(){
+
+                    answers[current] =
+                        radio.value;
+
+                    updateStatus();
+                    buildPalette();
+
+                }
+            );
+
+
+            const span =
+                document.createElement("span");
+
+            span.textContent =
+                opt.label +
+                ". " +
+                opt.text;
+
+
+            label.appendChild(radio);
+            label.appendChild(span);
+
+            box.appendChild(label);
+
+        });
+
+    }
+
+
+    updateStatus();
+    buildPalette();
+
+}
+
+
+/* STATUS */
+
+function updateStatus(){
+
+    if(answers[current] !== null){
+
+        $("attemptStatus").textContent =
+            reviewed[current]
+            ? "Answered + Review"
+            : "Answered";
+
+    }else{
+
+        $("attemptStatus").textContent =
+            reviewed[current]
+            ? "Marked for Review"
+            : "Not attempted";
+
+    }
+
+}
+
+
+/* PALETTE */
+
+function buildPalette(){
+
+    const p =
+        $("palette");
+
+    p.innerHTML = "";
+
+
+    questions.forEach(function(q,i){
+
+        const b =
+            document.createElement("button");
+
+        b.type =
+            "button";
+
+        b.className =
+            "pbtn";
+
+        b.textContent =
+            i+1;
+
+
+        if(answers[i] !== null){
+
+            b.classList.add("answered");
+
+        }
+
+        if(reviewed[i]){
+
+            b.classList.add("reviewed");
+
+        }
+
+        if(i === current){
+
+            b.classList.add("current");
+
+        }
+
+
+        b.addEventListener(
+            "click",
+            function(){
+
+                current=i;
+                renderQuestion();
+
+                window.scrollTo({
+                    top:0,
+                    behavior:"smooth"
+                });
+
+            }
+        );
+
+
+        p.appendChild(b);
+
+    });
+
+}
+
+
+/* PREVIOUS */
+
+$("prevBtn").addEventListener(
+    "click",
+    function(){
+
+        if(current > 0){
+
+            current--;
+            renderQuestion();
+
+            window.scrollTo({
+                top:0,
+                behavior:"smooth"
+            });
+
+        }
+
+    }
+);
+
+
+/* CLEAR */
+
+$("clearBtn").addEventListener(
+    "click",
+    function(){
+
+        answers[current] = null;
+
+        renderQuestion();
+
+    }
+);
+
+
+/* REVIEW */
+
+$("reviewBtn").addEventListener(
+    "click",
+    function(){
+
+        reviewed[current] =
+            !reviewed[current];
+
+        updateStatus();
+        buildPalette();
+
+    }
+);
+
+
+/* NEXT */
+
+$("nextBtn").addEventListener(
+    "click",
+    function(){
+
+        if(current < questions.length-1){
+
+            current++;
+
+            renderQuestion();
+
+            window.scrollTo({
+                top:0,
+                behavior:"smooth"
+            });
+
+        }else{
+
+            alert(
+                "Ye last question hai. Submit Test dabao."
+            );
+
+        }
+
+    }
+);
+
+
+/* SUBMIT */
+
+$("submitBtn").addEventListener(
+    "click",
+    function(){
+
+        if(
+            confirm(
+                "Kya aap test submit karna chahte hain?"
+            )
+        ){
+
+            finishTest();
+
+        }
+
+    }
+);
+
+
+/* FINISH */
+
+async function finishTest(){
+
+    if(submitted)
+        return;
+
+    submitted=true;
+
+    stopTimer();
+
+    $("examArea").classList.add("hidden");
+
+    $("loading").classList.remove("hidden");
+
+    $("loading").textContent =
+        "Result calculate ho raha hai...";
+
+
+    try{
+
+        if(keyFile){
+
+            answerKey =
+                await readAnswerKey(keyFile);
+
+        }else{
+
+            answerKey = {};
+
+        }
+
+    }catch(e){
+
+        console.error(e);
+
+        answerKey={};
+
+    }
+
+
+    calculateResult();
+
+}
+
+
+/* READ ANSWER KEY */
+
+async function readAnswerKey(file){
+
+    let name =
+        file.name.toLowerCase();
+
+
+    if(
+        name.endsWith(".txt") ||
+        name.endsWith(".csv") ||
+        name.endsWith(".json")
+    ){
+
+        let text =
+            await file.text();
+
+        return parseAnswerText(text);
+
+    }
+
+
+    /*
+      PDF answer key
+    */
+
+    if(name.endsWith(".pdf")){
+
+        let pages =
+            await extractPDFText(file);
+
+        let text =
+            pages.map(x=>x.text).join("\n");
+
+        return parseAnswerText(text);
+
+    }
+
+
+    return {};
+
+}
+
+
+/* PDF TEXT ONLY */
+
+async function extractPDFText(file){
+
+    const buffer =
+        await file.arrayBuffer();
+
+    const pdf =
+        await pdfjsLib.getDocument({
+            data:buffer
+        }).promise;
+
+    let pages=[];
+
+    for(let p=1;p<=pdf.numPages;p++){
+
+        const page =
+            await pdf.getPage(p);
+
+        const content =
+            await page.getTextContent();
+
+        const text =
+            content.items
+            .map(x=>x.str || "")
+            .join(" ");
+
+        pages.push({
+            page:p,
+            text:cleanText(text)
+        });
+
+    }
+
+    return pages;
+
+}
+
+
+/* PARSE ANSWER KEY */
+
+function parseAnswerText(text){
+
+    let key={};
+
+
+    /*
+      Accepted formats:
+
+      1 A
+      1:A
+      1-A
+      Q1 A
+      Q1:A
+      1 2.50
+    */
+
+    const lines =
+        String(text || "")
+        .split(/\r?\n/);
+
+
+    for(let line of lines){
+
+        line=line.trim();
+
+        if(!line)
+            continue;
+
+
+        let m =
+            line.match(
+                /^(?:Q(?:uestion)?\s*)?(\d{1,3})\s*[:.,\-]?\s*([A-D]|-?\d+(?:\.\d+)?)/i
+            );
+
+
+        if(m){
+
+            let n =
+                parseInt(m[1],10);
+
+            let value =
+                m[2].toUpperCase();
+
+            key[n]=value;
+
+        }
+
+    }
+
+
+    /*
+      Also try continuous text.
+    */
+
+    if(Object.keys(key).length === 0){
+
+        let re =
+            /(?:Q(?:uestion)?\s*)?(\d{1,3})\s*[:.)\-]\s*([A-D]|-?\d+(?:\.\d+)?)/gi;
+
+        let m;
+
+        while((m=re.exec(text))!==null){
+
+            key[
+                parseInt(m[1],10)
+            ] =
+                m[2].toUpperCase();
+
+        }
+
+    }
+
+
+    return key;
+
+}
+
+
+/* CALCULATE */
+
+function calculateResult(){
+
+    let total=0;
+    let attempted=0;
+    let correct=0;
+    let wrong=0;
+
+    let details=[];
+
+
+    for(let i=0;i<questions.length;i++){
+
+        const q =
+            questions[i];
+
+        const user =
+            answers[i];
+
+        const correctAnswer =
+            answerKey[q.number];
+
+
+        let state =
+            "Not Attempted";
+
+        let marks=0;
+
+
+        if(user !== null){
+
+            attempted++;
+
+
+            if(
+                correctAnswer !== undefined &&
+                isCorrect(user,correctAnswer,q.type)
+            ){
+
+                correct++;
+                marks=q.marks;
+                state="Correct";
+
+            }else if(
+                correctAnswer !== undefined
+            ){
+
+                wrong++;
+
+                if(
+                    $("negativeMarking").value === "on" &&
+                    q.type === "MCQ"
+                ){
+
+                    let neg =
+                        q.marks === 2
+                        ? parseFloat($("neg2").value)
+                        : parseFloat($("neg1").value);
+
+                    marks=-neg;
+
+                }
+
+                state="Wrong";
+
+            }else{
+
+                state="Attempted - Answer Key Missing";
+
+            }
+
+        }
+
+
+        total += marks;
+
+
+        details.push({
+            q:q,
+            user:user,
+            correct:correctAnswer,
+            state:state,
+            marks:marks
+        });
+
+    }
+
+
+    showResult(
+        total,
+        attempted,
+        correct,
+        wrong,
+        details
+    );
+
+}
+
+
+/* CHECK ANSWER */
+
+function isCorrect(user,key,type){
+
+    if(type === "NAT"){
+
+        let a =
+            parseFloat(user);
+
+        let b =
+            parseFloat(key);
+
+        if(
+            Number.isFinite(a) &&
+            Number.isFinite(b)
+        ){
+
+            return Math.abs(a-b) < 0.000001;
+
+        }
+
+        return String(user).trim() ===
+               String(key).trim();
+
+    }
+
+
+    return String(user).trim().toUpperCase() ===
+           String(key).trim().toUpperCase();
+
+}
+
+
+/* SHOW RESULT */
+
+function showResult(
+    total,
+    attempted,
+    correct,
+    wrong,
+    details
+){
+
+    $("loading").classList.add("hidden");
+
+    $("resultSection")
+        .classList.remove("hidden");
+
+
+    $("score").innerHTML =
+        "Score: " +
+        total.toFixed(2) +
+        "<br><small>" +
+        "Attempted: " + attempted +
+        " | Correct: " + correct +
+        " | Wrong: " + wrong +
+        "</small>";
+
+
+    const box =
+        $("resultDetails");
+
+    box.innerHTML =
+        "<h3>Question-wise Result</h3>";
+
+
+    details.forEach(function(d){
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "resultitem";
+
+
+        let html =
+            "<b>Question " +
+            d.q.number +
+            "</b><br>";
+
+
+        html +=
+            "Your Answer: " +
+            (d.user === null ? "Not Attempted" : d.user) +
+            "<br>";
+
+
+        if(d.correct !== undefined){
+
+            html +=
+                "Correct Answer: " +
+                d.correct +
+                "<br>";
+
+        }else{
+
+            html +=
+                "<span class='status'>Answer key available nahi hai.</span><br>";
+
+        }
+
+
+        if(d.state === "Correct"){
+
+            html +=
+                "<span class='correct'>Correct +" +
+                d.marks.toFixed(2) +
+                "</span>";
+
+        }else if(d.state === "Wrong"){
+
+            html +=
+                "<span class='wrong'>Wrong " +
+                d.marks.toFixed(2) +
+                "</span>";
+
+        }else{
+
+            html +=
+                d.state;
+
+        }
+
+
+        if(d.q.solution){
+
+            html +=
+                "<div class='solution'><b>Solution:</b><br>" +
+                escapeHTML(d.q.solution) +
+                "</div>";
+
+        }
+
+
+        div.innerHTML=html;
+
+        box.appendChild(div);
+
+    });
+
+
+    $("answerKeyAfter").innerHTML =
+        Object.keys(answerKey).length
+        ? "<div class='status'>Answer key successfully used for scoring.</div>"
+        : "<div class='status'>Answer key upload nahi ki gayi, isliye score verification nahi hua.</div>";
+
+}
+
+
+/* ESCAPE */
+
+function escapeHTML(str){
+
+    return String(str || "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;");
+
+}
+
 </script>
+
 </body>
 </html>
