@@ -2,273 +2,384 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>GATE Test Series</title>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
-*{
-    box-sizing:border-box;
-}
-
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f2f4f7;
-    color:#222;
-}
-
-.header{
-    background:#17365d;
-    color:white;
-    padding:18px;
-    text-align:center;
-    font-size:24px;
-    font-weight:bold;
-}
-
-.container{
-    max-width:600px;
-    margin:25px auto;
-    padding:15px;
-}
-
-.card{
-    background:white;
-    padding:22px;
-    border-radius:12px;
-    box-shadow:0 3px 12px rgba(0,0,0,.12);
-}
-
-label{
-    display:block;
-    margin-top:18px;
-    margin-bottom:7px;
-    font-weight:bold;
-}
-
-input,select,button{
-    width:100%;
-    padding:13px;
-    font-size:16px;
-    border-radius:8px;
-}
-
-input,select{
-    border:1px solid #bbb;
-}
-
-button{
-    margin-top:20px;
-    border:none;
-    background:#17365d;
-    color:white;
-    font-weight:bold;
-}
-
-button:active{
-    transform:scale(.98);
-}
-
-#testScreen{
-    display:none;
-}
-
-.timer{
-    background:#111;
-    color:#fff;
-    text-align:center;
-    padding:15px;
-    border-radius:10px;
-    font-size:28px;
-    font-weight:bold;
-    margin-bottom:15px;
-}
-
-.pdfBox{
-    background:#eee;
-    padding:20px;
-    text-align:center;
-    border-radius:10px;
-    margin-top:15px;
-}
-
-.warning{
-    color:#c00;
-    font-size:14px;
-    margin-top:10px;
-}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f3f6;color:#222}
+.header{background:#17365d;color:#fff;padding:16px;text-align:center;font-size:24px;font-weight:700}
+.container{max-width:1100px;margin:auto;padding:15px}
+.card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 3px 12px #0002;margin-bottom:15px}
+label{display:block;font-weight:700;margin:15px 0 7px}
+input,select,button{font-size:16px;padding:12px;border-radius:8px}
+input,select{width:100%;border:1px solid #bbb;background:#fff}
+button{border:0;background:#17365d;color:#fff;font-weight:700;cursor:pointer}
+button:active{transform:scale(.98)}
+.start{width:100%;margin-top:20px;font-size:18px}
+.hidden{display:none!important}
+.setup{max-width:650px;margin:30px auto}
+.timer{background:#111;color:#fff;text-align:center;padding:12px;border-radius:10px;font-size:28px;font-weight:700}
+.exambar{display:flex;gap:10px;align-items:center;margin:10px 0}
+.exambar .title{font-weight:700;flex:1}
+.examgrid{display:grid;grid-template-columns:1fr 280px;gap:15px}
+.questionbox{min-height:500px}
+.qhead{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #ddd;padding-bottom:10px}
+.badge{padding:5px 9px;border-radius:15px;background:#eee;font-size:13px}
+.pdfpages{background:#fff}
+.question-page{width:100%;display:block;margin:0 auto 12px;border:1px solid #ddd;border-radius:5px}
+.options{margin-top:15px}
+.option{display:flex;gap:10px;align-items:center;border:1px solid #ccc;border-radius:8px;padding:12px;margin:9px 0}
+.option input{width:auto}
+.natinput{width:100%;margin-top:15px}
+.nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:15px}
+.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.pbtn{padding:9px;background:#eee;color:#222}
+.pbtn.answered{background:#2e7d32;color:#fff}
+.pbtn.review{outline:3px solid #f5a623}
+.pbtn.current{border:3px solid #17365d}
+.status{font-size:13px;margin:10px 0}
+.reviewbtn{background:#6a1b9a}
+.clearbtn{background:#777}
+.submit{background:#b71c1c}
+#loading{text-align:center;padding:25px;font-weight:700}
+.score{font-size:24px;font-weight:700;text-align:center}
+.resultrow{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #ddd}
+@media(max-width:800px){.examgrid{grid-template-columns:1fr}.palette{grid-template-columns:repeat(8,1fr)}}
 </style>
 </head>
-
 <body>
-
-<div class="header">
-    GATE TEST SERIES
-</div>
+<div class="header">GATE TEST SERIES</div>
 
 <div class="container">
+  <div id="setupScreen" class="card setup">
+    <h2>Test Setup</h2>
+    <label>Question PDF</label>
+    <input type="file" id="questionPDF" accept=".pdf,application/pdf">
+    <small>PDF can contain questions + solutions. During the test, the solution part is hidden automatically.</small>
 
-    <!-- SETUP SCREEN -->
-    <div class="card" id="setupScreen">
+    <label>Test Time (Minutes)</label>
+    <input type="number" id="timeInput" value="180" min="1">
 
-        <h2>Test Setup</h2>
+    <label>Negative Marking</label>
+    <select id="negativeMarking">
+      <option value="on">ON</option><option value="off">OFF</option>
+    </select>
 
-        <label>Question PDF</label>
-        <input type="file" id="questionPDF" accept=".pdf">
+    <label>1 Mark Question Negative</label>
+    <select id="oneMarkNegative">
+      <option value="1/3">1/3</option><option value="0">0</option>
+    </select>
 
-        <label>Test Time (Minutes)</label>
-        <input type="number" id="timeInput" value="180" min="1">
+    <label>2 Mark Question Negative</label>
+    <select id="twoMarkNegative">
+      <option value="2/3">2/3</option><option value="0">0</option>
+    </select>
 
-        <label>Negative Marking</label>
-        <select id="negativeMarking">
-            <option value="on">ON</option>
-            <option value="off">OFF</option>
-        </select>
+    <button class="start" onclick="startTest()">START TEST</button>
+    <div id="loading" class="hidden">Reading PDF and preparing questions...</div>
+  </div>
 
-        <label>1 Mark Question Negative</label>
-        <select id="oneMarkNegative">
-            <option value="1/3">1/3</option>
-            <option value="0">0</option>
-        </select>
-
-        <label>2 Mark Question Negative</label>
-        <select id="twoMarkNegative">
-            <option value="2/3">2/3</option>
-            <option value="0">0</option>
-        </select>
-
-        <button onclick="startTest()">START TEST</button>
-
+  <div id="testScreen" class="hidden">
+    <div class="timer" id="timer">03:00:00</div>
+    <div class="exambar">
+      <div class="title" id="progress">Question 1 of 0</div>
+      <button class="submit" onclick="submitTest(false)">SUBMIT TEST</button>
     </div>
 
-
-    <!-- TEST SCREEN -->
-    <div id="testScreen">
-
-        <div class="timer" id="timer">
-            03:00:00
+    <div class="examgrid">
+      <div class="card questionbox">
+        <div class="qhead">
+          <div><b id="qnumber">Q1</b> <span id="qtype" class="badge"></span></div>
+          <span id="marks" class="badge"></span>
         </div>
+        <div id="pdfpages" class="pdfpages"></div>
+        <div id="answerArea"></div>
 
-        <div class="card">
-
-            <h2>Test Started</h2>
-
-            <div class="pdfBox">
-                <p>Question PDF selected:</p>
-                <strong id="pdfName"></strong>
-
-                <br><br>
-
-                <button onclick="openPDF()">
-                    OPEN QUESTION PDF
-                </button>
-            </div>
-
-            <button onclick="submitTest()">
-                SUBMIT TEST
-            </button>
-
+        <div class="nav">
+          <button onclick="previousQuestion()">PREVIOUS</button>
+          <button class="reviewbtn" onclick="toggleReview()">MARK REVIEW</button>
+          <button onclick="nextQuestion()">SAVE & NEXT</button>
         </div>
+        <button class="clearbtn" style="width:100%;margin-top:8px" onclick="clearAnswer()">CLEAR RESPONSE</button>
+      </div>
 
+      <div class="card">
+        <h3>Question Palette</h3>
+        <div class="status">
+          <span>🟩 Answered</span><br>
+          <span>🟨 Marked for Review</span><br>
+          <span>⬜ Not Answered</span>
+        </div>
+        <div id="palette" class="palette"></div>
+      </div>
     </div>
+  </div>
 
+  <div id="resultScreen" class="card hidden">
+    <h2>Test Result</h2>
+    <div id="result"></div>
+    <button style="width:100%;margin-top:15px" onclick="location.reload()">NEW TEST</button>
+  </div>
 </div>
 
-
 <script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-let totalSeconds = 0;
-let timerInterval = null;
-let pdfFile = null;
+let pdf=null, questions=[], current=0, answers={}, reviews=new Set();
+let totalSeconds=0,timerInterval=null,submitted=false;
 
-function startTest(){
+function normalize(s){return (s||"").replace(/\s+/g," ").trim()}
 
-    pdfFile = document.getElementById("questionPDF").files[0];
-
-    if(!pdfFile){
-        alert("Please upload Question PDF first.");
-        return;
-    }
-
-    let minutes =
-        parseInt(document.getElementById("timeInput").value);
-
-    if(!minutes || minutes <= 0){
-        alert("Please enter valid test time.");
-        return;
-    }
-
-    totalSeconds = minutes * 60;
-
-    document.getElementById("setupScreen").style.display="none";
-    document.getElementById("testScreen").style.display="block";
-
-    document.getElementById("pdfName").innerText =
-        pdfFile.name;
-
-    updateTimer();
-
-    timerInterval = setInterval(function(){
-
-        totalSeconds--;
-
-        updateTimer();
-
-        if(totalSeconds <= 0){
-
-            clearInterval(timerInterval);
-
-            alert("Time Over! Test submitted automatically.");
-
-            submitTest();
-        }
-
-    },1000);
+function pageTextItems(textContent){
+  return textContent.items.map(it=>{
+    const tr=it.transform||[1,0,0,1,0,0];
+    return {text:it.str,x:tr[4],y:tr[5],h:Math.abs(tr[3]||tr[0]||10)};
+  });
 }
 
+async function getPageInfo(pageNo){
+  const page=await pdf.getPage(pageNo);
+  const tc=await page.getTextContent();
+  const items=pageTextItems(tc);
+  const text=items.map(x=>x.text).join(" ");
+  return {page,items,text};
+}
+
+function findQuestionStart(text,n){
+  const re=new RegExp("\\bQ\\s*"+n+"\\b");
+  return re.test(text);
+}
+
+async function findQuestionPages(){
+  const found=[];
+  let qNo=1;
+  for(let p=1;p<=pdf.numPages && qNo<=100;p++){
+    const info=await getPageInfo(p);
+    if(findQuestionStart(info.text,qNo)){
+      found.push({n:qNo,startPage:p});
+      qNo++;
+    }
+  }
+  return found;
+}
+
+function parseMeta(text,n){
+  const one=/\\+1\\s*\\/\\s*-0\\.33/.test(text);
+  const two=/\\+2\\s*\\/\\s*-0\\.66/.test(text);
+  const plus2=/\\+2\\s*\\/\\s*-0(?:\\.0)?\\b/.test(text);
+  let marks=two||plus2?2:1;
+  let type=/Type your answer NAT/i.test(text)?"NAT":
+          /Match List|following statement\\(s\\)|which of the following/i.test(text)?"MCQ/MSQ":"MCQ";
+  // If correct answer has multiple letters, treat as MSQ where possible.
+  const ca=text.match(/Correct answer:\\s*\\(?([a-d](?:\\s*,\\s*[a-d])+)\\)?/i);
+  if(ca) type="MSQ";
+  return {marks,type};
+}
+
+async function buildQuestions(){
+  const starts=await findQuestionPages();
+  for(let i=0;i<starts.length;i++){
+    const s=starts[i], next=starts[i+1];
+    const pages=[];
+    let p=s.startPage;
+    let allText="";
+    while(p<=pdf.numPages){
+      const info=await getPageInfo(p);
+      allText += " "+info.text;
+      pages.push(p);
+      if(/Correct answer:/i.test(info.text) || /Solution/i.test(info.text)) break;
+      if(next && p>=next.startPage-1) break;
+      p++;
+    }
+    const meta=parseMeta(allText,s.n);
+    questions.push({n:s.n,startPage:s.startPage,pages,marks:meta.marks,type:meta.type,text:allText});
+  }
+  return starts.length;
+}
+
+async function startTest(){
+  const file=document.getElementById("questionPDF").files[0];
+  if(!file){alert("Please upload Question PDF first.");return}
+  const mins=parseInt(document.getElementById("timeInput").value);
+  if(!mins||mins<1){alert("Enter valid test time.");return}
+
+  document.getElementById("loading").classList.remove("hidden");
+  try{
+    const buf=await file.arrayBuffer();
+    pdf=await pdfjsLib.getDocument({data:buf}).promise;
+    questions=[]; answers={}; reviews.clear(); current=0; submitted=false;
+    await buildQuestions();
+    if(!questions.length) throw new Error("No questions found. PDF text layer could not be read.");
+    totalSeconds=mins*60;
+    document.getElementById("setupScreen").classList.add("hidden");
+    document.getElementById("testScreen").classList.remove("hidden");
+    renderPalette(); renderQuestion(); updateTimer();
+    timerInterval=setInterval(()=>{
+      if(submitted)return;
+      totalSeconds--; updateTimer();
+      if(totalSeconds<=0){
+        clearInterval(timerInterval);
+        submitTest(true);
+      }
+    },1000);
+  }catch(e){
+    alert("PDF could not be prepared: "+e.message);
+  }finally{
+    document.getElementById("loading").classList.add("hidden");
+  }
+}
 
 function updateTimer(){
-
-    let hours =
-        Math.floor(totalSeconds / 3600);
-
-    let minutes =
-        Math.floor((totalSeconds % 3600) / 60);
-
-    let seconds =
-        totalSeconds % 60;
-
-    document.getElementById("timer").innerText =
-        String(hours).padStart(2,"0") + ":" +
-        String(minutes).padStart(2,"0") + ":" +
-        String(seconds).padStart(2,"0");
+  const h=Math.floor(totalSeconds/3600);
+  const m=Math.floor((totalSeconds%3600)/60);
+  const s=totalSeconds%60;
+  document.getElementById("timer").textContent=
+    String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
 }
 
+async function renderQuestion(){
+  const q=questions[current];
+  document.getElementById("qnumber").textContent="Q"+q.n;
+  document.getElementById("qtype").textContent=q.type;
+  document.getElementById("marks").textContent=q.marks+" Mark";
+  document.getElementById("progress").textContent=`Question ${current+1} of ${questions.length}`;
+  const box=document.getElementById("pdfpages");
+  box.innerHTML='<div style="padding:20px;text-align:center">Loading question...</div>';
 
-function openPDF(){
+  for(const pno of q.pages){
+    const info=await getPageInfo(pno);
+    const canvas=document.createElement("canvas");
+    canvas.className="question-page";
+    const viewport=info.page.getViewport({scale:1.45});
+    canvas.width=viewport.width; canvas.height=viewport.height;
+    await info.page.render({canvasContext:canvas.getContext("2d"),viewport}).promise;
+    box.appendChild(canvas);
+  }
+  // Cover the solution/correct-answer area on every page. The question image remains visible.
+  await maskSolutionAreas(box,q.pages);
+  renderAnswerArea(q);
+  renderPalette();
+}
 
-    if(!pdfFile){
-        alert("PDF not found.");
-        return;
+async function maskSolutionAreas(box,pageNos){
+  // The visible page image is intentionally kept intact. A white overlay is added
+  // only when the PDF text layer locates "Correct answer" or "Solution".
+  const canvases=[...box.querySelectorAll("canvas")];
+  for(let i=0;i<pageNos.length;i++){
+    const info=await getPageInfo(pageNos[i]);
+    const idx=info.items.findIndex(x=>/Correct answer|Solution/i.test(x.text));
+    if(idx<0) continue;
+    const y=info.items[idx].y;
+    const pageHeight=canvases[i].height;
+    // PDF coordinates start from bottom; convert to canvas top.
+    const scale=canvases[i].width/(info.page.getViewport({scale:1}).width);
+    const top=Math.max(0,pageHeight-y*scale-18);
+    const ctx=canvases[i].getContext("2d");
+    ctx.fillStyle="#fff";
+    ctx.fillRect(0,top,canvases[i].width,pageHeight-top);
+  }
+}
+
+function renderAnswerArea(q){
+  const area=document.getElementById("answerArea");
+  area.innerHTML="";
+  const a=answers[q.n];
+  if(q.type==="NAT"){
+    const inp=document.createElement("input");
+    inp.className="natinput"; inp.type="text"; inp.inputMode="decimal";
+    inp.placeholder="Enter your answer";
+    inp.value=a||"";
+    inp.oninput=()=>{answers[q.n]=inp.value;renderPalette()};
+    area.appendChild(inp);
+  }else{
+    ["A","B","C","D"].forEach(opt=>{
+      const row=document.createElement("label"); row.className="option";
+      const radio=document.createElement("input");
+      radio.type="radio";radio.name="q"+q.n;radio.value=opt;
+      radio.checked=Array.isArray(a)?a.includes(opt):a===opt;
+      radio.onchange=()=>{answers[q.n]=opt;renderPalette()};
+      row.append(radio,document.createTextNode("Option "+opt));
+      area.appendChild(row);
+    });
+  }
+}
+
+function renderPalette(){
+  const p=document.getElementById("palette");p.innerHTML="";
+  questions.forEach((q,i)=>{
+    const b=document.createElement("button");b.className="pbtn";
+    b.textContent=q.n;
+    if(answers[q.n]!==undefined && answers[q.n]!=="")b.classList.add("answered");
+    if(reviews.has(q.n))b.classList.add("review");
+    if(i===current)b.classList.add("current");
+    b.onclick=()=>{current=i;renderQuestion()};
+    p.appendChild(b);
+  });
+}
+
+function nextQuestion(){if(current<questions.length-1){current++;renderQuestion()}else alert("This is the last question.")}
+function previousQuestion(){if(current>0){current--;renderQuestion()}}
+function toggleReview(){
+  const n=questions[current].n;
+  if(reviews.has(n))reviews.delete(n);else reviews.add(n);
+  renderPalette();
+}
+function clearAnswer(){delete answers[questions[current].n];renderAnswerArea(questions[current]);renderPalette()}
+
+function getCorrectAnswerFromText(t){
+  const m=t.match(/Correct answer:\s*(?:N\/A|\(?([A-D](?:\s*,\s*[A-D])*)\)?)/i);
+  if(!m||!m[1])return null;
+  return m[1].toUpperCase().split(/\s*,\s*/);
+}
+
+function scoreTest(){
+  let score=0,correct=0,wrong=0,unattempted=0;
+  const negOn=document.getElementById("negativeMarking").value==="on";
+  const neg1=document.getElementById("oneMarkNegative").value;
+  const neg2=document.getElementById("twoMarkNegative").value;
+  questions.forEach(q=>{
+    const given=answers[q.n];
+    const corr=getCorrectAnswerFromText(q.text);
+    const empty=given===undefined||given==="";
+    if(empty){unattempted++;return}
+    let ok=false;
+    if(q.type==="NAT"){
+      const num=parseFloat(given);
+      const cm=q.text.match(/Correct answer:\s*([-+]?\d+(?:\.\d+)?)/i);
+      if(cm)ok=Math.abs(num-parseFloat(cm[1]))<1e-9;
+    }else if(corr){
+      const g=Array.isArray(given)?given:[given];
+      ok=corr.length===g.length&&corr.every(x=>g.includes(x));
     }
-
-    let url = URL.createObjectURL(pdfFile);
-
-    window.open(url,"_blank");
-}
-
-
-function submitTest(){
-
-    if(timerInterval){
-        clearInterval(timerInterval);
+    if(ok){correct++;score+=q.marks}
+    else{
+      wrong++;
+      if(negOn){
+        const n=q.marks===1?neg1:neg2;
+        if(n==="1/3")score-=1/3;
+        if(n==="2/3")score-=2/3;
+      }
     }
-
-    alert("Test submitted.");
-
+  });
+  return {score,correct,wrong,unattempted};
 }
 
+function submitTest(auto){
+  if(submitted)return;
+  if(!auto && !confirm("Are you sure you want to submit the test?"))return;
+  submitted=true;clearInterval(timerInterval);
+  const r=scoreTest();
+  document.getElementById("testScreen").classList.add("hidden");
+  document.getElementById("resultScreen").classList.remove("hidden");
+  document.getElementById("result").innerHTML=
+    `<div class="score">Score: ${r.score.toFixed(2)}</div>
+     <div class="resultrow"><span>Correct</span><b>${r.correct}</b></div>
+     <div class="resultrow"><span>Wrong</span><b>${r.wrong}</b></div>
+     <div class="resultrow"><span>Unattempted</span><b>${r.unattempted}</b></div>
+     <p style="text-align:center">${auto?"Time over — test submitted automatically.":"Test submitted successfully."}</p>`;
+}
 </script>
-
 </body>
-          </html>
+</html>
