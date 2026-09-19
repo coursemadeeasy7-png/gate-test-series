@@ -1,305 +1,285 @@
 /* =========================================================
    GATE TEST SERIES
-   PDF Loader
-   File: js/pdf-loader.js
-   ========================================================= */
+   FILE: js/pdf-loader.js
+
+   Reliable PDF.js loader
+   Supports:
+   - File input PDF
+   - Multiple PDFs
+   - ArrayBuffer
+   - Uint8Array
+   - Blob
+   - PDF URL
+========================================================= */
 
 (function () {
     "use strict";
 
-    const PDFLoader = {
+    const PDFJS_VERSION = "4.10.38";
 
-        /* ---------------------------------------------------
-           Configuration
-           --------------------------------------------------- */
+    const PDFJS_CDN =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/" +
+        PDFJS_VERSION +
+        "/pdf.min.mjs";
 
-        config: {
-            workerSource:
-                "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs",
+    const PDFJS_WORKER =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/" +
+        PDFJS_VERSION +
+        "/pdf.worker.min.mjs";
 
-            librarySource:
-                "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs",
+    class PDFLoader {
 
-            maxFileSize:
-                100 * 1024 * 1024,
+        constructor() {
+            this.pdfjs = null;
+            this.loadingPromise = null;
+        }
 
-            supportedType:
-                "application/pdf"
-        },
+        /* =====================================================
+           LOAD PDF.JS
+        ===================================================== */
 
-        pdfjs: null,
-
-        /* ---------------------------------------------------
-           Initialize PDF.js
-           --------------------------------------------------- */
-
-        async init() {
+        async loadPDFJS() {
 
             if (this.pdfjs) {
                 return this.pdfjs;
             }
 
-            /*
-             * If pdfjsLib has already been loaded by another
-             * script, use it directly.
-             */
+            if (window.pdfjsLib) {
 
-            if (
-                typeof window !== "undefined" &&
-                window.pdfjsLib
-            ) {
+                this.pdfjs = window.pdfjsLib;
 
-                this.pdfjs =
-                    window.pdfjsLib;
-
-                this.configureWorker();
+                this.pdfjs.GlobalWorkerOptions.workerSrc =
+                    PDFJS_WORKER;
 
                 return this.pdfjs;
             }
 
-            /*
-             * Dynamically load PDF.js.
-             */
+            if (this.loadingPromise) {
+                return this.loadingPromise;
+            }
+
+            this.loadingPromise =
+                this.importPDFJS();
 
             try {
 
-                const module =
-                    await import(
-                        this.config.librarySource
-                    );
-
                 this.pdfjs =
-                    module;
-
-                /*
-                 * Some builds expose the library through
-                 * default, while others expose it directly.
-                 */
-
-                if (
-                    this.pdfjs &&
-                    this.pdfjs.default
-                ) {
-                    this.pdfjs =
-                        this.pdfjs.default;
-                }
-
-                this.configureWorker();
+                    await this.loadingPromise;
 
                 return this.pdfjs;
 
             } catch (error) {
 
+                this.loadingPromise = null;
+
                 console.error(
-                    "PDF.js could not be loaded:",
+                    "PDF.js loading failed:",
                     error
                 );
 
                 throw new Error(
-                    "PDF engine could not be loaded."
+                    "PDF.js could not be loaded. " +
+                    "Check your internet connection and GitHub Pages."
                 );
             }
-        },
+        }
 
-        /* ---------------------------------------------------
-           Configure PDF.js Worker
-           --------------------------------------------------- */
+        /* =====================================================
+           IMPORT PDF.JS MODULE
+        ===================================================== */
 
-        configureWorker() {
+        async importPDFJS() {
 
-            if (
-                !this.pdfjs ||
-                !this.pdfjs.GlobalWorkerOptions
-            ) {
-                return;
-            }
+            /*
+             * PDF.js 4.x is an ES module.
+             * Dynamic import works on modern browsers.
+             */
 
-            this.pdfjs.GlobalWorkerOptions.workerSrc =
-                this.config.workerSource;
-        },
+            const module =
+                await import(PDFJS_CDN);
 
-        /* ---------------------------------------------------
-           Validate File
-           --------------------------------------------------- */
+            /*
+             * Depending on PDF.js build, the exported
+             * object may be the module itself.
+             */
 
-        validateFile(file) {
+            const pdfjs =
+                module.default || module;
 
-            if (!file) {
+            if (!pdfjs.getDocument) {
 
-                return {
-                    valid: false,
-                    message:
-                        "No PDF file was selected."
-                };
-            }
-
-            const name =
-                String(file.name || "")
-                    .toLowerCase();
-
-            const isPDF =
-                file.type ===
-                    this.config.supportedType ||
-                name.endsWith(".pdf");
-
-            if (!isPDF) {
-
-                return {
-                    valid: false,
-                    message:
-                        "Only PDF files are supported."
-                };
+                throw new Error(
+                    "PDF.js loaded but getDocument() was not found."
+                );
             }
 
             if (
-                Number(file.size) >
-                this.config.maxFileSize
+                pdfjs.GlobalWorkerOptions
             ) {
 
-                return {
-                    valid: false,
-                    message:
-                        "PDF file is larger than the allowed 100 MB limit."
-                };
+                pdfjs.GlobalWorkerOptions.workerSrc =
+                    PDFJS_WORKER;
             }
 
-            return {
-                valid: true,
-                message: "Valid PDF file."
-            };
-        },
+            /*
+             * Make available globally as well.
+             */
 
-        /* ---------------------------------------------------
-           Read File
-           --------------------------------------------------- */
+            window.pdfjsLib =
+                pdfjs;
+
+            return pdfjs;
+        }
+
+        /* =====================================================
+           READ FILE
+        ===================================================== */
 
         async readFile(file) {
 
-            const validation =
-                this.validateFile(file);
+            if (!file) {
 
-            if (!validation.valid) {
                 throw new Error(
-                    validation.message
+                    "No PDF file was provided."
                 );
             }
 
+            /*
+             * Browser File / Blob
+             */
+
             if (
-                typeof file.arrayBuffer ===
-                "function"
+                file instanceof Blob &&
+                typeof file.arrayBuffer === "function"
             ) {
 
                 return await file.arrayBuffer();
             }
 
             /*
-             * Older browsers fallback.
+             * ArrayBuffer
              */
 
-            return await new Promise(
-                (resolve, reject) => {
+            if (
+                file instanceof ArrayBuffer
+            ) {
 
-                    const reader =
-                        new FileReader();
+                return file;
+            }
 
-                    reader.onload =
-                        () => resolve(
-                            reader.result
-                        );
+            /*
+             * Uint8Array / typed array
+             */
 
-                    reader.onerror =
-                        () => reject(
-                            new Error(
-                                "Unable to read PDF file."
-                            )
-                        );
+            if (
+                file instanceof Uint8Array
+            ) {
 
-                    reader.readAsArrayBuffer(
-                        file
+                return file;
+            }
+
+            /*
+             * URL string
+             */
+
+            if (
+                typeof file === "string"
+            ) {
+
+                const response =
+                    await fetch(file);
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Could not fetch PDF: HTTP " +
+                        response.status
                     );
                 }
-            );
-        },
 
-        /* ---------------------------------------------------
-           Load PDF
-           --------------------------------------------------- */
+                return await response.arrayBuffer();
+            }
+
+            throw new Error(
+                "Unsupported PDF input type."
+            );
+        }
+
+        /* =====================================================
+           LOAD ONE PDF
+        ===================================================== */
 
         async load(file) {
 
-            const validation =
-                this.validateFile(file);
-
-            if (!validation.valid) {
-                throw new Error(
-                    validation.message
-                );
-            }
-
-            const pdfjs =
-                await this.init();
-
-            const arrayBuffer =
-                await this.readFile(file);
-
-            /*
-             * Keep a Uint8Array copy because PDF.js may
-             * transfer the underlying ArrayBuffer.
-             */
-
-            const data =
-                new Uint8Array(
-                    arrayBuffer
-                );
-
-            let loadingTask = null;
-
             try {
 
-                loadingTask =
+                console.log(
+                    "PDFLoader: starting PDF load..."
+                );
+
+                const pdfjs =
+                    await this.loadPDFJS();
+
+                console.log(
+                    "PDFLoader: PDF.js loaded."
+                );
+
+                const data =
+                    await this.readFile(file);
+
+                console.log(
+                    "PDFLoader: PDF data loaded."
+                );
+
+                /*
+                 * Copy typed arrays so the original File/
+                 * ArrayBuffer is never modified.
+                 */
+
+                let source = data;
+
+                if (
+                    data instanceof Uint8Array
+                ) {
+
+                    source =
+                        new Uint8Array(data);
+                }
+
+                const loadingTask =
                     pdfjs.getDocument({
-                        data: data
+                        data: source,
+                        useWorkerFetch: true,
+                        isEvalSupported: true
                     });
 
                 const pdf =
                     await loadingTask.promise;
 
-                return {
-                    pdf: pdf,
+                console.log(
+                    "PDFLoader: PDF opened successfully.",
+                    "Pages:",
+                    pdf.numPages
+                );
 
-                    file: file,
-
-                    fileName:
-                        file.name,
-
-                    fileSize:
-                        file.size,
-
-                    pageCount:
-                        pdf.numPages,
-
-                    loadedAt:
-                        new Date().toISOString()
-                };
+                return pdf;
 
             } catch (error) {
 
                 console.error(
-                    "PDF loading failed:",
+                    "PDFLoader.load() failed:",
                     error
                 );
 
-                throw new Error(
-                    "The PDF could not be opened. It may be corrupted, password protected, or unsupported."
-                );
+                throw error;
             }
-        },
+        }
 
-        /* ---------------------------------------------------
-           Load Multiple PDFs
-           --------------------------------------------------- */
+        /* =====================================================
+           LOAD MULTIPLE PDF FILES
+        ===================================================== */
 
-        async loadMultiple(files, progressCallback) {
+        async loadMultiple(files) {
 
             if (!files) {
                 return [];
@@ -311,95 +291,100 @@
             const results = [];
 
             for (
-                let i = 0;
-                i < fileArray.length;
-                i++
+                const file of fileArray
             ) {
-
-                const file =
-                    fileArray[i];
-
-                if (
-                    typeof progressCallback ===
-                    "function"
-                ) {
-
-                    progressCallback({
-                        current:
-                            i + 1,
-
-                        total:
-                            fileArray.length,
-
-                        percent:
-                            Math.round(
-                                (i /
-                                    fileArray.length) *
-                                100
-                            ),
-
-                        fileName:
-                            file.name
-                    });
-                }
 
                 try {
 
-                    const result =
+                    const pdf =
                         await this.load(file);
 
-                    results.push(result);
+                    results.push({
+                        file: file,
+                        pdf: pdf,
+                        success: true,
+                        pages: pdf.numPages,
+                        name:
+                            file.name ||
+                            "PDF"
+                    });
 
                 } catch (error) {
 
+                    console.error(
+                        "Failed to load:",
+                        file.name,
+                        error
+                    );
+
                     results.push({
-                        file:
-                            file,
-
-                        fileName:
-                            file.name,
-
+                        file: file,
+                        pdf: null,
+                        success: false,
+                        pages: 0,
+                        name:
+                            file.name ||
+                            "PDF",
                         error:
-                            error.message,
-
-                        failed:
-                            true
+                            error.message ||
+                            String(error)
                     });
                 }
             }
 
-            if (
-                typeof progressCallback ===
-                "function"
-            ) {
-
-                progressCallback({
-                    current:
-                        fileArray.length,
-
-                    total:
-                        fileArray.length,
-
-                    percent:
-                        100,
-
-                    completed:
-                        true
-                });
-            }
-
             return results;
-        },
+        }
 
-        /* ---------------------------------------------------
-           Get Page
-           --------------------------------------------------- */
+        /* =====================================================
+           CHECK PDF
+        ===================================================== */
 
-        async getPage(pdf, pageNumber) {
+        async validate(file) {
+
+            try {
+
+                const pdf =
+                    await this.load(file);
+
+                return {
+
+                    valid: true,
+
+                    pages:
+                        pdf.numPages,
+
+                    message:
+                        "PDF loaded successfully."
+                };
+
+            } catch (error) {
+
+                return {
+
+                    valid: false,
+
+                    pages: 0,
+
+                    message:
+                        error.message ||
+                        "Unable to load PDF."
+                };
+            }
+        }
+
+        /* =====================================================
+           GET PDF PAGE
+        ===================================================== */
+
+        async getPage(
+            pdf,
+            pageNumber
+        ) {
 
             if (!pdf) {
+
                 throw new Error(
-                    "PDF document is missing."
+                    "PDF document is not loaded."
                 );
             }
 
@@ -411,445 +396,33 @@
                 page < 1 ||
                 page > pdf.numPages
             ) {
+
                 throw new Error(
-                    `Invalid PDF page number: ${pageNumber}`
+                    "Invalid PDF page number: " +
+                    pageNumber
                 );
             }
 
-            return await pdf.getPage(
-                page
-            );
-        },
-
-        /* ---------------------------------------------------
-           Get All Pages
-           --------------------------------------------------- */
-
-        async getAllPages(
-            pdf,
-            progressCallback
-        ) {
-
-            if (!pdf) {
-                return [];
-            }
-
-            const pages = [];
-
-            for (
-                let pageNumber = 1;
-                pageNumber <= pdf.numPages;
-                pageNumber++
-            ) {
-
-                const page =
-                    await this.getPage(
-                        pdf,
-                        pageNumber
-                    );
-
-                pages.push(page);
-
-                if (
-                    typeof progressCallback ===
-                    "function"
-                ) {
-
-                    progressCallback({
-                        current:
-                            pageNumber,
-
-                        total:
-                            pdf.numPages,
-
-                        percent:
-                            Math.round(
-                                (pageNumber /
-                                    pdf.numPages) *
-                                100
-                            )
-                    });
-                }
-            }
-
-            return pages;
-        },
-
-        /* ---------------------------------------------------
-           Extract Text From Page
-           --------------------------------------------------- */
-
-        async extractPageText(page) {
-
-            if (!page) {
-                return null;
-            }
-
-            try {
-
-                const textContent =
-                    await page.getTextContent();
-
-                const items =
-                    Array.isArray(
-                        textContent.items
-                    )
-                        ? textContent.items
-                        : [];
-
-                const text =
-                    items
-                        .map((item) => {
-                            return String(
-                                item.str || ""
-                            );
-                        })
-                        .join(" ");
-
-                return {
-                    pageNumber:
-                        page.pageNumber,
-
-                    text:
-                        text.trim(),
-
-                    items:
-                        items
-                };
-
-            } catch (error) {
-
-                console.warn(
-                    "Page text extraction failed:",
-                    error
-                );
-
-                return {
-                    pageNumber:
-                        page.pageNumber,
-
-                    text: "",
-
-                    items: [],
-
-                    extractionError:
-                        error.message
-                };
-            }
-        },
-
-        /* ---------------------------------------------------
-           Extract Complete PDF Text
-           --------------------------------------------------- */
-
-        async extractText(
-            pdf,
-            progressCallback
-        ) {
-
-            if (!pdf) {
-                throw new Error(
-                    "PDF document is missing."
-                );
-            }
-
-            const pages = [];
-
-            for (
-                let pageNumber = 1;
-                pageNumber <= pdf.numPages;
-                pageNumber++
-            ) {
-
-                const page =
-                    await pdf.getPage(
-                        pageNumber
-                    );
-
-                const data =
-                    await this.extractPageText(
-                        page
-                    );
-
-                pages.push(data);
-
-                if (
-                    typeof progressCallback ===
-                    "function"
-                ) {
-
-                    progressCallback({
-                        current:
-                            pageNumber,
-
-                        total:
-                            pdf.numPages,
-
-                        percent:
-                            Math.round(
-                                (pageNumber /
-                                    pdf.numPages) *
-                                100
-                            )
-                    });
-                }
-            }
-
-            return {
-                pages:
-                    pages,
-
-                pageCount:
-                    pdf.numPages,
-
-                text:
-                    pages
-                        .map(
-                            (page) =>
-                                page.text
-                        )
-                        .join("\n\n")
-            };
-        },
-
-        /* ---------------------------------------------------
-           Get Text Items With Coordinates
-           --------------------------------------------------- */
-
-        async extractPageItems(page) {
-
-            if (!page) {
-                return [];
-            }
-
-            try {
-
-                const content =
-                    await page.getTextContent();
-
-                return (
-                    content.items || []
-                ).map((item) => {
-
-                    const transform =
-                        Array.isArray(
-                            item.transform
-                        )
-                            ? item.transform
-                            : [1, 0, 0, 1, 0, 0];
-
-                    return {
-                        text:
-                            String(
-                                item.str || ""
-                            ),
-
-                        x:
-                            Number(
-                                transform[4]
-                            ) || 0,
-
-                        y:
-                            Number(
-                                transform[5]
-                            ) || 0,
-
-                        width:
-                            Number(
-                                item.width
-                            ) || 0,
-
-                        height:
-                            Number(
-                                item.height
-                            ) || 0,
-
-                        fontSize:
-                            Math.abs(
-                                Number(
-                                    transform[3]
-                                ) || 0
-                            ),
-
-                        hasEOL:
-                            Boolean(
-                                item.hasEOL
-                            )
-                    };
-                });
-
-            } catch (error) {
-
-                console.warn(
-                    "Coordinate extraction failed:",
-                    error
-                );
-
-                return [];
-            }
-        },
-
-        /* ---------------------------------------------------
-           Detect Page Images
-           --------------------------------------------------- */
-
-        async getPageOperatorList(page) {
-
-            if (
-                !page ||
-                typeof page.getOperatorList !==
-                    "function"
-            ) {
-                return null;
-            }
-
-            try {
-
-                return await page.getOperatorList();
-
-            } catch (error) {
-
-                console.warn(
-                    "Unable to inspect page graphics:",
-                    error
-                );
-
-                return null;
-            }
-        },
-
-        /* ---------------------------------------------------
-           Check For Text
-           --------------------------------------------------- */
-
-        async pageHasText(page) {
-
-            const data =
-                await this.extractPageText(
-                    page
-                );
-
-            return Boolean(
-                data &&
-                data.text &&
-                data.text.trim().length > 0
-            );
-        },
-
-        /* ---------------------------------------------------
-           Detect Scanned PDF
-           --------------------------------------------------- */
-
-        async detectScannedPDF(pdf) {
-
-            if (!pdf) {
-                return false;
-            }
-
-            const samplePages =
-                Math.min(
-                    pdf.numPages,
-                    5
-                );
-
-            let pagesWithText = 0;
-
-            for (
-                let i = 1;
-                i <= samplePages;
-                i++
-            ) {
-
-                const page =
-                    await pdf.getPage(i);
-
-                const hasText =
-                    await this.pageHasText(
-                        page
-                    );
-
-                if (hasText) {
-                    pagesWithText++;
-                }
-            }
-
-            /*
-             * This is only a heuristic.
-             * A PDF may contain both text and scanned pages.
-             */
-
-            return (
-                samplePages > 0 &&
-                pagesWithText === 0
-            );
-        },
-
-        /* ---------------------------------------------------
-           Metadata
-           --------------------------------------------------- */
-
-        async getMetadata(pdf) {
-
-            if (
-                !pdf ||
-                typeof pdf.getMetadata !==
-                    "function"
-            ) {
-                return null;
-            }
-
-            try {
-
-                return await pdf.getMetadata();
-
-            } catch (error) {
-
-                console.warn(
-                    "PDF metadata unavailable:",
-                    error
-                );
-
-                return null;
-            }
-        },
-
-        /* ---------------------------------------------------
-           Destroy PDF
-           --------------------------------------------------- */
-
-        async destroy(documentData) {
-
-            if (!documentData) {
-                return;
-            }
-
-            const pdf =
-                documentData.pdf ||
-                documentData;
-
-            if (
-                pdf &&
-                typeof pdf.destroy ===
-                    "function"
-            ) {
-
-                try {
-                    await pdf.destroy();
-                } catch (error) {
-                    console.warn(
-                        "Unable to destroy PDF:",
-                        error
-                    );
-                }
-            }
+            return await pdf.getPage(page);
         }
-    };
+    }
 
-    /* -------------------------------------------------------
-       Expose Globally
-       ------------------------------------------------------- */
+    /* =========================================================
+       GLOBAL INSTANCE
+    ========================================================= */
 
     window.PDFLoader =
+        new PDFLoader();
+
+    /*
+     * Also expose the class.
+     */
+
+    window.PDFLoaderClass =
         PDFLoader;
+
+    console.log(
+        "PDFLoader initialized successfully."
+    );
 
 })();
