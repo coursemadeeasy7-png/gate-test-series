@@ -1,0 +1,735 @@
+/* =========================================================
+   GATE TEST SERIES
+   Responsive Styles
+   File: css/responsive.css
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   Global Responsive Helpers
+   --------------------------------------------------------- */
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+table {
+    max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+    max-width: 100%;
+}
+
+/* ---------------------------------------------------------
+   Large Tablet / Small Desktop
+   --------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+    .container,
+    .result-container,
+    .analysis-container {
+        width: min(100% - 28px, 1200px);
+    }
+
+    .home-hero {
+        padding: 32px 24px;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .settings-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .exam-main {
+        grid-template-columns: minmax(0, 1fr) 280px;
+    }
+
+    .exam-question-card {
+        padding: 18px;
+    }
+}
+
+/* ---------------------------------------------------------
+   Tablet
+   --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+
+    /* Header */
+
+    .site-header-inner {
+        padding: 10px 14px;
+    }
+
+    .site-nav {
+        gap: 8px;
+    }
+
+    /* Home */
+
+    .home-hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .home-hero-content {
+        align-items: center;
+    }
+
+    .upload-section {
+        padding: 18px;
+    }
+
+    .settings-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* Exam */
+
+    .exam-main {
+        grid-template-columns: 1fr;
+    }
+
+    .exam-sidebar {
+        position: static;
+        width: 100%;
+        max-height: none;
+    }
+
+    .question-palette {
+        grid-template-columns: repeat(10, 1fr);
+    }
+
+    .exam-question-area {
+        min-width: 0;
+    }
+
+    /* Result */
+
+    .result-score-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Analysis */
+
+    .analysis-stat-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ---------------------------------------------------------
+   Mobile Navigation
+   --------------------------------------------------------- */
+
+@media (max-width: 700px) {
+
+    .site-header {
+        position: relative;
+    }
+
+    .site-header-inner {
+        min-height: 56px;
+    }
+
+    .site-nav {
+        display: none;
+    }
+
+    .mobile-menu-button {
+        display: flex;
+    }
+
+    /* Generic */
+
+    .page-title {
+        font-size: 24px;
+    }
+
+    .section-title {
+        font-size: 18px;
+    }
+
+    /* Home */
+
+    .home-hero {
+        padding: 24px 16px;
+    }
+
+    .home-title {
+        font-size: 27px;
+    }
+
+    .home-subtitle {
+        font-size: 13px;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Exam */
+
+    .exam-header {
+        grid-template-columns: auto 1fr auto;
+        min-height: 54px;
+        padding: 7px 10px;
+    }
+
+    .exam-header-center {
+        text-align: center;
+    }
+
+    .exam-title {
+        font-size: 13px;
+    }
+
+    .exam-subtitle {
+        display: none;
+    }
+
+    .exam-header-left {
+        min-width: 0;
+    }
+
+    .exam-header-right {
+        gap: 5px;
+    }
+
+    .exam-tool-button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .exam-timer {
+        min-width: 75px;
+        padding: 7px 8px;
+        font-size: 13px;
+    }
+
+    .exam-submit-top {
+        padding: 7px 9px;
+        font-size: 11px;
+    }
+
+    .exam-main {
+        width: 100%;
+        padding: 8px;
+    }
+
+    .question-topbar {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .question-card {
+        padding: 14px;
+    }
+
+    .question-text {
+        font-size: 14px;
+        line-height: 1.65;
+    }
+
+    .question-option {
+        padding: 11px;
+    }
+
+    .question-actions {
+        flex-wrap: wrap;
+    }
+
+    .question-actions .btn {
+        flex: 1 1 45%;
+    }
+
+    .exam-sidebar {
+        padding: 12px;
+    }
+
+    .question-palette {
+        grid-template-columns: repeat(8, 1fr);
+    }
+
+    /* Result */
+
+    .result-container,
+    .analysis-container {
+        width: calc(100% - 20px);
+    }
+
+    .result-hero {
+        padding: 18px;
+    }
+
+    .result-hero-content {
+        gap: 15px;
+    }
+
+    .result-title {
+        font-size: 21px;
+    }
+
+    /* Calculator */
+
+    .calculator-modal {
+        padding: 10px;
+    }
+}
+
+/* ---------------------------------------------------------
+   Mobile
+   --------------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    /* Header */
+
+    .site-header-inner {
+        padding: 9px 10px;
+    }
+
+    .site-logo {
+        width: 34px;
+        height: 34px;
+        font-size: 12px;
+    }
+
+    .site-brand-title {
+        font-size: 14px;
+    }
+
+    .site-brand-subtitle {
+        font-size: 9px;
+    }
+
+    /* Buttons */
+
+    .btn {
+        min-height: 42px;
+        padding: 9px 12px;
+        font-size: 12px;
+    }
+
+    /* Forms */
+
+    .form-control,
+    .form-select {
+        min-height: 42px;
+        font-size: 13px;
+    }
+
+    /* Home */
+
+    .home-container {
+        width: calc(100% - 20px);
+        margin-top: 14px;
+    }
+
+    .home-hero {
+        padding: 20px 14px;
+        border-radius: 10px;
+    }
+
+    .home-title {
+        font-size: 24px;
+    }
+
+    .upload-area {
+        min-height: 180px;
+        padding: 18px 12px;
+    }
+
+    .upload-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 22px;
+    }
+
+    .upload-title {
+        font-size: 15px;
+    }
+
+    .upload-description {
+        font-size: 11px;
+    }
+
+    .file-list {
+        gap: 7px;
+    }
+
+    .file-item {
+        padding: 9px;
+    }
+
+    .feature-card {
+        padding: 14px;
+    }
+
+    /* Exam */
+
+    .exam-header {
+        grid-template-columns: auto 1fr auto;
+        gap: 6px;
+    }
+
+    .exam-logo {
+        width: 32px;
+        height: 32px;
+        font-size: 11px;
+    }
+
+    .question-progress {
+        font-size: 10px;
+    }
+
+    .exam-main {
+        padding: 6px;
+    }
+
+    .question-card {
+        border-radius: 8px;
+    }
+
+    .question-figure {
+        margin: 12px 0;
+    }
+
+    .question-option {
+        font-size: 12px;
+    }
+
+    .option-text {
+        line-height: 1.5;
+    }
+
+    .nat-input {
+        width: 100%;
+        min-height: 44px;
+        font-size: 15px;
+    }
+
+    .question-actions .btn {
+        min-width: 0;
+    }
+
+    .question-palette {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+    }
+
+    .palette-button {
+        min-width: 0;
+        min-height: 35px;
+        font-size: 11px;
+    }
+
+    /* Result */
+
+    .result-score-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .result-card {
+        padding: 13px;
+    }
+
+    /* Tables */
+
+    .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        min-width: 600px;
+    }
+
+    /* Footer */
+
+    .site-footer {
+        padding: 20px 12px;
+        text-align: center;
+    }
+}
+
+/* ---------------------------------------------------------
+   Small Mobile
+   --------------------------------------------------------- */
+
+@media (max-width: 420px) {
+
+    .container,
+    .home-container,
+    .result-container,
+    .analysis-container {
+        width: calc(100% - 14px);
+    }
+
+    /* Home */
+
+    .home-title {
+        font-size: 21px;
+    }
+
+    .home-subtitle {
+        font-size: 12px;
+    }
+
+    .upload-area {
+        min-height: 160px;
+    }
+
+    /* Exam Header */
+
+    .exam-header {
+        grid-template-columns: 34px minmax(0, 1fr) auto;
+        padding: 6px;
+    }
+
+    .exam-header-center {
+        overflow: hidden;
+    }
+
+    .exam-title {
+        overflow: hidden;
+        font-size: 11px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .exam-timer {
+        min-width: 66px;
+        font-size: 11px;
+    }
+
+    .exam-submit-top {
+        display: none;
+    }
+
+    .exam-tool-button {
+        width: 32px;
+        height: 32px;
+    }
+
+    /* Question */
+
+    .question-topbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .question-meta {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .question-card {
+        padding: 11px;
+    }
+
+    .question-text {
+        font-size: 13px;
+    }
+
+    .question-option {
+        padding: 10px;
+    }
+
+    .question-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+
+    .question-actions .btn {
+        width: 100%;
+    }
+
+    .question-palette {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    /* Result */
+
+    .result-hero-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .result-score-circle {
+        width: 105px;
+        height: 105px;
+    }
+
+    .result-score-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Analysis */
+
+    .analysis-stat-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* Calculator */
+
+    .calculator-key {
+        min-height: 42px;
+    }
+}
+
+/* ---------------------------------------------------------
+   Very Small Devices
+   --------------------------------------------------------- */
+
+@media (max-width: 340px) {
+
+    .site-brand-title {
+        font-size: 12px;
+    }
+
+    .home-title {
+        font-size: 19px;
+    }
+
+    .question-palette {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    .palette-button {
+        min-height: 32px;
+        font-size: 10px;
+    }
+
+    .question-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .analysis-stat-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---------------------------------------------------------
+   Landscape Mobile
+   --------------------------------------------------------- */
+
+@media (max-height: 500px) and (orientation: landscape) {
+
+    .exam-header {
+        min-height: 48px;
+    }
+
+    .exam-main {
+        padding: 6px 10px;
+    }
+
+    .question-card {
+        padding: 12px;
+    }
+
+    .calculator-modal {
+        align-items: flex-start;
+        overflow-y: auto;
+    }
+
+    .calculator-box {
+        margin: 5px auto;
+    }
+}
+
+/* ---------------------------------------------------------
+   Touch Devices
+   --------------------------------------------------------- */
+
+@media (hover: none) and (pointer: coarse) {
+
+    button,
+    .btn,
+    .question-option,
+    .palette-button,
+    .upload-area {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    button,
+    .btn,
+    .palette-button {
+        min-height: 42px;
+    }
+
+    .question-option {
+        min-height: 44px;
+    }
+
+    .upload-area {
+        cursor: pointer;
+    }
+}
+
+/* ---------------------------------------------------------
+   Reduced Motion
+   --------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ---------------------------------------------------------
+   Print
+   --------------------------------------------------------- */
+
+@media print {
+
+    .site-header,
+    .exam-header,
+    .exam-sidebar,
+    .question-actions,
+    .result-actions,
+    .mobile-menu-button,
+    .calculator-modal {
+        display: none !important;
+    }
+
+    body {
+        background: #ffffff !important;
+    }
+
+    .exam-main,
+    .result-container,
+    .analysis-container {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
