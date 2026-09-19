@@ -1,0 +1,1000 @@
+/* =========================================================
+   GATE TEST SERIES
+   Result & Analysis Styles
+   File: css/result.css
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   Result Page
+   --------------------------------------------------------- */
+
+.result-page {
+    min-height: 100vh;
+    background: #f3f4f6;
+}
+
+/* ---------------------------------------------------------
+   Result Header
+   --------------------------------------------------------- */
+
+.result-header {
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 14px 20px;
+}
+
+.result-header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.result-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.result-brand-logo {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #1d4ed8;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.result-brand-text h1 {
+    margin: 0;
+    color: #111827;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.result-brand-text p {
+    margin: 2px 0 0;
+    color: #6b7280;
+    font-size: 12px;
+}
+
+/* ---------------------------------------------------------
+   Result Container
+   --------------------------------------------------------- */
+
+.result-container {
+    width: min(1200px, calc(100% - 32px));
+    margin: 24px auto 40px;
+}
+
+/* ---------------------------------------------------------
+   Result Hero
+   --------------------------------------------------------- */
+
+.result-hero {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 18px;
+    padding: 28px;
+    border-radius: 14px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+}
+
+.result-hero::after {
+    content: "";
+    position: absolute;
+    right: -80px;
+    top: -100px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: rgba(37, 99, 235, 0.07);
+    pointer-events: none;
+}
+
+.result-hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.result-title {
+    margin: 0 0 6px;
+    color: #111827;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.result-subtitle {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.result-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 14px;
+    padding: 6px 11px;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.result-status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+/* ---------------------------------------------------------
+   Score Circle
+   --------------------------------------------------------- */
+
+.result-score-circle {
+    flex: 0 0 auto;
+    width: 145px;
+    height: 145px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 8px solid #dbeafe;
+    border-radius: 50%;
+    background: #ffffff;
+}
+
+.result-score-value {
+    color: #111827;
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.result-score-label {
+    margin-top: 5px;
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* ---------------------------------------------------------
+   Score Cards
+   --------------------------------------------------------- */
+
+.result-score-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.result-score-card {
+    padding: 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.result-score-card-label {
+    margin-bottom: 8px;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.result-score-card-value {
+    color: #111827;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.15;
+}
+
+.result-score-card-sub {
+    margin-top: 5px;
+    color: #9ca3af;
+    font-size: 11px;
+}
+
+.result-score-card.positive .result-score-card-value {
+    color: #15803d;
+}
+
+.result-score-card.negative .result-score-card-value {
+    color: #dc2626;
+}
+
+/* ---------------------------------------------------------
+   Generic Result Card
+   --------------------------------------------------------- */
+
+.result-card {
+    margin-bottom: 18px;
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.result-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.result-card-title {
+    margin: 0;
+    color: #111827;
+    font-size: 17px;
+    font-weight: 750;
+}
+
+.result-card-subtitle {
+    margin: 3px 0 0;
+    color: #6b7280;
+    font-size: 12px;
+}
+
+/* ---------------------------------------------------------
+   Performance
+   --------------------------------------------------------- */
+
+.performance-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.performance-item {
+    margin-bottom: 15px;
+}
+
+.performance-item:last-child {
+    margin-bottom: 0;
+}
+
+.performance-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    color: #374151;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.performance-value {
+    color: #111827;
+    font-weight: 700;
+}
+
+.performance-bar {
+    width: 100%;
+    height: 8px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e5e7eb;
+}
+
+.performance-bar-fill {
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: #2563eb;
+    transition: width 0.4s ease;
+}
+
+.performance-bar-fill.success {
+    background: #16a34a;
+}
+
+.performance-bar-fill.warning {
+    background: #d97706;
+}
+
+.performance-bar-fill.danger {
+    background: #dc2626;
+}
+
+/* ---------------------------------------------------------
+   Section Analysis
+   --------------------------------------------------------- */
+
+.section-analysis-table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.section-analysis-table table {
+    width: 100%;
+    min-width: 650px;
+    border-collapse: collapse;
+}
+
+.section-analysis-table th,
+.section-analysis-table td {
+    padding: 11px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+    font-size: 12px;
+}
+
+.section-analysis-table th {
+    background: #f9fafb;
+    color: #4b5563;
+    font-weight: 700;
+}
+
+.section-analysis-table td {
+    color: #374151;
+}
+
+.section-analysis-table tr:last-child td {
+    border-bottom: none;
+}
+
+.section-name {
+    color: #111827;
+    font-weight: 700;
+}
+
+.section-score {
+    font-weight: 750;
+}
+
+/* ---------------------------------------------------------
+   Marks Breakdown
+   --------------------------------------------------------- */
+
+.marks-breakdown {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.marks-box {
+    padding: 14px;
+    border-radius: 9px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+}
+
+.marks-box-label {
+    margin-bottom: 5px;
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.marks-box-value {
+    color: #111827;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.marks-box.correct .marks-box-value {
+    color: #15803d;
+}
+
+.marks-box.wrong .marks-box-value {
+    color: #dc2626;
+}
+
+.marks-box.unattempted .marks-box-value {
+    color: #6b7280;
+}
+
+/* ---------------------------------------------------------
+   Question Summary
+   --------------------------------------------------------- */
+
+.question-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.question-summary-item {
+    padding: 14px;
+    border-radius: 9px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+}
+
+.question-summary-number {
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.question-summary-value {
+    margin-top: 5px;
+    color: #111827;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+/* ---------------------------------------------------------
+   Question-wise Result
+   --------------------------------------------------------- */
+
+.question-result-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.question-result-row {
+    display: grid;
+    grid-template-columns: 55px 80px 1fr 90px 90px;
+    align-items: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 8px 11px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.question-result-number {
+    color: #111827;
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.question-result-answer {
+    overflow: hidden;
+    color: #4b5563;
+    font-size: 12px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.question-result-marks {
+    text-align: right;
+    color: #111827;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* ---------------------------------------------------------
+   Result Status Badges
+   --------------------------------------------------------- */
+
+.result-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 68px;
+    padding: 5px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 750;
+}
+
+.result-badge.correct {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.result-badge.wrong {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.result-badge.partial {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.result-badge.unattempted {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.result-badge.review {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+/* ---------------------------------------------------------
+   Solutions
+   --------------------------------------------------------- */
+
+.solution-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.solution-item {
+    padding: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.solution-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.solution-question-number {
+    color: #111827;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.solution-question-type {
+    color: #6b7280;
+    font-size: 11px;
+}
+
+.solution-question {
+    margin-bottom: 12px;
+    color: #1f2937;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.solution-options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.solution-option {
+    padding: 8px 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 7px;
+    color: #374151;
+    font-size: 12px;
+}
+
+.solution-option.correct {
+    border-color: #86efac;
+    background: #f0fdf4;
+    color: #166534;
+    font-weight: 650;
+}
+
+.solution-option.selected-wrong {
+    border-color: #fca5a5;
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+.solution-explanation {
+    padding: 11px 12px;
+    border-left: 3px solid #2563eb;
+    border-radius: 0 7px 7px 0;
+    background: #f9fafb;
+    color: #4b5563;
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+.solution-answer {
+    margin-top: 10px;
+    color: #111827;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* ---------------------------------------------------------
+   Analysis Page
+   --------------------------------------------------------- */
+
+.analysis-page {
+    min-height: 100vh;
+    background: #f3f4f6;
+}
+
+.analysis-container {
+    width: min(1200px, calc(100% - 32px));
+    margin: 24px auto 40px;
+}
+
+.analysis-header {
+    margin-bottom: 18px;
+}
+
+.analysis-title {
+    margin: 0;
+    color: #111827;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.analysis-subtitle {
+    margin: 5px 0 0;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+/* ---------------------------------------------------------
+   Analysis Stats
+   --------------------------------------------------------- */
+
+.analysis-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.analysis-stat {
+    padding: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.analysis-stat-label {
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.analysis-stat-value {
+    margin-top: 5px;
+    color: #111827;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+/* ---------------------------------------------------------
+   Analysis Chart Container
+   --------------------------------------------------------- */
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    min-height: 240px;
+    padding: 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 9px;
+    background: #ffffff;
+}
+
+.chart-container canvas {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* ---------------------------------------------------------
+   Filter Controls
+   --------------------------------------------------------- */
+
+.analysis-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.analysis-filter-btn {
+    padding: 7px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #4b5563;
+    font-size: 11px;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+.analysis-filter-btn:hover {
+    background: #f9fafb;
+}
+
+.analysis-filter-btn.active {
+    border-color: #2563eb;
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+/* ---------------------------------------------------------
+   Action Buttons
+   --------------------------------------------------------- */
+
+.result-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.result-actions .btn {
+    min-width: 130px;
+}
+
+/* ---------------------------------------------------------
+   Empty State
+   --------------------------------------------------------- */
+
+.result-empty {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.result-empty-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f3f4f6;
+    color: #6b7280;
+    font-size: 22px;
+}
+
+.result-empty-title {
+    margin: 0 0 5px;
+    color: #111827;
+    font-size: 16px;
+    font-weight: 750;
+}
+
+.result-empty-text {
+    margin: 0;
+    color: #6b7280;
+    font-size: 12px;
+}
+
+/* ---------------------------------------------------------
+   Print
+   --------------------------------------------------------- */
+
+@media print {
+    .result-header,
+    .result-actions,
+    .analysis-filters {
+        display: none !important;
+    }
+
+    .result-page,
+    .analysis-page {
+        background: #ffffff;
+    }
+
+    .result-container,
+    .analysis-container {
+        width: 100%;
+        margin: 0;
+    }
+
+    .result-card,
+    .result-hero,
+    .result-score-card,
+    .analysis-stat {
+        break-inside: avoid;
+        box-shadow: none;
+    }
+}
+
+/* ---------------------------------------------------------
+   Tablet
+   --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+    .result-score-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .analysis-stat-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .performance-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .question-summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .question-result-row {
+        grid-template-columns: 50px 75px 1fr 75px 75px;
+        gap: 8px;
+    }
+}
+
+/* ---------------------------------------------------------
+   Mobile
+   --------------------------------------------------------- */
+
+@media (max-width: 600px) {
+    .result-container,
+    .analysis-container {
+        width: min(100% - 20px, 1200px);
+        margin-top: 12px;
+        margin-bottom: 25px;
+    }
+
+    .result-header {
+        padding: 10px;
+    }
+
+    .result-header-inner {
+        gap: 8px;
+    }
+
+    .result-brand-logo {
+        width: 36px;
+        height: 36px;
+        font-size: 13px;
+    }
+
+    .result-brand-text h1 {
+        font-size: 15px;
+    }
+
+    .result-brand-text p {
+        font-size: 10px;
+    }
+
+    .result-hero {
+        padding: 18px;
+        border-radius: 10px;
+    }
+
+    .result-hero-content {
+        align-items: flex-start;
+    }
+
+    .result-title {
+        font-size: 21px;
+    }
+
+    .result-subtitle {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .result-score-circle {
+        width: 105px;
+        height: 105px;
+        border-width: 6px;
+    }
+
+    .result-score-value {
+        font-size: 25px;
+    }
+
+    .result-score-label {
+        font-size: 9px;
+    }
+
+    .result-score-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .result-score-card {
+        padding: 13px;
+    }
+
+    .result-score-card-value {
+        font-size: 19px;
+    }
+
+    .result-card {
+        padding: 14px;
+        margin-bottom: 12px;
+    }
+
+    .result-card-title {
+        font-size: 15px;
+    }
+
+    .marks-breakdown {
+        grid-template-columns: 1fr;
+    }
+
+    .question-summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .question-result-row {
+        grid-template-columns: 40px 1fr 65px;
+        gap: 7px;
+    }
+
+    .question-result-row .question-result-answer {
+        grid-column: 2;
+    }
+
+    .question-result-row .question-result-marks {
+        grid-column: 3;
+        grid-row: 1;
+    }
+
+    .question-result-row .result-badge {
+        grid-column: 2;
+        justify-self: start;
+    }
+
+    .analysis-stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .analysis-stat {
+        padding: 13px;
+    }
+
+    .analysis-stat-value {
+        font-size: 18px;
+    }
+
+    .analysis-title {
+        font-size: 21px;
+    }
+
+    .chart-container {
+        min-height: 190px;
+    }
+
+    .result-actions {
+        flex-direction: column;
+    }
+
+    .result-actions .btn {
+        width: 100%;
+    }
+}
+
+/* ---------------------------------------------------------
+   Small Mobile
+   --------------------------------------------------------- */
+
+@media (max-width: 380px) {
+    .result-hero-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .result-score-circle {
+        width: 100px;
+        height: 100px;
+    }
+
+    .result-score-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .question-summary-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .analysis-stat-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
