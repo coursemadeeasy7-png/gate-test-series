@@ -2,36 +2,28 @@
    GATE TEST SERIES
    FILE: js/pdf-loader.js
 
-   Reliable PDF.js loader
-   Supports:
-   - File input PDF
-   - Multiple PDFs
-   - ArrayBuffer
-   - Uint8Array
-   - Blob
-   - PDF URL
+   Stable PDF.js loader for GitHub Pages
 ========================================================= */
 
 (function () {
     "use strict";
 
-    const PDFJS_VERSION = "4.10.38";
+    const PDFJS_VERSION = "3.11.174";
 
-    const PDFJS_CDN =
+    const PDFJS_URL =
         "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/" +
         PDFJS_VERSION +
-        "/pdf.min.mjs";
+        "/pdf.min.js";
 
-    const PDFJS_WORKER =
+    const WORKER_URL =
         "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/" +
         PDFJS_VERSION +
-        "/pdf.worker.min.mjs";
+        "/pdf.worker.min.js";
 
-    class PDFLoader {
+    class PDFLoaderClass {
 
         constructor() {
-            this.pdfjs = null;
-            this.loadingPromise = null;
+            this.readyPromise = null;
         }
 
         /* =====================================================
@@ -40,95 +32,78 @@
 
         async loadPDFJS() {
 
-            if (this.pdfjs) {
-                return this.pdfjs;
-            }
-
-            if (window.pdfjsLib) {
-
-                this.pdfjs = window.pdfjsLib;
-
-                this.pdfjs.GlobalWorkerOptions.workerSrc =
-                    PDFJS_WORKER;
-
-                return this.pdfjs;
-            }
-
-            if (this.loadingPromise) {
-                return this.loadingPromise;
-            }
-
-            this.loadingPromise =
-                this.importPDFJS();
-
-            try {
-
-                this.pdfjs =
-                    await this.loadingPromise;
-
-                return this.pdfjs;
-
-            } catch (error) {
-
-                this.loadingPromise = null;
-
-                console.error(
-                    "PDF.js loading failed:",
-                    error
-                );
-
-                throw new Error(
-                    "PDF.js could not be loaded. " +
-                    "Check your internet connection and GitHub Pages."
-                );
-            }
-        }
-
-        /* =====================================================
-           IMPORT PDF.JS MODULE
-        ===================================================== */
-
-        async importPDFJS() {
-
-            /*
-             * PDF.js 4.x is an ES module.
-             * Dynamic import works on modern browsers.
-             */
-
-            const module =
-                await import(PDFJS_CDN);
-
-            /*
-             * Depending on PDF.js build, the exported
-             * object may be the module itself.
-             */
-
-            const pdfjs =
-                module.default || module;
-
-            if (!pdfjs.getDocument) {
-
-                throw new Error(
-                    "PDF.js loaded but getDocument() was not found."
-                );
-            }
-
+            /* Already available */
             if (
-                pdfjs.GlobalWorkerOptions
+                window.pdfjsLib &&
+                typeof window.pdfjsLib.getDocument === "function"
             ) {
 
-                pdfjs.GlobalWorkerOptions.workerSrc =
-                    PDFJS_WORKER;
+                window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+                    WORKER_URL;
+
+                return window.pdfjsLib;
             }
 
-            /*
-             * Make available globally as well.
-             */
+            /* Already loading */
+            if (this.readyPromise) {
+                return this.readyPromise;
+            }
 
-            window.pdfjsLib =
-                pdfjs;
+            this.readyPromise = new Promise(
+                (resolve, reject) => {
 
-            return pdfjs;
+                    const script =
+                        document.createElement("script");
+
+                    script.src = PDFJS_URL;
+
+                    script.async = true;
+
+                    script.crossOrigin = "anonymous";
+
+                    script.onload = () => {
+
+                        if (
+                            !window.pdfjsLib ||
+                            typeof window.pdfjsLib.getDocument !==
+                            "function"
+                        ) {
+
+                            reject(
+                                new Error(
+                                    "PDF.js loaded but pdfjsLib is unavailable."
+                                )
+                            );
+
+                            return;
+                        }
+
+                        window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+                            WORKER_URL;
+
+                        console.log(
+                            "PDF.js loaded successfully."
+                        );
+
+                        resolve(
+                            window.pdfjsLib
+                        );
+                    };
+
+                    script.onerror = () => {
+
+                        reject(
+                            new Error(
+                                "Could not load PDF.js from CDN."
+                            )
+                        );
+                    };
+
+                    document.head.appendChild(script);
+                }
+            );
+
+            return this.readyPromise;
         }
 
         /* =====================================================
@@ -140,25 +115,16 @@
             if (!file) {
 
                 throw new Error(
-                    "No PDF file was provided."
+                    "No PDF file selected."
                 );
             }
 
-            /*
-             * Browser File / Blob
-             */
-
             if (
-                file instanceof Blob &&
                 typeof file.arrayBuffer === "function"
             ) {
 
                 return await file.arrayBuffer();
             }
-
-            /*
-             * ArrayBuffer
-             */
 
             if (
                 file instanceof ArrayBuffer
@@ -167,10 +133,6 @@
                 return file;
             }
 
-            /*
-             * Uint8Array / typed array
-             */
-
             if (
                 file instanceof Uint8Array
             ) {
@@ -178,30 +140,8 @@
                 return file;
             }
 
-            /*
-             * URL string
-             */
-
-            if (
-                typeof file === "string"
-            ) {
-
-                const response =
-                    await fetch(file);
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Could not fetch PDF: HTTP " +
-                        response.status
-                    );
-                }
-
-                return await response.arrayBuffer();
-            }
-
             throw new Error(
-                "Unsupported PDF input type."
+                "Invalid PDF file."
             );
         }
 
@@ -211,54 +151,35 @@
 
         async load(file) {
 
-            try {
+            console.log(
+                "PDFLoader: loading:",
+                file && file.name
+                    ? file.name
+                    : "PDF"
+            );
 
-                console.log(
-                    "PDFLoader: starting PDF load..."
-                );
+            try {
 
                 const pdfjs =
                     await this.loadPDFJS();
 
-                console.log(
-                    "PDFLoader: PDF.js loaded."
-                );
-
                 const data =
                     await this.readFile(file);
 
-                console.log(
-                    "PDFLoader: PDF data loaded."
-                );
-
-                /*
-                 * Copy typed arrays so the original File/
-                 * ArrayBuffer is never modified.
-                 */
-
-                let source = data;
-
-                if (
-                    data instanceof Uint8Array
-                ) {
-
-                    source =
-                        new Uint8Array(data);
-                }
-
                 const loadingTask =
                     pdfjs.getDocument({
-                        data: source,
-                        useWorkerFetch: true,
-                        isEvalSupported: true
+                        data: data
                     });
 
                 const pdf =
                     await loadingTask.promise;
 
                 console.log(
-                    "PDFLoader: PDF opened successfully.",
-                    "Pages:",
+                    "PDF loaded successfully."
+                );
+
+                console.log(
+                    "Total pages:",
                     pdf.numPages
                 );
 
@@ -267,7 +188,7 @@
             } catch (error) {
 
                 console.error(
-                    "PDFLoader.load() failed:",
+                    "PDFLoader ERROR:",
                     error
                 );
 
@@ -276,22 +197,18 @@
         }
 
         /* =====================================================
-           LOAD MULTIPLE PDF FILES
+           LOAD MULTIPLE
         ===================================================== */
 
         async loadMultiple(files) {
 
-            if (!files) {
-                return [];
-            }
+            const list =
+                Array.from(files || []);
 
-            const fileArray =
-                Array.from(files);
-
-            const results = [];
+            const output = [];
 
             for (
-                const file of fileArray
+                const file of list
             ) {
 
                 try {
@@ -299,44 +216,50 @@
                     const pdf =
                         await this.load(file);
 
-                    results.push({
+                    output.push({
+
                         file: file,
+
                         pdf: pdf,
+
                         success: true,
-                        pages: pdf.numPages,
+
+                        pages:
+                            pdf.numPages,
+
                         name:
-                            file.name ||
-                            "PDF"
+                            file.name
+
                     });
 
                 } catch (error) {
 
-                    console.error(
-                        "Failed to load:",
-                        file.name,
-                        error
-                    );
+                    output.push({
 
-                    results.push({
                         file: file,
+
                         pdf: null,
+
                         success: false,
+
                         pages: 0,
+
                         name:
-                            file.name ||
-                            "PDF",
+                            file.name,
+
                         error:
                             error.message ||
                             String(error)
+
                     });
                 }
             }
 
-            return results;
+            return output;
         }
 
         /* =====================================================
-           CHECK PDF
+           VALIDATE
         ===================================================== */
 
         async validate(file) {
@@ -355,6 +278,7 @@
 
                     message:
                         "PDF loaded successfully."
+
                 };
 
             } catch (error) {
@@ -367,13 +291,14 @@
 
                     message:
                         error.message ||
-                        "Unable to load PDF."
+                        "PDF could not be loaded."
+
                 };
             }
         }
 
         /* =====================================================
-           GET PDF PAGE
+           GET PAGE
         ===================================================== */
 
         async getPage(
@@ -384,26 +309,24 @@
             if (!pdf) {
 
                 throw new Error(
-                    "PDF document is not loaded."
+                    "PDF is not loaded."
                 );
             }
 
-            const page =
+            const number =
                 Number(pageNumber);
 
             if (
-                !Number.isInteger(page) ||
-                page < 1 ||
-                page > pdf.numPages
+                number < 1 ||
+                number > pdf.numPages
             ) {
 
                 throw new Error(
-                    "Invalid PDF page number: " +
-                    pageNumber
+                    "Invalid PDF page."
                 );
             }
 
-            return await pdf.getPage(page);
+            return await pdf.getPage(number);
         }
     }
 
@@ -412,17 +335,13 @@
     ========================================================= */
 
     window.PDFLoader =
-        new PDFLoader();
-
-    /*
-     * Also expose the class.
-     */
+        new PDFLoaderClass();
 
     window.PDFLoaderClass =
-        PDFLoader;
+        PDFLoaderClass;
 
     console.log(
-        "PDFLoader initialized successfully."
+        "PDFLoader ready."
     );
 
 })();
