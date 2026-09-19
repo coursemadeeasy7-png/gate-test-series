@@ -1,1 +1,864 @@
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="theme-color"
+        content="#1a73e8">
+
+    <title>GATE ME - Test Result</title>
+
+    <!-- COMMON CSS -->
+    <link
+        rel="stylesheet"
+        href="css/main.css">
+
+    <!-- RESULT CSS -->
+    <link
+        rel="stylesheet"
+        href="css/result.css">
+
+    <!-- RESPONSIVE CSS -->
+    <link
+        rel="stylesheet"
+        href="css/responsive.css">
+
+</head>
+
+
+<body class="result-page">
+
+
+<!-- =====================================================
+     HEADER
+====================================================== -->
+
+<header class="site-header">
+
+
+    <div class="header-left">
+
+
+        <div class="logo">
+            GATE
+        </div>
+
+
+        <div class="logo-text">
+
+            <strong>
+                GATE Mechanical Engineering
+            </strong>
+
+            <span>
+                Test Result
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-right">
+
+        <button
+            type="button"
+            id="backToTestsBtn"
+            class="header-btn">
+
+            Back to Tests
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+====================================================== -->
+
+<main class="main-container">
+
+
+    <!-- =================================================
+         RESULT HEADER
+    ================================================== -->
+
+    <section class="result-hero card">
+
+
+        <div class="result-hero-content">
+
+
+            <span class="result-badge">
+                TEST COMPLETED
+            </span>
+
+
+            <h1>
+                Test Result
+            </h1>
+
+
+            <p id="resultTestName">
+                GATE Mechanical Engineering Test
+            </p>
+
+
+            <div class="result-date"
+                 id="resultDate">
+
+                --
+
+            </div>
+
+        </div>
+
+
+        <div class="result-status-icon"
+             id="resultStatusIcon">
+
+            ✓
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         SCORE CARDS
+    ================================================== -->
+
+    <section class="score-grid">
+
+
+        <!-- SCORE -->
+
+        <div class="score-card primary-score-card">
+
+
+            <span class="score-label">
+                Total Score
+            </span>
+
+
+            <strong
+                id="totalScore"
+                class="main-score">
+
+                0
+
+            </strong>
+
+
+            <span
+                id="maximumMarks"
+                class="score-subtext">
+
+                out of 100
+
+            </span>
+
+        </div>
+
+
+
+        <!-- CORRECT -->
+
+        <div class="score-card">
+
+
+            <span class="score-label">
+                Correct
+            </span>
+
+
+            <strong
+                id="correctCount"
+                class="success-number">
+
+                0
+
+            </strong>
+
+
+            <span class="score-subtext">
+                Questions
+            </span>
+
+        </div>
+
+
+
+        <!-- WRONG -->
+
+        <div class="score-card">
+
+
+            <span class="score-label">
+                Wrong
+            </span>
+
+
+            <strong
+                id="wrongCount"
+                class="danger-number">
+
+                0
+
+            </strong>
+
+
+            <span class="score-subtext">
+                Questions
+            </span>
+
+        </div>
+
+
+
+        <!-- UNATTEMPTED -->
+
+        <div class="score-card">
+
+
+            <span class="score-label">
+                Unattempted
+            </span>
+
+
+            <strong
+                id="unattemptedCount"
+                class="neutral-number">
+
+                0
+
+            </strong>
+
+
+            <span class="score-subtext">
+                Questions
+            </span>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         PERFORMANCE
+    ================================================== -->
+
+    <section class="card performance-card">
+
+
+        <div class="card-heading">
+
+            <div>
+
+                <h2>
+                    Performance
+                </h2>
+
+                <p>
+                    Overview of your test performance.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="performance-grid">
+
+
+            <!-- ACCURACY -->
+
+            <div class="performance-item">
+
+
+                <div class="performance-icon">
+                    🎯
+                </div>
+
+
+                <div class="performance-info">
+
+                    <span>
+                        Accuracy
+                    </span>
+
+                    <strong id="accuracyValue">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div class="performance-bar">
+
+                    <div
+                        id="accuracyBar"
+                        class="performance-fill">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ATTEMPT -->
+
+            <div class="performance-item">
+
+
+                <div class="performance-icon">
+                    📝
+                </div>
+
+
+                <div class="performance-info">
+
+                    <span>
+                        Attempted
+                    </span>
+
+                    <strong id="attemptedValue">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div class="performance-bar">
+
+                    <div
+                        id="attemptedBar"
+                        class="performance-fill">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TIME -->
+
+            <div class="performance-item">
+
+
+                <div class="performance-icon">
+                    ⏱️
+                </div>
+
+
+                <div class="performance-info">
+
+                    <span>
+                        Time Used
+                    </span>
+
+                    <strong id="timeUsedValue">
+                        00:00
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SPEED -->
+
+            <div class="performance-item">
+
+
+                <div class="performance-icon">
+                    ⚡
+                </div>
+
+
+                <div class="performance-info">
+
+                    <span>
+                        Average Time / Question
+                    </span>
+
+                    <strong id="averageTimeValue">
+                        00:00
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         SECTION ANALYSIS
+    ================================================== -->
+
+    <section class="card section-analysis-card">
+
+
+        <div class="card-heading">
+
+            <div>
+
+                <h2>
+                    Section-wise Analysis
+                </h2>
+
+                <p>
+                    Performance by section.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="section-analysis-table-wrapper">
+
+
+            <table class="analysis-table">
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Section
+                        </th>
+
+                        <th>
+                            Total
+                        </th>
+
+                        <th>
+                            Attempted
+                        </th>
+
+                        <th>
+                            Correct
+                        </th>
+
+                        <th>
+                            Wrong
+                        </th>
+
+                        <th>
+                            Marks
+                        </th>
+
+                        <th>
+                            Accuracy
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="sectionAnalysisBody">
+
+                    <!-- Added by JavaScript -->
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         MARKS BREAKDOWN
+    ================================================== -->
+
+    <section class="card marks-breakdown-card">
+
+
+        <div class="card-heading">
+
+            <div>
+
+                <h2>
+                    Marks Breakdown
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="marks-breakdown">
+
+
+            <div class="marks-row">
+
+                <span>
+                    Positive Marks
+                </span>
+
+                <strong
+                    id="positiveMarksEarned"
+                    class="success-number">
+
+                    +0
+
+                </strong>
+
+            </div>
+
+
+            <div class="marks-row">
+
+                <span>
+                    Negative Marks
+                </span>
+
+                <strong
+                    id="negativeMarksLost"
+                    class="danger-number">
+
+                    -0
+
+                </strong>
+
+            </div>
+
+
+            <div class="marks-divider">
+            </div>
+
+
+            <div class="marks-row total-row">
+
+                <span>
+                    Final Score
+                </span>
+
+                <strong id="finalScore">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         QUESTION SUMMARY
+    ================================================== -->
+
+    <section class="card question-summary-card">
+
+
+        <div class="card-heading">
+
+            <div>
+
+                <h2>
+                    Question Summary
+                </h2>
+
+                <p>
+                    Status of every question.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="question-summary-grid">
+
+
+            <div class="question-summary-item">
+
+                <span class="summary-circle answered-circle">
+                    ✓
+                </span>
+
+                <div>
+
+                    <strong id="summaryCorrect">
+                        0
+                    </strong>
+
+                    <span>
+                        Correct
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="question-summary-item">
+
+                <span class="summary-circle wrong-circle">
+                    ×
+                </span>
+
+                <div>
+
+                    <strong id="summaryWrong">
+                        0
+                    </strong>
+
+                    <span>
+                        Wrong
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="question-summary-item">
+
+                <span class="summary-circle unanswered-circle">
+                    —
+                </span>
+
+                <div>
+
+                    <strong id="summaryUnanswered">
+                        0
+                    </strong>
+
+                    <span>
+                        Unattempted
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="question-summary-item">
+
+                <span class="summary-circle review-circle">
+                    🔖
+                </span>
+
+                <div>
+
+                    <strong id="summaryMarked">
+                        0
+                    </strong>
+
+                    <span>
+                        Marked
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         ACTION BUTTONS
+    ================================================== -->
+
+    <section class="result-actions">
+
+
+        <button
+            type="button"
+            id="analysisBtn"
+            class="primary-btn">
+
+            📊 Detailed Analysis
+
+        </button>
+
+
+        <button
+            type="button"
+            id="solutionsBtn"
+            class="secondary-btn">
+
+            📝 View Solutions
+
+        </button>
+
+
+        <button
+            type="button"
+            id="retakeBtn"
+            class="secondary-btn">
+
+            🔄 Retake Test
+
+        </button>
+
+
+        <button
+            type="button"
+            id="homeBtn"
+            class="secondary-btn">
+
+            🏠 Test Home
+
+        </button>
+
+    </section>
+
+
+
+    <!-- =================================================
+         QUESTION-WISE RESULT
+    ================================================== -->
+
+    <section class="card question-result-card">
+
+
+        <div class="card-heading">
+
+            <div>
+
+                <h2>
+                    Question-wise Result
+                </h2>
+
+                <p>
+                    Click a question to view its details.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="question-result-list"
+            id="questionResultList">
+
+            <!-- Generated by JavaScript -->
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         SOLUTIONS
+    ================================================== -->
+
+    <section
+        class="card solutions-card"
+        id="solutionsSection">
+
+
+        <div class="card-heading">
+
+            <div>
+
+                <h2>
+                    Solutions
+                </h2>
+
+                <p>
+                    Detailed solutions from the source test.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="solutionsContainer">
+
+            <!-- Solutions inserted by JavaScript -->
+
+        </div>
+
+    </section>
+
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer class="site-footer">
+
+    <p>
+        GATE Mechanical Engineering Test Series
+    </p>
+
+    <span>
+        Test Result & Analysis
+    </span>
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script
+    src="js/storage.js"
+    defer>
+</script>
+
+
+<script
+    src="js/scoring.js"
+    defer>
+</script>
+
+
+<script
+    src="js/analysis.js"
+    defer>
+</script>
+
+
+</body>
+
+</html>
