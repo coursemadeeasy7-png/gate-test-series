@@ -1,1 +1,1083 @@
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="theme-color"
+        content="#1a73e8">
+
+    <title>GATE ME - Detailed Analysis</title>
+
+
+    <!-- COMMON CSS -->
+
+    <link
+        rel="stylesheet"
+        href="css/main.css">
+
+
+    <!-- RESULT CSS -->
+
+    <link
+        rel="stylesheet"
+        href="css/result.css">
+
+
+    <!-- RESPONSIVE CSS -->
+
+    <link
+        rel="stylesheet"
+        href="css/responsive.css">
+
+</head>
+
+
+<body class="analysis-page">
+
+
+<!-- =====================================================
+     HEADER
+====================================================== -->
+
+<header class="site-header">
+
+
+    <div class="header-left">
+
+
+        <div class="logo">
+            GATE
+        </div>
+
+
+        <div class="logo-text">
+
+            <strong>
+                GATE Mechanical Engineering
+            </strong>
+
+            <span>
+                Detailed Test Analysis
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-right">
+
+
+        <button
+            type="button"
+            id="backResultBtn"
+            class="header-btn">
+
+            ← Result
+
+        </button>
+
+
+        <button
+            type="button"
+            id="analysisHomeBtn"
+            class="header-btn">
+
+            Test Home
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+====================================================== -->
+
+<main class="main-container">
+
+
+    <!-- =================================================
+         ANALYSIS HEADER
+    ================================================== -->
+
+    <section class="card analysis-hero">
+
+
+        <div class="analysis-hero-content">
+
+
+            <span class="result-badge">
+                DETAILED ANALYSIS
+            </span>
+
+
+            <h1>
+                Test Performance Analysis
+            </h1>
+
+
+            <p id="analysisTestName">
+                GATE Mechanical Engineering Test
+            </p>
+
+
+            <span
+                id="analysisDate"
+                class="analysis-date">
+
+                --
+
+            </span>
+
+        </div>
+
+
+        <div class="analysis-score-box">
+
+
+            <span>
+                Your Score
+            </span>
+
+
+            <strong id="analysisScore">
+                0
+            </strong>
+
+
+            <small id="analysisMaximum">
+                / 100
+            </small>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         QUICK STATISTICS
+    ================================================== -->
+
+    <section class="analysis-stat-grid">
+
+
+        <!-- TOTAL -->
+
+        <div class="analysis-stat-card">
+
+
+            <div class="stat-icon">
+                📋
+            </div>
+
+
+            <div class="stat-content">
+
+                <span>
+                    Total Questions
+                </span>
+
+                <strong id="analysisTotal">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ATTEMPTED -->
+
+        <div class="analysis-stat-card">
+
+
+            <div class="stat-icon">
+                ✍️
+            </div>
+
+
+            <div class="stat-content">
+
+                <span>
+                    Attempted
+                </span>
+
+                <strong id="analysisAttempted">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CORRECT -->
+
+        <div class="analysis-stat-card">
+
+
+            <div class="stat-icon">
+                ✓
+            </div>
+
+
+            <div class="stat-content">
+
+                <span>
+                    Correct
+                </span>
+
+                <strong
+                    id="analysisCorrect"
+                    class="success-number">
+
+                    0
+
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- WRONG -->
+
+        <div class="analysis-stat-card">
+
+
+            <div class="stat-icon">
+                ×
+            </div>
+
+
+            <div class="stat-content">
+
+                <span>
+                    Wrong
+                </span>
+
+                <strong
+                    id="analysisWrong"
+                    class="danger-number">
+
+                    0
+
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- UNATTEMPTED -->
+
+        <div class="analysis-stat-card">
+
+
+            <div class="stat-icon">
+                —
+            </div>
+
+
+            <div class="stat-content">
+
+                <span>
+                    Unattempted
+                </span>
+
+                <strong id="analysisUnattempted">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ACCURACY -->
+
+        <div class="analysis-stat-card">
+
+
+            <div class="stat-icon">
+                🎯
+            </div>
+
+
+            <div class="stat-content">
+
+                <span>
+                    Accuracy
+                </span>
+
+                <strong id="analysisAccuracy">
+                    0%
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         SCORE DISTRIBUTION
+    ================================================== -->
+
+    <section class="card score-distribution-card">
+
+
+        <div class="card-heading">
+
+            <div>
+
+                <h2>
+                    Score Distribution
+                </h2>
+
+                <p>
+                    Breakdown of your obtained marks.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="distribution-container">
+
+
+            <!-- CORRECT MARKS -->
+
+            <div class="distribution-item">
+
+
+                <div class="distribution-label">
+
+                    <span>
+                        Positive Marks
+                    </span>
+
+                    <strong
+                        id="distributionPositive">
+
+                        +0
+
+                    </strong>
+
+                </div>
+
+
+                <div class="distribution-bar">
+
+                    <div
+                        id="positiveDistributionBar"
+                        class="distribution-fill positive-fill">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- NEGATIVE MARKS -->
+
+            <div class="distribution-item">
+
+
+                <div class="distribution-label">
+
+                    <span>
+                        Negative Marks
+                    </span>
+
+                    <strong
+                        id="distributionNegative">
+
+                        -0
+
+                    </strong>
+
+                </div>
+
+
+                <div class="distribution-bar">
+
+                    <div
+                        id="negativeDistributionBar"
+                        class="distribution-fill negative-fill">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- FINAL SCORE -->
+
+            <div class="distribution-item">
+
+
+                <div class="distribution-label">
+
+                    <span>
+                        Final Score
+                    </span>
+
+                    <strong id="distributionFinal">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="distribution-bar">
+
+                    <div
+                        id="finalDistributionBar"
+                        class="distribution-fill final-fill">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         SECTION PERFORMANCE
+    ================================================== -->
+
+    <section class="card">
+
+
+        <div class="card-heading">
+
+            <div>
+
+                <h2>
+                    Section Performance
+                </h2>
+
+                <p>
+                    Compare your performance across sections.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="section-performance-container"
+            id="sectionPerformanceContainer">
+
+            <!-- Generated by JavaScript -->
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         QUESTION TYPE ANALYSIS
+    ================================================== -->
+
+    <section class="card">
+
+
+        <div class="card-heading">
+
+            <div>
+
+                <h2>
+                    Question Type Analysis
+                </h2>
+
+                <p>
+                    Performance according to question type.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="question-type-grid">
+
+
+            <!-- MCQ -->
+
+            <div class="type-analysis-card">
+
+
+                <div class="type-analysis-header">
+
+                    <span class="type-badge mcq-badge">
+                        MCQ
+                    </span>
+
+                    <strong id="mcqTotal">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="type-analysis-row">
+
+                    <span>
+                        Correct
+                    </span>
+
+                    <strong
+                        id="mcqCorrect"
+                        class="success-number">
+
+                        0
+
+                    </strong>
+
+                </div>
+
+
+                <div class="type-analysis-row">
+
+                    <span>
+                        Wrong
+                    </span>
+
+                    <strong
+                        id="mcqWrong"
+                        class="danger-number">
+
+                        0
+
+                    </strong>
+
+                </div>
+
+
+                <div class="type-analysis-row">
+
+                    <span>
+                        Accuracy
+                    </span>
+
+                    <strong id="mcqAccuracy">
+                        0%
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MSQ -->
+
+            <div class="type-analysis-card">
+
+
+                <div class="type-analysis-header">
+
+                    <span class="type-badge msq-badge">
+                        MSQ
+                    </span>
+
+                    <strong id="msqTotal">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="type-analysis-row">
+
+                    <span>
+                        Correct
+                    </span>
+
+                    <strong
+                        id="msqCorrect"
+                        class="success-number">
+
+                        0
+
+                    </strong>
+
+                </div>
+
+
+                <div class="type-analysis-row">
+
+                    <span>
+                        Wrong
+                    </span>
+
+                    <strong
+                        id="msqWrong"
+                        class="danger-number">
+
+                        0
+
+                    </strong>
+
+                </div>
+
+
+                <div class="type-analysis-row">
+
+                    <span>
+                        Accuracy
+                    </span>
+
+                    <strong id="msqAccuracy">
+                        0%
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- NAT -->
+
+            <div class="type-analysis-card">
+
+
+                <div class="type-analysis-header">
+
+                    <span class="type-badge nat-badge">
+                        NAT
+                    </span>
+
+                    <strong id="natTotal">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="type-analysis-row">
+
+                    <span>
+                        Correct
+                    </span>
+
+                    <strong
+                        id="natCorrect"
+                        class="success-number">
+
+                        0
+
+                    </strong>
+
+                </div>
+
+
+                <div class="type-analysis-row">
+
+                    <span>
+                        Wrong
+                    </span>
+
+                    <strong
+                        id="natWrong"
+                        class="danger-number">
+
+                        0
+
+                    </strong>
+
+                </div>
+
+
+                <div class="type-analysis-row">
+
+                    <span>
+                        Accuracy
+                    </span>
+
+                    <strong id="natAccuracy">
+                        0%
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         TIME ANALYSIS
+    ================================================== -->
+
+    <section class="card">
+
+
+        <div class="card-heading">
+
+            <div>
+
+                <h2>
+                    Time Analysis
+                </h2>
+
+                <p>
+                    Understand how you used your examination time.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="time-analysis-grid">
+
+
+            <div class="time-item">
+
+                <span>
+                    Total Time
+                </span>
+
+                <strong id="totalTimeUsed">
+                    00:00
+                </strong>
+
+            </div>
+
+
+            <div class="time-item">
+
+                <span>
+                    Average / Question
+                </span>
+
+                <strong id="averageQuestionTime">
+                    00:00
+                </strong>
+
+            </div>
+
+
+            <div class="time-item">
+
+                <span>
+                    Average / Attempt
+                </span>
+
+                <strong id="averageAttemptTime">
+                    00:00
+                </strong>
+
+            </div>
+
+
+            <div class="time-item">
+
+                <span>
+                    Time Remaining
+                </span>
+
+                <strong id="timeRemaining">
+                    00:00
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         QUESTION PERFORMANCE
+    ================================================== -->
+
+    <section class="card">
+
+
+        <div class="card-heading">
+
+            <div>
+
+                <h2>
+                    Question-wise Performance
+                </h2>
+
+                <p>
+                    Detailed status of each question.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <select
+                    id="questionFilter"
+                    class="analysis-filter">
+
+                    <option value="all">
+                        All Questions
+                    </option>
+
+                    <option value="correct">
+                        Correct
+                    </option>
+
+                    <option value="wrong">
+                        Wrong
+                    </option>
+
+                    <option value="unattempted">
+                        Unattempted
+                    </option>
+
+                    <option value="review">
+                        Marked for Review
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="question-analysis-list"
+            id="questionAnalysisList">
+
+            <!-- Generated by JavaScript -->
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         ACCURACY INFORMATION
+    ================================================== -->
+
+    <section class="card">
+
+
+        <div class="card-heading">
+
+            <div>
+
+                <h2>
+                    Accuracy Details
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="accuracy-details">
+
+
+            <div class="accuracy-meter">
+
+
+                <div
+                    class="accuracy-circle"
+                    id="accuracyCircle">
+
+                    <strong id="accuracyCircleValue">
+                        0%
+                    </strong>
+
+                    <span>
+                        Accuracy
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="accuracy-description">
+
+
+                <div class="accuracy-row">
+
+                    <span>
+                        Attempted Questions
+                    </span>
+
+                    <strong id="accuracyAttempted">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="accuracy-row">
+
+                    <span>
+                        Correct Answers
+                    </span>
+
+                    <strong
+                        id="accuracyCorrect"
+                        class="success-number">
+
+                        0
+
+                    </strong>
+
+                </div>
+
+
+                <div class="accuracy-row">
+
+                    <span>
+                        Incorrect Answers
+                    </span>
+
+                    <strong
+                        id="accuracyWrong"
+                        class="danger-number">
+
+                        0
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         ACTIONS
+    ================================================== -->
+
+    <section class="analysis-actions">
+
+
+        <button
+            type="button"
+            id="viewSolutionsBtn"
+            class="primary-btn">
+
+            📝 View Solutions
+
+        </button>
+
+
+        <button
+            type="button"
+            id="backResultBottomBtn"
+            class="secondary-btn">
+
+            ← Back to Result
+
+        </button>
+
+
+        <button
+            type="button"
+            id="analysisHomeBottomBtn"
+            class="secondary-btn">
+
+            🏠 Test Home
+
+        </button>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer class="site-footer">
+
+    <p>
+        GATE Mechanical Engineering Test Series
+    </p>
+
+    <span>
+        Detailed Performance Analysis
+    </span>
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script
+    src="js/storage.js"
+    defer>
+</script>
+
+
+<script
+    src="js/scoring.js"
+    defer>
+</script>
+
+
+<script
+    src="js/analysis.js"
+    defer>
+</script>
+
+
+</body>
+
+</html>
