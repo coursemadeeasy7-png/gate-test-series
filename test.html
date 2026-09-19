@@ -1,1 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="theme-color"
+        content="#ffffff">
+
+    <title>GATE ME - Test</title>
+
+
+    <!-- COMMON CSS -->
+    <link
+        rel="stylesheet"
+        href="css/main.css">
+
+
+    <!-- EXAM CSS -->
+    <link
+        rel="stylesheet"
+        href="css/exam.css">
+
+
+    <!-- CALCULATOR CSS -->
+    <link
+        rel="stylesheet"
+        href="css/calculator.css">
+
+
+    <!-- RESPONSIVE CSS -->
+    <link
+        rel="stylesheet"
+        href="css/responsive.css">
+
+</head>
+
+
+<body class="exam-page">
+
+
+<!-- ======================================================
+     TOP EXAM BAR
+======================================================= -->
+
+<header class="exam-header">
+
+
+    <!-- LEFT -->
+
+    <div class="exam-header-left">
+
+        <div class="exam-logo">
+            GATE
+        </div>
+
+        <div class="exam-title">
+
+            <strong>
+                GATE 2025 - Mechanical Engineering
+            </strong>
+
+            <span id="examName">
+                Online Test
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- CENTER -->
+
+    <div class="exam-header-center">
+
+        <div class="question-progress">
+
+            <span>
+                Question
+            </span>
+
+            <strong id="currentQuestionNumber">
+                1
+            </strong>
+
+            <span>
+                /
+            </span>
+
+            <strong id="totalQuestionNumber">
+                65
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT -->
+
+    <div class="exam-header-right">
+
+
+        <!-- CALCULATOR -->
+
+        <button
+            type="button"
+            id="calculatorBtn"
+            class="exam-tool-btn">
+
+            🧮
+            <span>
+                Calculator
+            </span>
+
+        </button>
+
+
+        <!-- TIMER -->
+
+        <div
+            class="exam-timer"
+            id="examTimer">
+
+            <span class="timer-label">
+                Time Left
+            </span>
+
+            <strong id="timerDisplay">
+                180:00
+            </strong>
+
+        </div>
+
+
+        <!-- SUBMIT -->
+
+        <button
+            type="button"
+            id="submitTestBtn"
+            class="submit-top-btn">
+
+            Submit Test
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- ======================================================
+     EXAM BODY
+======================================================= -->
+
+<main class="exam-container">
+
+
+    <!-- ==================================================
+         QUESTION AREA
+    =================================================== -->
+
+    <section class="question-area">
+
+
+        <!-- QUESTION TOP -->
+
+        <div class="question-topbar">
+
+
+            <div class="question-info">
+
+
+                <span
+                    id="questionNumberLabel"
+                    class="question-number">
+
+                    Q1
+
+                </span>
+
+
+                <span
+                    id="questionTypeLabel"
+                    class="question-type">
+
+                    MCQ
+
+                </span>
+
+
+                <span
+                    id="questionSectionLabel"
+                    class="question-section">
+
+                    Mechanical Engineering
+
+                </span>
+
+            </div>
+
+
+            <div class="question-marks">
+
+
+                <span>
+                    Marks:
+                </span>
+
+
+                <strong id="positiveMarks">
+                    +1
+                </strong>
+
+
+                <span class="negative-mark">
+
+                    Negative:
+
+                    <strong id="negativeMarks">
+                        -0.33
+                    </strong>
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- QUESTION CARD -->
+
+        <article
+            class="question-card"
+            id="questionCard">
+
+
+            <!-- QUESTION TEXT -->
+
+            <div
+                class="question-text"
+                id="questionText">
+
+                Loading question...
+
+            </div>
+
+
+            <!-- QUESTION FIGURE -->
+
+            <div
+                class="question-figure hidden"
+                id="questionFigure">
+
+                <img
+                    id="questionFigureImage"
+                    src=""
+                    alt="Question figure">
+
+            </div>
+
+
+            <!-- OPTIONS -->
+
+            <div
+                class="options-container"
+                id="optionsContainer">
+
+                <!-- Options inserted by JavaScript -->
+
+            </div>
+
+
+            <!-- NAT -->
+
+            <div
+                class="nat-container hidden"
+                id="natContainer">
+
+
+                <label
+                    for="natAnswer">
+
+                    Enter your numerical answer
+
+                </label>
+
+
+                <input
+                    type="text"
+                    id="natAnswer"
+                    inputmode="decimal"
+                    autocomplete="off"
+                    placeholder="Enter answer">
+
+
+                <div class="nat-help">
+
+                    Type the numerical value only.
+
+                </div>
+
+            </div>
+
+
+        </article>
+
+
+
+        <!-- =================================================
+             QUESTION ACTIONS
+        ================================================== -->
+
+        <div class="question-actions">
+
+
+            <button
+                type="button"
+                id="markReviewBtn"
+                class="action-btn review-btn">
+
+                🔖
+                Mark for Review
+
+            </button>
+
+
+            <button
+                type="button"
+                id="clearResponseBtn"
+                class="action-btn clear-btn">
+
+                ✕
+                Clear Response
+
+            </button>
+
+
+            <div class="action-spacer"></div>
+
+
+            <button
+                type="button"
+                id="previousBtn"
+                class="action-btn previous-btn">
+
+                ←
+                Previous
+
+            </button>
+
+
+            <button
+                type="button"
+                id="saveNextBtn"
+                class="action-btn save-next-btn">
+
+                Save & Next
+                →
+
+            </button>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ==================================================
+         SIDE PANEL
+    =================================================== -->
+
+    <aside class="exam-sidebar">
+
+
+        <!-- =================================================
+             CANDIDATE / TEST INFO
+        ================================================== -->
+
+        <div class="sidebar-card candidate-card">
+
+
+            <div class="candidate-avatar">
+                ME
+            </div>
+
+
+            <div class="candidate-info">
+
+                <strong>
+                    GATE ME
+                </strong>
+
+                <span>
+                    Test Candidate
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             QUESTION PALETTE LEGEND
+        ================================================== -->
+
+        <div class="sidebar-card palette-card">
+
+
+            <div class="sidebar-title">
+
+                Question Palette
+
+            </div>
+
+
+            <div class="palette-legend">
+
+
+                <div class="legend-item">
+
+                    <span
+                        class="legend-box not-visited">
+                    </span>
+
+                    <span>
+                        Not Visited
+                    </span>
+
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span
+                        class="legend-box not-answered">
+                    </span>
+
+                    <span>
+                        Not Answered
+                    </span>
+
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span
+                        class="legend-box answered">
+                    </span>
+
+                    <span>
+                        Answered
+                    </span>
+
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span
+                        class="legend-box review">
+                    </span>
+
+                    <span>
+                        Marked for Review
+                    </span>
+
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span
+                        class="legend-box answered-review">
+                    </span>
+
+                    <span>
+                        Answered & Review
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- PALETTE -->
+
+            <div
+                class="question-palette"
+                id="questionPalette">
+
+                <!-- Question buttons inserted by JS -->
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SECTION SUMMARY
+        ================================================== -->
+
+        <div class="sidebar-card summary-card">
+
+
+            <div class="sidebar-title">
+
+                Summary
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Total
+                </span>
+
+                <strong id="summaryTotal">
+                    65
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Answered
+                </span>
+
+                <strong
+                    id="summaryAnswered"
+                    class="summary-green">
+
+                    0
+
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Not Answered
+                </span>
+
+                <strong
+                    id="summaryNotAnswered"
+                    class="summary-red">
+
+                    0
+
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Marked
+                </span>
+
+                <strong
+                    id="summaryReview"
+                    class="summary-purple">
+
+                    0
+
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SUBMIT SIDE BUTTON
+        ================================================== -->
+
+        <button
+            type="button"
+            id="sidebarSubmitBtn"
+            class="sidebar-submit-btn">
+
+            Submit Test
+
+        </button>
+
+
+    </aside>
+
+</main>
+
+
+
+<!-- ======================================================
+     CALCULATOR MODAL
+======================================================= -->
+
+<div
+    class="calculator-overlay hidden"
+    id="calculatorOverlay">
+
+
+    <div
+        class="calculator-window"
+        id="calculatorWindow">
+
+
+        <!-- CALCULATOR HEADER -->
+
+        <div class="calculator-header">
+
+            <strong>
+                Virtual Calculator
+            </strong>
+
+
+            <button
+                type="button"
+                id="closeCalculatorBtn"
+                class="calculator-close">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <!-- DISPLAY -->
+
+        <div class="calculator-display">
+
+            <input
+                type="text"
+                id="calculatorDisplay"
+                readonly
+                value="0">
+
+        </div>
+
+
+        <!-- KEYS -->
+
+        <div class="calculator-keys">
+
+
+            <button
+                type="button"
+                data-calc="clear"
+                class="calc-key function-key">
+
+                AC
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="backspace"
+                class="calc-key function-key">
+
+                ⌫
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="percent"
+                class="calc-key function-key">
+
+                %
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="/"
+                class="calc-key operator-key">
+
+                ÷
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="7"
+                class="calc-key">
+
+                7
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="8"
+                class="calc-key">
+
+                8
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="9"
+                class="calc-key">
+
+                9
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="*"
+                class="calc-key operator-key">
+
+                ×
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="4"
+                class="calc-key">
+
+                4
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="5"
+                class="calc-key">
+
+                5
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="6"
+                class="calc-key">
+
+                6
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="-"
+                class="calc-key operator-key">
+
+                −
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="1"
+                class="calc-key">
+
+                1
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="2"
+                class="calc-key">
+
+                2
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="3"
+                class="calc-key">
+
+                3
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="+"
+                class="calc-key operator-key">
+
+                +
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="0"
+                class="calc-key zero-key">
+
+                0
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="."
+                class="calc-key">
+
+                .
+
+            </button>
+
+
+            <button
+                type="button"
+                data-calc="="
+                class="calc-key equals-key">
+
+                =
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======================================================
+     SUBMIT CONFIRMATION MODAL
+======================================================= -->
+
+<div
+    class="modal-overlay hidden"
+    id="submitModal">
+
+
+    <div class="confirm-modal">
+
+
+        <div class="confirm-icon">
+            ⚠️
+        </div>
+
+
+        <h2>
+            Submit Test?
+        </h2>
+
+
+        <p>
+            Are you sure you want to submit the test?
+        </p>
+
+
+        <div class="submit-summary">
+
+
+            <div>
+
+                <span>
+                    Answered
+                </span>
+
+                <strong id="confirmAnswered">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Unanswered
+                </span>
+
+                <strong id="confirmUnanswered">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Marked
+                </span>
+
+                <strong id="confirmMarked">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="confirm-actions">
+
+
+            <button
+                type="button"
+                id="cancelSubmitBtn"
+                class="secondary-btn">
+
+                Cancel
+
+            </button>
+
+
+            <button
+                type="button"
+                id="confirmSubmitBtn"
+                class="danger-btn">
+
+                Submit Test
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======================================================
+     TIME UP MODAL
+======================================================= -->
+
+<div
+    class="modal-overlay hidden"
+    id="timeUpModal">
+
+
+    <div class="confirm-modal">
+
+
+        <div class="confirm-icon">
+            ⏰
+        </div>
+
+
+        <h2>
+            Time is Over
+        </h2>
+
+
+        <p>
+            Your test will be submitted automatically.
+        </p>
+
+
+        <button
+            type="button"
+            id="timeUpSubmitBtn"
+            class="primary-btn">
+
+            Continue
+
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======================================================
+     JAVASCRIPT
+======================================================= -->
+
+<script
+    src="js/storage.js"
+    defer>
+</script>
+
+
+<script
+    src="js/timer.js"
+    defer>
+</script>
+
+
+<script
+    src="js/calculator.js"
+    defer>
+</script>
+
+
+<script
+    src="js/palette.js"
+    defer>
+</script>
+
+
+<script
+    src="js/scoring.js"
+    defer>
+</script>
+
+
+<script
+    src="js/exam-engine.js"
+    defer>
+</script>
+
+
+<script
+    src="js/analysis.js"
+    defer>
+</script>
+
+
+</body>
+
+</html>
