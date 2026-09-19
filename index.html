@@ -1,3630 +1,610 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>GATE Test Series</title>
+    <meta charset="UTF-8">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-<style>
-*{box-sizing:border-box}
+    <meta
+        name="theme-color"
+        content="#1a73e8">
 
-body{
-  margin:0;
-  background:#f1f3f6;
-  color:#202124;
-  font-family:Arial,Helvetica,sans-serif
-}
+    <title>GATE ME Test Series</title>
 
-header{
-  background:#123f67;
-  color:#fff;
-  text-align:center;
-  font-weight:700;
-  padding:12px 8px;
-  font-size:18px;
-  position:sticky;
-  top:0;
-  z-index:20
-}
-
-.wrap{
-  max-width:1200px;
-  margin:auto;
-  padding:12px
-}
-
-.card{
-  background:#fff;
-  border:1px solid #d7dce2;
-  border-radius:10px;
-  box-shadow:0 2px 7px rgba(0,0,0,.08);
-  padding:14px;
-  margin-bottom:12px
-}
-
-h2,h3{
-  margin:0 0 12px
-}
-
-label{
-  display:block;
-  font-weight:700;
-  font-size:14px;
-  margin:12px 0 6px
-}
-
-input[type=file],
-input[type=number],
-select{
-  width:100%;
-  padding:10px;
-  border:1px solid #b9c0c8;
-  border-radius:7px;
-  background:#fff;
-  font-size:15px
-}
-
-button{
-  border:0;
-  border-radius:6px;
-  padding:10px 13px;
-  font-weight:700;
-  cursor:pointer
-}
-
-button:disabled{
-  opacity:.55;
-  cursor:not-allowed
-}
-
-.primary{
-  background:#0b6aa2;
-  color:#fff
-}
-
-.green{
-  background:#087f5b;
-  color:#fff
-}
-
-.red{
-  background:#c62828;
-  color:#fff
-}
-
-.gray{
-  background:#59636e;
-  color:#fff
-}
-
-.yellow{
-  background:#e0a800;
-  color:#111
-}
-
-.status{
-  margin-top:7px;
-  color:#58616b;
-  font-size:13px
-}
-
-.help{
-  font-size:12px;
-  color:#68717b;
-  line-height:1.45
-}
-
-.hidden{
-  display:none!important
-}
-
-.loading{
-  padding:18px;
-  text-align:center;
-  font-weight:700
-}
-
-.progressbar{
-  height:7px;
-  background:#e2e6ea;
-  border-radius:20px;
-  overflow:hidden;
-  margin-top:10px
-}
-
-.progressbar>div{
-  height:100%;
-  width:0;
-  background:#0b6aa2;
-  transition:width .2s
-}
-
-.setup-actions{
-  margin-top:15px
-}
-
-.exam-top{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap
-}
-
-.exam-title{
-  font-weight:700
-}
-
-.timer{
-  background:#222;
-  color:#fff;
-  padding:9px 12px;
-  border-radius:6px;
-  font-weight:700;
-  min-width:86px;
-  text-align:center
-}
-
-.timer.danger{
-  background:#a00
-}
-
-.exam-grid{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 300px;
-  gap:12px;
-  align-items:start
-}
-
-.qhead{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:center;
-  border-bottom:1px solid #e5e7eb;
-  padding-bottom:10px;
-  margin-bottom:10px
-}
-
-.qtag{
-  font-weight:700;
-  color:#244d6e
-}
-
-.qstatus{
-  font-size:12px;
-  color:#606a74
-}
-
-.question-view{
-  position:relative;
-  width:100%;
-  background:#fff;
-  border:1px solid #e1e4e8;
-  border-radius:7px;
-  overflow:hidden
-}
-
-.question-view canvas{
-  display:block;
-  width:100%;
-  height:auto
-}
-
-.option-hit{
-  position:absolute;
-  left:1%;
-  width:98%;
-  border:2px solid transparent;
-  border-radius:8px;
-  background:transparent;
-  z-index:5;
-  padding:0
-}
-
-.option-hit.selected{
-  border-color:#0074b8;
-  background:rgba(0,116,184,.12)
-}
-
-.option-hit.selected:after{
-  content:"✓";
-  position:absolute;
-  right:8px;
-  top:4px;
-  background:#0074b8;
-  color:#fff;
-  border-radius:50%;
-  width:24px;
-  height:24px;
-  line-height:24px;
-  text-align:center;
-  font-weight:700
-}
-
-.nat-box{
-  margin-top:12px;
-  padding:12px;
-  border:1px solid #cfd5db;
-  border-radius:8px;
-  background:#fafafa
-}
-
-.nat-box input{
-  max-width:360px
-}
-
-.nav-buttons{
-  display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-  margin-top:12px
-}
-
-.nav-buttons button{
-  font-size:12px
-}
-
-.palette h3{
-  font-size:16px
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:6px
-}
-
-.pbtn{
-  padding:8px 0;
-  font-size:12px;
-  background:#e4e7ea;
-  color:#202124;
-  border:2px solid transparent
-}
-
-.pbtn.current{
-  border-color:#006fae
-}
-
-.pbtn.answered{
-  background:#2e9d63;
-  color:#fff
-}
-
-.pbtn.review{
-  background:#e4b52f;
-  color:#111
-}
-
-.pbtn.answered.review{
-  background:linear-gradient(
-    135deg,
-    #2e9d63 0 50%,
-    #e4b52f 50%
-  );
-  color:#fff
-}
-
-.legend{
-  font-size:11px;
-  line-height:1.7;
-  margin-top:10px;
-  color:#4f5861
-}
-
-.dot{
-  display:inline-block;
-  width:10px;
-  height:10px;
-  border-radius:2px;
-  margin-right:4px
-}
-
-.dot.green{
-  background:#2e9d63
-}
-
-.dot.yellow{
-  background:#e4b52f
-}
-
-.dot.gray{
-  background:#e4e7ea;
-  border:1px solid #bbb
-}
-
-.result-summary{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px
-}
-
-.stat{
-  border:1px solid #dfe3e7;
-  border-radius:8px;
-  padding:12px;
-  text-align:center;
-  background:#fafafa
-}
-
-.stat b{
-  display:block;
-  font-size:22px;
-  margin-top:4px
-}
-
-.section-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:12px
-}
-
-.section-table th,
-.section-table td{
-  border:1px solid #d9dee3;
-  padding:9px;
-  text-align:center
-}
-
-.section-table th{
-  background:#eef2f5
-}
-
-.review-item{
-  border:1px solid #d9dee3;
-  border-radius:8px;
-  margin-top:9px;
-  padding:10px
-}
-
-.review-head{
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  align-items:center
-}
-
-.solution-box{
-  margin-top:10px;
-  background:#f8fafc;
-  border-radius:7px;
-  padding:6px
-}
-
-.solution-box canvas{
-  width:100%;
-  height:auto;
-  display:block;
-  margin:6px 0
-}
-
-.small{
-  font-size:12px;
-  color:#606a74
-}
-
-.calc{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.55);
-  z-index:100;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:15px
-}
-
-.calc-panel{
-  background:#fff;
-  width:min(360px,100%);
-  border-radius:10px;
-  padding:12px
-}
-
-.calc-display{
-  width:100%;
-  font-size:20px;
-  padding:10px;
-  border:1px solid #aaa;
-  border-radius:6px;
-  text-align:right;
-  margin-bottom:8px
-}
-
-.calc-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:6px
-}
-
-.calc-grid button{
-  background:#eef1f4
-}
-
-@media(max-width:800px){
-
-  .exam-grid{
-    grid-template-columns:1fr
-  }
-
-  .palette{
-    order:2
-  }
-
-  .result-summary{
-    grid-template-columns:repeat(2,1fr)
-  }
-
-  header{
-    font-size:16px
-  }
-}
-</style>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/home.css">
 </head>
 
 <body>
 
-<header>GATE TEST SERIES</header>
+    <!-- ================= HEADER ================= -->
 
-<div class="wrap">
+    <header class="site-header">
 
-<section id="setup" class="card">
+        <div class="header-left">
 
-<h2>Test Setup</h2>
+            <div class="logo">
+                GATE
+            </div>
 
-<label for="pdfFile">Question PDF</label>
+            <div class="logo-text">
 
-<input
-  id="pdfFile"
-  type="file"
-  accept="application/pdf,.pdf"
->
+                <strong>
+                    GATE Mechanical Engineering
+                </strong>
 
-<div id="pdfStatus" class="status">
-PDF select karo.
-</div>
+                <span>
+                    Online Test Series
+                </span>
 
-<label for="timeInput">
-Test Time (minutes)
-</label>
+            </div>
 
-<input
-  id="timeInput"
-  type="number"
-  min="1"
-  value="180"
->
+        </div>
 
-<label for="negativeMarking">
-Negative Marking
-</label>
 
-<select id="negativeMarking">
-  <option value="on">ON</option>
-  <option value="off">OFF</option>
-</select>
+        <div class="header-right">
 
-<div class="help" style="margin-top:10px">
+            <button
+                type="button"
+                class="header-btn"
+                id="historyBtn">
 
-PDF ke andar hi Correct Answer aur Solution diya ho
-to code unhe test ke dauran hide rakhega.
+                Test History
 
-Submit ke baad answer checking aur solutions
-automatically show honge.
+            </button>
 
-</div>
+        </div>
 
-<div id="loadBox" class="hidden">
+    </header>
 
-<div class="loading" id="loadText">
-PDF read ho raha hai...
-</div>
 
-<div class="progressbar">
-<div id="loadProgress"></div>
-</div>
+    <!-- ================= MAIN ================= -->
 
-</div>
+    <main class="main-container">
 
-<div class="setup-actions">
 
-<button
-  id="startBtn"
-  class="primary"
-  disabled
->
-START TEST
-</button>
+        <!-- HERO -->
 
-</div>
+        <section class="hero-section">
 
-</section>
+            <div class="hero-content">
 
+                <span class="hero-badge">
+                    GATE ME
+                </span>
 
-<section id="exam" class="hidden">
+                <h1>
+                    Online Test Series
+                </h1>
 
-<div class="card exam-top">
+                <p>
+                    Upload your PDF test paper and
+                    create a computer-based test.
+                </p>
 
-<div>
+            </div>
 
-<div class="exam-title">
-GATE TEST
-</div>
+        </section>
 
-<div
-  id="progressText"
-  class="small"
->
-Question 1 of 65
-</div>
 
-</div>
+        <!-- ================= PDF UPLOAD ================= -->
 
-<div
-  style="
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-  align-items:center
-  "
->
-
-<button
-  id="calcBtn"
-  class="gray"
->
-CALCULATOR
-</button>
-
-<button
-  id="fullBtn"
-  class="gray"
->
-FULL SCREEN
-</button>
-
-<div
-  id="timer"
-  class="timer"
->
-03:00:00
-</div>
-
-<button
-  id="topSubmit"
-  class="green"
->
-SUBMIT TEST
-</button>
-
-</div>
-
-</div>
-
-
-<div class="exam-grid">
-
-<div class="card">
-
-<div class="qhead">
-
-<div
-  id="qtag"
-  class="qtag"
->
-Question 1 • MCQ • 1 Mark
-</div>
-
-<div
-  id="qstatus"
-  class="qstatus"
->
-Not attempted
-</div>
-
-</div>
-
-
-<div
-  id="questionView"
-  class="question-view"
-></div>
-
-
-<div
-  id="natArea"
-  class="nat-box hidden"
->
+        <section class="card upload-card">
 
-<label for="natInput">
-Enter your answer
-</label>
+            <div class="card-heading">
 
-<input
-  id="natInput"
-  type="text"
-  inputmode="decimal"
-  autocomplete="off"
-  placeholder="Type your answer"
->
+                <div>
 
-<div class="small">
-NAT answer save karne ke liye
-SAVE & NEXT ya Question Palette use karo.
-</div>
+                    <h2>
+                        Create Test
+                    </h2>
 
-</div>
+                    <p>
+                        Upload one or multiple PDF test papers.
+                    </p>
 
+                </div>
 
-<div class="nav-buttons">
+            </div>
 
-<button
-  id="prevBtn"
-  class="gray"
->
-PREVIOUS
-</button>
 
-<button
-  id="clearBtn"
-  class="gray"
->
-CLEAR RESPONSE
-</button>
+            <!-- DROP AREA -->
 
-<button
-  id="reviewBtn"
-  class="yellow"
->
-MARK FOR REVIEW
-</button>
+            <div
+                class="upload-area"
+                id="dropArea">
 
-<button
-  id="nextBtn"
-  class="primary"
->
-SAVE & NEXT
-</button>
+                <div class="upload-icon">
+                    📄
+                </div>
 
-<button
-  id="submitBtn"
-  class="green"
->
-SUBMIT TEST
-</button>
+                <h3>
+                    Upload PDF
+                </h3>
 
-</div>
+                <p>
+                    Select your GATE test PDF
+                </p>
 
-</div>
 
+                <label
+                    for="pdfInput"
+                    class="upload-button">
 
-<div class="card palette">
+                    Choose PDF
 
-<h3>
-Question Palette
-</h3>
+                </label>
 
-<div
-  id="palette"
-  class="grid"
-></div>
 
-<div class="legend">
+                <input
+                    type="file"
+                    id="pdfInput"
+                    accept=".pdf,application/pdf"
+                    multiple
+                    hidden>
 
-<div>
-<span class="dot green"></span>
-Answered
-</div>
 
-<div>
-<span class="dot yellow"></span>
-Marked for Review
-</div>
+                <small>
+                    Multiple PDF files are supported
+                </small>
 
-<div>
-<span class="dot gray"></span>
-Not Answered
-</div>
+            </div>
 
-</div>
 
-</div>
+            <!-- SELECTED FILES -->
 
-</div>
+            <div
+                id="fileList"
+                class="file-list hidden">
 
-</section>
+                <div class="file-list-header">
 
+                    <strong>
+                        Selected PDFs
+                    </strong>
 
-<section
-  id="result"
-  class="hidden"
->
+                    <button
+                        type="button"
+                        id="clearFilesBtn"
+                        class="small-btn">
 
-<div class="card">
+                        Clear
 
-<h2>
-Test Result
-</h2>
+                    </button>
 
-<div
-  id="resultTitle"
-  class="small"
-></div>
+                </div>
 
 
-<div
-  class="result-summary"
-  style="margin-top:12px"
->
+                <div id="fileItems"></div>
 
-<div class="stat">
-Score
-<b id="scoreStat">0</b>
-</div>
+            </div>
 
-<div class="stat">
-Correct
-<b id="correctStat">0</b>
-</div>
+        </section>
 
-<div class="stat">
-Wrong
-<b id="wrongStat">0</b>
-</div>
 
-<div class="stat">
-Unattempted
-<b id="unattemptedStat">0</b>
-</div>
+        <!-- ================= TEST SETTINGS ================= -->
 
-</div>
+        <section class="card settings-card">
 
+            <div class="card-heading">
 
-<table class="section-table">
+                <div>
 
-<thead>
+                    <h2>
+                        Test Settings
+                    </h2>
 
-<tr>
+                    <p>
+                        Configure the examination before starting.
+                    </p>
 
-<th>
-Section
-</th>
+                </div>
 
-<th>
-Questions
-</th>
+            </div>
 
-<th>
-Marks
-</th>
 
-<th>
-Score
-</th>
+            <div class="settings-grid">
 
-<th>
-Correct
-</th>
 
-<th>
-Wrong
-</th>
+                <!-- DURATION -->
 
-</tr>
+                <div class="form-group">
 
-</thead>
+                    <label for="testDuration">
+                        Test Duration
+                    </label>
 
-<tbody
-  id="sectionBody"
-></tbody>
+                    <div class="input-with-unit">
 
-</table>
+                        <input
+                            type="number"
+                            id="testDuration"
+                            value="180"
+                            min="1"
+                            max="600">
 
-</div>
+                        <span>
+                            minutes
+                        </span>
 
+                    </div>
 
-<div class="card">
+                </div>
 
-<h3>
-Question Review & Solutions
-</h3>
 
-<div class="small">
+                <!-- QUESTION COUNT -->
 
-Solutions test submit hone ke baad hi open hongi.
+                <div class="form-group">
 
-</div>
+                    <label for="questionCount">
+                        Number of Questions
+                    </label>
 
-<div
-  id="reviewList"
-></div>
+                    <input
+                        type="number"
+                        id="questionCount"
+                        value="0"
+                        min="0">
 
-</div>
+                    <small>
+                        0 = all detected questions
+                    </small>
 
-</section>
+                </div>
 
-</div>
 
+                <!-- SECTION -->
 
-<div
-  id="calcModal"
-  class="calc hidden"
->
+                <div class="form-group">
 
-<div class="calc-panel">
+                    <label for="sectionSelect">
+                        Section
+                    </label>
 
-<div
-  style="
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:8px
-  "
->
+                    <select id="sectionSelect">
 
-<b>
-Calculator
-</b>
+                        <option value="all">
+                            Full Test
+                        </option>
 
-<button
-  id="calcClose"
-  class="gray"
->
-CLOSE
-</button>
+                        <option value="aptitude">
+                            General Aptitude
+                        </option>
 
-</div>
+                        <option value="mechanical">
+                            Mechanical Engineering
+                        </option>
 
+                    </select>
 
-<input
-  id="calcDisplay"
-  class="calc-display"
-  type="text"
-  readonly
-  value=""
->
+                </div>
 
 
-<div class="calc-grid">
+                <!-- QUESTION ORDER -->
 
-<button data-c="7">7</button>
-<button data-c="8">8</button>
-<button data-c="9">9</button>
-<button data-c="/">÷</button>
+                <div class="form-group">
 
-<button data-c="4">4</button>
-<button data-c="5">5</button>
-<button data-c="6">6</button>
-<button data-c="*">×</button>
+                    <label for="questionOrder">
+                        Question Order
+                    </label>
 
-<button data-c="1">1</button>
-<button data-c="2">2</button>
-<button data-c="3">3</button>
-<button data-c="-">−</button>
+                    <select id="questionOrder">
 
-<button data-c="0">0</button>
-<button data-c=".">.</button>
-<button data-c="(">(</button>
-<button data-c=")">)</button>
+                        <option value="original">
+                            Original PDF Order
+                        </option>
 
-<button data-c="+">+</button>
-<button data-c="**">^</button>
-<button data-f="sqrt">√</button>
-<button data-f="neg">±</button>
+                        <option value="shuffle">
+                            Shuffle Questions
+                        </option>
 
-<button data-f="sin">sin</button>
-<button data-f="cos">cos</button>
-<button data-f="tan">tan</button>
-<button data-f="log">log</button>
+                    </select>
 
-<button data-f="ln">ln</button>
-<button data-f="pi">π</button>
-<button data-f="back">⌫</button>
-<button data-f="clear">C</button>
+                </div>
 
-<button
-  data-f="equal"
-  style="
-  grid-column:span 4;
-  background:#0b6aa2;
-  color:#fff
-  "
->
-=
-</button>
+            </div>
 
-</div>
 
-</div>
+            <!-- EXTRA SETTINGS -->
 
-</div>
+            <div class="settings-options">
 
 
-<script>
+                <label class="check-row">
 
-"use strict";
+                    <input
+                        type="checkbox"
+                        id="shuffleOptions">
 
+                    <span>
+                        Shuffle options
+                    </span>
 
-/* PDF.JS */
+                </label>
 
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
+                <label class="check-row">
 
-/* SHORT ID FUNCTION */
+                    <input
+                        type="checkbox"
+                        id="negativeMarking"
+                        checked>
 
-const $ = id =>
-document.getElementById(id);
+                    <span>
+                        Enable negative marking
+                    </span>
 
+                </label>
 
-/* VARIABLES */
 
-let pdfDoc = null;
+                <label class="check-row">
 
-let pageMeta = [];
+                    <input
+                        type="checkbox"
+                        id="autoSubmit"
+                        checked>
 
-let questions = [];
+                    <span>
+                        Auto submit when time ends
+                    </span>
 
-let answers = [];
+                </label>
 
-let reviewed = [];
+            </div>
 
-let current = 0;
+        </section>
 
-let endAt = 0;
 
-let timerId = null;
+        <!-- ================= PROCESSING ================= -->
 
-let submitted = false;
+        <section
+            class="card processing-card hidden"
+            id="processingCard">
 
-let negativeOn = true;
 
+            <div class="processing-header">
 
-/* PDF SELECT */
+                <div
+                    class="loading-spinner"
+                    id="loadingSpinner">
+                </div>
 
-$("pdfFile").addEventListener(
-"change",
-function(){
 
-  const f =
-  $("pdfFile").files[0];
+                <div>
 
-  $("pdfStatus").textContent =
-  f
-  ? "Selected: " + f.name
-  : "PDF select karo.";
+                    <h3 id="processingTitle">
+                        Processing PDF...
+                    </h3>
 
-  $("startBtn").disabled =
-  !f;
+                    <p id="processingText">
+                        Reading PDF pages and questions.
+                    </p>
 
-});
+                </div>
 
+            </div>
 
-/* BUTTON EVENTS */
 
-$("startBtn")
-.addEventListener(
-"click",
-startTest
-);
+            <div class="progress-container">
 
+                <div
+                    class="progress-bar"
+                    id="processingProgress">
+                </div>
 
-$("prevBtn")
-.addEventListener(
-"click",
-function(){
+            </div>
 
-  saveCurrent();
 
-  if(current > 0){
+            <div class="processing-stats">
 
-    current--;
+                <span id="processingPages">
+                    Pages: 0
+                </span>
 
-    renderQuestion();
+                <span id="processingQuestions">
+                    Questions: 0
+                </span>
 
-  }
+            </div>
 
-});
+        </section>
 
 
-$("nextBtn")
-.addEventListener(
-"click",
-function(){
+        <!-- ================= MESSAGE ================= -->
 
-  saveCurrent();
+        <section
+            class="card message-card hidden"
+            id="messageCard">
 
-  if(current < questions.length - 1){
 
-    current++;
+            <div
+                class="message-icon"
+                id="messageIcon">
 
-    renderQuestion();
+                ℹ️
 
-  }
-  else{
+            </div>
 
-    submitTest(false);
 
-  }
+            <div class="message-content">
 
-});
+                <h3 id="messageTitle">
+                    Information
+                </h3>
 
+                <p id="messageText">
+                    Ready.
+                </p>
 
-$("clearBtn")
-.addEventListener(
-"click",
-clearResponse
-);
+            </div>
 
+        </section>
 
-$("reviewBtn")
-.addEventListener(
-"click",
-toggleReview
-);
 
+        <!-- ================= START TEST ================= -->
 
-$("submitBtn")
-.addEventListener(
-"click",
-function(){
+        <section class="start-section">
 
-  submitTest(false);
+            <button
+                type="button"
+                id="startTestBtn"
+                class="start-test-btn">
 
-}
-);
+                <span>
+                    Start Test
+                </span>
 
+                <span class="arrow">
+                    →
+                </span>
 
-$("topSubmit")
-.addEventListener(
-"click",
-function(){
+            </button>
 
-  submitTest(false);
 
-}
-);
+            <p class="start-note">
+                Answers and solutions will remain hidden
+                during the examination.
+            </p>
 
+        </section>
 
-/* NAT INPUT */
 
-$("natInput")
-.addEventListener(
-"input",
-function(){
+        <!-- ================= FEATURES ================= -->
 
-  answers[current] =
-  $("natInput").value;
+        <section class="features-section">
 
-  updateUI();
 
-});
+            <div class="feature-card">
 
+                <div class="feature-icon">
+                    ⏱️
+                </div>
 
-/* CALCULATOR */
+                <h3>
+                    Exam Timer
+                </h3>
 
-$("calcBtn")
-.addEventListener(
-"click",
-function(){
+                <p>
+                    Configurable examination time with
+                    automatic submission.
+                </p>
 
-  $("calcModal")
-  .classList
-  .remove("hidden");
+            </div>
 
-}
-);
 
+            <div class="feature-card">
 
-$("calcClose")
-.addEventListener(
-"click",
-function(){
+                <div class="feature-icon">
+                    🧮
+                </div>
 
-  $("calcModal")
-  .classList
-  .add("hidden");
+                <h3>
+                    Virtual Calculator
+                </h3>
 
-}
-);
+                <p>
+                    Calculator available inside the
+                    examination interface.
+                </p>
 
+            </div>
 
-/* FULL SCREEN */
 
-$("fullBtn")
-.addEventListener(
-"click",
-async function(){
+            <div class="feature-card">
 
-  try{
+                <div class="feature-icon">
+                    📊
+                </div>
 
-    if(!document.fullscreenElement){
+                <h3>
+                    Detailed Analysis
+                </h3>
 
-      await document
-      .documentElement
-      .requestFullscreen();
+                <p>
+                    Score, accuracy, attempts and
+                    question-wise performance.
+                </p>
 
-    }
-    else{
+            </div>
 
-      await document
-      .exitFullscreen();
 
-    }
+            <div class="feature-card">
 
-  }
-  catch(e){}
+                <div class="feature-icon">
+                    📱
+                </div>
 
-});
+                <h3>
+                    Mobile Friendly
+                </h3>
 
+                <p>
+                    Works on mobile, tablet and desktop.
+                </p>
 
-/* START TEST */
+            </div>
 
-async function startTest(){
+        </section>
 
-  if(!pdfjsLib){
+    </main>
 
-    alert(
-      "PDF engine load nahi hua. Internet ON karke page refresh karo."
-    );
 
-    return;
+    <!-- ================= FOOTER ================= -->
 
-  }
+    <footer class="site-footer">
 
+        <p>
+            GATE Mechanical Engineering Test Series
+        </p>
 
-  const file =
-  $("pdfFile").files[0];
+        <span>
+            Practice • Analyze • Improve
+        </span>
 
+    </footer>
 
-  if(!file){
 
-    alert(
-      "Question PDF select karo."
-    );
+    <!-- ================= JAVASCRIPT ================= -->
 
-    return;
+    <script
+        src="js/storage.js"
+        defer>
+    </script>
 
-  }
+    <script
+        src="js/pdf-loader.js"
+        defer>
+    </script>
 
+    <script
+        src="js/pdf-parser.js"
+        defer>
+    </script>
 
-  const mins =
-  parseInt(
-    $("timeInput").value,
-    10
-  );
+    <script
+        src="js/question-parser.js"
+        defer>
+    </script>
 
+    <script
+        src="js/question-validator.js"
+        defer>
+    </script>
 
-  if(!mins || mins < 1){
+    <script
+        src="js/question-bank.js"
+        defer>
+    </script>
 
-    alert(
-      "Valid test time enter karo."
-    );
-
-    return;
-
-  }
-
-
-  $("startBtn").disabled = true;
-
-  $("loadBox")
-  .classList
-  .remove("hidden");
-
-
-  try{
-
-    await loadAndParsePDF(file);
-
-
-    if(questions.length === 0){
-
-      throw new Error(
-        "PDF me question blocks nahi mile."
-      );
-
-    }
-
-
-    answers =
-    Array(
-      questions.length
-    ).fill(null);
-
-
-    reviewed =
-    Array(
-      questions.length
-    ).fill(false);
-
-
-    current = 0;
-
-    submitted = false;
-
-    negativeOn =
-    $("negativeMarking").value === "on";
-
-
-    endAt =
-    Date.now() +
-    mins * 60 * 1000;
-
-
-    $("setup")
-    .classList
-    .add("hidden");
-
-
-    $("exam")
-    .classList
-    .remove("hidden");
-
-
-    buildPalette();
-
-    renderQuestion();
-
-    tick();
-
-
-    timerId =
-    setInterval(
-      tick,
-      500
-    );
-
-  }
-
-  catch(err){
-
-    console.error(err);
-
-    alert(
-      "PDF read nahi ho paaya.\n\n" +
-      "Ye text-based PDF hona chahiye.\n\n" +
-      "Agar PDF scanned/image-only hai to OCR wali version chahiye.\n\n" +
-      "Error: " +
-      err.message
-    );
-
-
-    $("startBtn").disabled =
-    false;
-
-  }
-
-  finally{
-
-    $("loadBox")
-    .classList
-    .add("hidden");
-
-  }
-
-}
-
-
-/* READ PDF */
-
-async function loadAndParsePDF(file){
-
-  pageMeta = [];
-
-  questions = [];
-
-
-  const buf =
-  await file.arrayBuffer();
-
-
-  pdfDoc =
-  await pdfjsLib
-  .getDocument({
-    data:buf
-  })
-  .promise;
-
-
-  const total =
-  pdfDoc.numPages;
-
-
-  /* READ EVERY PAGE */
-
-  for(
-    let pn = 1;
-    pn <= total;
-    pn++
-  ){
-
-    const page =
-    await pdfDoc.getPage(pn);
-
-
-    const vp =
-    page.getViewport({
-      scale:1
-    });
-
-
-    const tc =
-    await page.getTextContent();
-
-
-    const items =
-    tc.items
-    .map(
-      function(it){
-
-        const h =
-        Number(it.height) ||
-        Math.hypot(
-          it.transform[2] || 0,
-          it.transform[3] || 0
-        ) ||
-        10;
-
-
-        const top =
-        vp.height -
-        Number(it.transform[5] || 0) -
-        h;
-
-
-        return {
-
-          text:
-          (it.str || "")
-          .trim(),
-
-          top:top,
-
-          height:h
-
-        };
-
-      }
-    )
-    .filter(
-      x => x.text
-    );
-
-
-    pageMeta.push({
-
-      pageNum:pn,
-
-      width:vp.width,
-
-      height:vp.height,
-
-      items:items
-
-    });
-
-
-    $("loadText")
-    .textContent =
-    "PDF read ho raha hai... page " +
-    pn +
-    " / " +
-    total;
-
-
-    $("loadProgress")
-    .style
-    .width =
-    ((pn / total) * 100)
-    .toFixed(1) +
-    "%";
-
-  }
-
-
-  /* FIND QUESTIONS */
-
-  for(
-    let pi = 0;
-    pi < pageMeta.length;
-    pi++
-  ){
-
-    const pm =
-    pageMeta[pi];
-
-
-    const qItems =
-    pm.items
-    .filter(
-      x =>
-      /^Q\d+$/.test(x.text)
-    );
-
-
-    for(
-      let qi = 0;
-      qi < qItems.length;
-      qi++
-    ){
-
-      const qItem =
-      qItems[qi];
-
-
-      const qn =
-      parseInt(
-        qItem.text.slice(1),
-        10
-      );
-
-
-      const nextSameQTop =
-      qi + 1 < qItems.length
-      ? qItems[qi + 1].top
-      : pm.height + 1;
-
-
-      const block =
-      pm.items.filter(
-        x =>
-        x.top >= qItem.top - 1 &&
-        x.top < nextSameQTop
-      );
-
-
-      const answerItem =
-      block.find(
-        x =>
-        /^Correct answer\s*:/.test(
-          x.text
-        )
-      );
-
-
-      if(!answerItem)
-        continue;
-
-
-      const metaItem =
-      block.find(
-        x =>
-        /\+\d+\s*\/\s*-\s*[\d.]+/
-        .test(x.text)
-      );
-
-
-      const metaText =
-      metaItem
-      ? metaItem.text
-      : "";
-
-
-      const marksM =
-      metaText.match(
-        /\+(\d+)/
-      );
-
-
-      const negM =
-      metaText.match(
-        /\/\s*-\s*([\d.]+)/
-      );
-
-
-      const marks =
-      marksM
-      ? Number(marksM[1])
-      : 1;
-
-
-      const pdfNegative =
-      negM
-      ? Number(negM[1])
-      : 0;
-
-
-      const blockText =
-      block
-      .map(
-        x => x.text
-      )
-      .join("\n");
-
-
-      const ca =
-      answerItem.text
-      .replace(
-        /^Correct answer\s*:\s*/,
-        ""
-      )
-      .trim();
-
-
-      let type =
-      /Type your answer\s+NAT/i
-      .test(blockText)
-      ? "NAT"
-      :
-      (/^N\/A$/i.test(ca)
-      ? "MSQ"
-      : "MCQ");
-
-
-      const optionItems =
-      block.filter(
-        x =>
-        /^[A-D]\.(?:\s*.*)?$/
-        .test(x.text)
-      );
-
-
-      const solutionItem =
-      block.find(
-        x =>
-        /^Solution$/i.test(x.text)
-      );
-
-
-      let answer = null;
-
-      let natRange = null;
-
-
-      /* MCQ */
-
-      if(type === "MCQ"){
-
-        const m =
-        ca.match(
-          /^[A-D]/i
-        );
-
-
-        answer =
-        m
-        ? m[0].toUpperCase()
-        : null;
-
-      }
-
-
-      /* MSQ */
-
-      else if(type === "MSQ"){
-
-        if(solutionItem){
-
-          const after =
-          block.filter(
-            x =>
-            x.top >
-            solutionItem.top
-          );
-
-
-          const s =
-          after
-          .map(
-            x => x.text
-          )
-          .join(" ");
-
-
-          const m =
-          s.match(
-            /\(([a-d](?:\s*,\s*[a-d])*)\)/i
-          );
-
-
-          if(m){
-
-            answer =
-            m[1]
-            .toUpperCase()
-            .split(
-              /\s*,\s*/
-            )
-            .filter(Boolean);
-
-          }
-
-        }
-
-      }
-
-
-      /* NAT */
-
-      else{
-
-        const rm =
-        ca.match(
-          /\(\s*([-+]?\d*\.?\d+)\s*-\s*([-+]?\d*\.?\d+)\s*\)/
-        );
-
-
-        if(rm){
-
-          natRange = [
-
-            Number(rm[1]),
-
-            Number(rm[2])
-
-          ];
-
-        }
-
-        else{
-
-          const nm =
-          ca.match(
-            /[-+]?\d*\.?\d+/
-          );
-
-
-          if(nm){
-
-            answer =
-            Number(nm[0]);
-
-          }
-
-        }
-
-      }
-
-
-      questions.push({
-
-        n:qn,
-
-        page:pm.pageNum,
-
-        top:
-        Math.max(
-          0,
-          qItem.top - 10
-        ),
-
-        answerTop:
-        answerItem.top,
-
-        type:type,
-
-        marks:marks,
-
-        pdfNegative:
-        pdfNegative,
-
-        answer:answer,
-
-        natRange:natRange,
-
-        options:
-        optionItems.map(
-          x => ({
-
-            letter:
-            x.text[0]
-            .toUpperCase(),
-
-            top:x.top
-
-          })
-        ),
-
-        meta:metaText
-
-      });
-
-    }
-
-  }
-
-
-  /* SORT */
-
-  questions.sort(
-    (a,b) =>
-    a.n - b.n
-  );
-
-
-  const nums =
-  questions.map(
-    q => q.n
-  );
-
-
-  const unique =
-  new Set(nums);
-
-
-  if(
-    questions.length !==
-    unique.size
-  ){
-
-    throw new Error(
-      "Duplicate question number detected."
-    );
-
-  }
-
-
-  if(
-    questions.some(
-      (q,i) =>
-      q.n !== i + 1
-    )
-  ){
-
-    throw new Error(
-      "Questions 1 se continuous nahi mile. Found: " +
-      nums.join(", ")
-    );
-
-  }
-
-}
-
-
-/* NEXT QUESTION */
-
-function getNextQuestion(index){
-
-  return index + 1 <
-  questions.length
-  ? questions[index + 1]
-  : null;
-
-}
-
-
-/* QUESTION BOTTOM */
-
-function getQuestionBottom(
-  q,
-  index
-){
-
-  return Math.max(
-    q.answerTop - 6,
-    q.top + 20
-  );
-
-}
-
-
-/* RENDER QUESTION */
-
-async function renderQuestion(){
-
-  const q =
-  questions[current];
-
-
-  $("progressText")
-  .textContent =
-  "Question " +
-  q.n +
-  " of " +
-  questions.length;
-
-
-  $("qtag")
-  .textContent =
-  "Question " +
-  q.n +
-  " • " +
-  q.type +
-  " • " +
-  q.marks +
-  " Mark" +
-  (
-    q.marks === 1
-    ? ""
-    : "s"
-  );
-
-
-  $("qstatus")
-  .textContent =
-  statusText(current);
-
-
-  $("reviewBtn")
-  .textContent =
-  reviewed[current]
-  ? "UNMARK REVIEW"
-  : "MARK FOR REVIEW";
-
-
-  $("prevBtn")
-  .disabled =
-  current === 0;
-
-
-  $("nextBtn")
-  .textContent =
-  current === questions.length - 1
-  ? "SAVE & SUBMIT"
-  : "SAVE & NEXT";
-
-
-  $("questionView")
-  .innerHTML = "";
-
-
-  $("natArea")
-  .classList
-  .toggle(
-    "hidden",
-    q.type !== "NAT"
-  );
-
-
-  const bottom =
-  getQuestionBottom(
-    q,
-    current
-  );
-
-
-  const wrap =
-  $("questionView");
-
-
-  await renderCrop(
-    q.page,
-    q.top,
-    bottom,
-    wrap,
-    false
-  );
-
-
-  if(q.type === "NAT"){
-
-    $("natInput")
-    .value =
-    answers[current] ?? "";
-
-  }
-
-  else{
-
-    addOptionHitboxes(
-      q,
-      current,
-      q.top,
-      bottom
-    );
-
-  }
-
-
-  updateUI();
-
-
-  window.scrollTo({
-    top:0,
-    behavior:"instant"
-  });
-
-}
-
-
-/* RENDER CROPPED PDF PAGE */
-
-async function renderCrop(
-  pageNum,
-  top,
-  bottom,
-  container,
-  solutionMode
-){
-
-  const page =
-  await pdfDoc
-  .getPage(pageNum);
-
-
-  const scale =
-  1.6;
-
-
-  const vp =
-  page.getViewport({
-    scale:scale
-  });
-
-
-  const full =
-  document.createElement(
-    "canvas"
-  );
-
-
-  full.width =
-  Math.ceil(vp.width);
-
-
-  full.height =
-  Math.ceil(vp.height);
-
-
-  const ctx =
-  full.getContext("2d");
-
-
-  await page.render({
-
-    canvasContext:ctx,
-
-    viewport:vp
-
-  }).promise;
-
-
-  const t =
-  Math.max(
-    0,
-    top * scale
-  );
-
-
-  const b =
-  Math.min(
-    full.height,
-    bottom * scale
-  );
-
-
-  const h =
-  Math.max(
-    10,
-    Math.floor(b - t)
-  );
-
-
-  const crop =
-  document.createElement(
-    "canvas"
-  );
-
-
-  crop.width =
-  full.width;
-
-
-  crop.height =
-  h;
-
-
-  crop
-  .getContext("2d")
-  .drawImage(
-    full,
-    0,
-    t,
-    full.width,
-    h,
-    0,
-    0,
-    full.width,
-    h
-  );
-
-
-  container.appendChild(
-    crop
-  );
-
-
-  return crop;
-
-}
-
-
-/* OPTION CLICK AREAS */
-
-function addOptionHitboxes(
-  q,
-  index,
-  top,
-  bottom
-){
-
-  const wrap =
-  $("questionView");
-
-
-  const opts =
-  q.options;
-
-
-  if(!opts.length)
-    return;
-
-
-  for(
-    let i = 0;
-    i < opts.length;
-    i++
-  ){
-
-    const o =
-    opts[i];
-
-
-    const nextTop =
-    i + 1 < opts.length
-    ? opts[i + 1].top - 5
-    : q.answerTop - 6;
-
-
-    const a =
-    Math.max(
-      top,
-      o.top - 12
-    );
-
-
-    const b =
-    Math.min(
-      bottom,
-      nextTop
-    );
-
-
-    if(b <= a)
-      continue;
-
-
-    const hit =
-    document.createElement(
-      "button"
-    );
-
-
-    hit.type =
-    "button";
-
-
-    hit.className =
-    "option-hit";
-
-
-    hit.dataset.letter =
-    o.letter;
-
-
-    hit.style.top =
-    (
-      (a - top) /
-      (bottom - top) *
-      100
-    ) + "%";
-
-
-    hit.style.height =
-    (
-      (b - a) /
-      (bottom - top) *
-      100
-    ) + "%";
-
-
-    if(
-      isSelected(
-        index,
-        o.letter
-      )
-    ){
-
-      hit.classList
-      .add("selected");
-
-    }
-
-
-    hit.addEventListener(
-      "click",
-      function(){
-
-        selectOption(
-          index,
-          o.letter
-        );
-
-      }
-    );
-
-
-    wrap.appendChild(
-      hit
-    );
-
-  }
-
-}
-
-
-/* CHECK SELECTED */
-
-function isSelected(
-  index,
-  letter
-){
-
-  const v =
-  answers[index];
-
-
-  if(Array.isArray(v))
-    return v.includes(letter);
-
-
-  return v === letter;
-
-}
-
-
-/* SELECT OPTION */
-
-function selectOption(
-  index,
-  letter
-){
-
-  const q =
-  questions[index];
-
-
-  /* MCQ */
-
-  if(q.type === "MCQ"){
-
-    answers[index] =
-    letter;
-
-  }
-
-
-  /* MSQ */
-
-  else if(q.type === "MSQ"){
-
-    let a =
-    Array.isArray(
-      answers[index]
-    )
-    ? [...answers[index]]
-    : [];
-
-
-    if(
-      a.includes(letter)
-    ){
-
-      a =
-      a.filter(
-        x =>
-        x !== letter
-      );
-
-    }
-
-    else{
-
-      a.push(letter);
-
-    }
-
-
-    a.sort();
-
-
-    answers[index] =
-    a.length
-    ? a
-    : null;
-
-  }
-
-
-  renderQuestion();
-
-}
-
-
-/* SAVE CURRENT */
-
-function saveCurrent(){
-
-  if(
-    questions[current].type ===
-    "NAT"
-  ){
-
-    answers[current] =
-    $("natInput")
-    .value
-    .trim();
-
-  }
-
-}
-
-
-/* CLEAR RESPONSE */
-
-function clearResponse(){
-
-  answers[current] =
-  null;
-
-
-  renderQuestion();
-
-}
-
-
-/* MARK REVIEW */
-
-function toggleReview(){
-
-  reviewed[current] =
-  !reviewed[current];
-
-
-  updateUI();
-
-}
-
-
-/* HAS ANSWER */
-
-function hasAnswer(i){
-
-  const a =
-  answers[i];
-
-
-  if(Array.isArray(a))
-    return a.length > 0;
-
-
-  return (
-    a !== null &&
-    a !== undefined &&
-    String(a).trim() !== ""
-  );
-
-}
-
-
-/* STATUS */
-
-function statusText(i){
-
-  if(
-    reviewed[i] &&
-    hasAnswer(i)
-  ){
-
-    return "Answered • Marked for Review";
-
-  }
-
-
-  if(reviewed[i]){
-
-    return "Marked for Review";
-
-  }
-
-
-  return hasAnswer(i)
-  ? "Answered"
-  : "Not attempted";
-
-}
-
-
-/* BUILD PALETTE */
-
-function buildPalette(){
-
-  $("palette")
-  .innerHTML = "";
-
-
-  for(
-    let i = 0;
-    i < questions.length;
-    i++
-  ){
-
-    const b =
-    document.createElement(
-      "button"
-    );
-
-
-    b.type =
-    "button";
-
-
-    b.className =
-    "pbtn";
-
-
-    b.textContent =
-    questions[i].n;
-
-
-    b.addEventListener(
-      "click",
-      function(){
-
-        saveCurrent();
-
-        current = i;
-
-        renderQuestion();
-
-      }
-    );
-
-
-    $("palette")
-    .appendChild(b);
-
-  }
-
-
-  updateUI();
-
-}
-
-
-/* UPDATE UI */
-
-function updateUI(){
-
-  const btns =
-  $("palette").children;
-
-
-  for(
-    let i = 0;
-    i < btns.length;
-    i++
-  ){
-
-    btns[i].className =
-    "pbtn";
-
-
-    if(
-      hasAnswer(i)
-    ){
-
-      btns[i]
-      .classList
-      .add("answered");
-
-    }
-
-
-    if(
-      reviewed[i]
-    ){
-
-      btns[i]
-      .classList
-      .add("review");
-
-    }
-
-
-    if(
-      i === current
-    ){
-
-      btns[i]
-      .classList
-      .add("current");
-
-    }
-
-  }
-
-
-  if(questions.length){
-
-    $("qstatus")
-    .textContent =
-    statusText(current);
-
-
-    $("reviewBtn")
-    .textContent =
-    reviewed[current]
-    ? "UNMARK REVIEW"
-    : "MARK FOR REVIEW";
-
-  }
-
-}
-
-
-/* TIMER */
-
-function tick(){
-
-  if(submitted)
-    return;
-
-
-  const left =
-  Math.max(
-    0,
-    endAt - Date.now()
-  );
-
-
-  const sec =
-  Math.ceil(
-    left / 1000
-  );
-
-
-  const h =
-  Math.floor(
-    sec / 3600
-  );
-
-
-  const m =
-  Math.floor(
-    (sec % 3600) / 60
-  );
-
-
-  const s =
-  sec % 60;
-
-
-  $("timer")
-  .textContent =
-  [
-    h,
-    m,
-    s
-  ]
-  .map(
-    x =>
-    String(x)
-    .padStart(2,"0")
-  )
-  .join(":");
-
-
-  $("timer")
-  .classList
-  .toggle(
-    "danger",
-    sec <= 300
-  );
-
-
-  if(left <= 0){
-
-    submitTest(true);
-
-  }
-
-}
-
-
-/* EVALUATE ANSWER */
-
-function evaluateAnswer(
-  q,
-  a
-){
-
-  /* MCQ */
-
-  if(q.type === "MCQ"){
-
-    const correct =
-    a === q.answer;
-
-
-    return {
-
-      attempted:
-      hasAnswerValue(a),
-
-      correct:correct,
-
-      score:
-      correct
-      ? q.marks
-      : -(
-        negativeOn
-        ? q.pdfNegative
-        : 0
-      )
-
-    };
-
-  }
-
-
-  /* MSQ */
-
-  if(q.type === "MSQ"){
-
-    const correct =
-    Array.isArray(a) &&
-    Array.isArray(q.answer) &&
-    a.length ===
-    q.answer.length &&
-    a.every(
-      x =>
-      q.answer.includes(x)
-    );
-
-
-    return {
-
-      attempted:
-      hasAnswerValue(a),
-
-      correct:correct,
-
-      score:
-      correct
-      ? q.marks
-      : 0
-
-    };
-
-  }
-
-
-  /* NAT */
-
-  if(q.type === "NAT"){
-
-    if(
-      !hasAnswerValue(a)
-    ){
-
-      return {
-
-        attempted:false,
-
-        correct:false,
-
-        score:0
-
-      };
-
-    }
-
-
-    const n =
-    Number(a);
-
-
-    if(
-      !Number.isFinite(n)
-    ){
-
-      return {
-
-        attempted:true,
-
-        correct:false,
-
-        score:0
-
-      };
-
-    }
-
-
-    let correct =
-    false;
-
-
-    if(q.natRange){
-
-      correct =
-      n >= q.natRange[0] &&
-      n <= q.natRange[1];
-
-    }
-
-    else if(
-      q.answer !== null
-    ){
-
-      correct =
-      Math.abs(
-        n - q.answer
-      )
-      <=
-      1e-9 *
-      Math.max(
-        1,
-        Math.abs(q.answer)
-      );
-
-    }
-
-
-    return {
-
-      attempted:true,
-
-      correct:correct,
-
-      score:
-      correct
-      ? q.marks
-      : 0
-
-    };
-
-  }
-
-
-  return {
-
-    attempted:false,
-
-    correct:false,
-
-    score:0
-
-  };
-
-}
-
-
-/* ANSWER VALUE */
-
-function hasAnswerValue(a){
-
-  if(Array.isArray(a))
-    return a.length > 0;
-
-
-  return (
-    a !== null &&
-    a !== undefined &&
-    String(a).trim() !== ""
-  );
-
-}
-
-
-/* SUBMIT */
-
-async function submitTest(
-  auto
-){
-
-  if(submitted)
-    return;
-
-
-  saveCurrent();
-
-
-  const attempted =
-  answers.filter(
-    hasAnswerValue
-  ).length;
-
-
-  if(!auto){
-
-    const unanswered =
-    questions.length -
-    attempted;
-
-
-    const ok =
-    confirm(
-      "Test submit karna hai?\n\n" +
-      "Attempted: " +
-      attempted +
-      "\n" +
-      "Unattempted: " +
-      unanswered
-    );
-
-
-    if(!ok)
-      return;
-
-  }
-
-
-  submitted = true;
-
-
-  if(timerId)
-    clearInterval(timerId);
-
-
-  const results =
-  questions.map(
-    (q,i) =>
-    evaluateAnswer(
-      q,
-      answers[i]
-    )
-  );
-
-
-  const score =
-  results.reduce(
-    (s,r) =>
-    s + r.score,
-    0
-  );
-
-
-  const correct =
-  results.filter(
-    r => r.correct
-  ).length;
-
-
-  const wrong =
-  results.filter(
-    r =>
-    r.attempted &&
-    !r.correct
-  ).length;
-
-
-  const unattempted =
-  results.filter(
-    r =>
-    !r.attempted
-  ).length;
-
-
-  showResult(
-    results,
-    score,
-    correct,
-    wrong,
-    unattempted,
-    auto
-  );
-
-}
-
-
-/* RESULT */
-
-function showResult(
-  results,
-  score,
-  correct,
-  wrong,
-  unattempted,
-  auto
-){
-
-  $("exam")
-  .classList
-  .add("hidden");
-
-
-  $("result")
-  .classList
-  .remove("hidden");
-
-
-  const max =
-  questions.reduce(
-    (s,q) =>
-    s + q.marks,
-    0
-  );
-
-
-  $("resultTitle")
-  .textContent =
-  (
-    auto
-    ? "Time over. "
-    : ""
-  ) +
-  "Maximum Marks: " +
-  max +
-  " • Negative Marking: " +
-  (
-    negativeOn
-    ? "ON"
-    : "OFF"
-  );
-
-
-  $("scoreStat")
-  .textContent =
-  score.toFixed(2);
-
-
-  $("correctStat")
-  .textContent =
-  correct;
-
-
-  $("wrongStat")
-  .textContent =
-  wrong;
-
-
-  $("unattemptedStat")
-  .textContent =
-  unattempted;
-
-
-  /* SECTIONS */
-
-  const sections = [
-
-    {
-      name:"General Aptitude",
-      start:1,
-      end:10
-    },
-
-    {
-      name:"Technical",
-      start:11,
-      end:questions.length
-    }
-
-  ];
-
-
-  $("sectionBody")
-  .innerHTML = "";
-
-
-  for(
-    const sec of sections
-  ){
-
-    const idx =
-    questions
-    .map(
-      (q,i) =>
-      q.n >= sec.start &&
-      q.n <= sec.end
-      ? i
-      : -1
-    )
-    .filter(
-      i => i >= 0
-    );
-
-
-    const marks =
-    idx.reduce(
-      (s,i) =>
-      s + questions[i].marks,
-      0
-    );
-
-
-    const sc =
-    idx.reduce(
-      (s,i) =>
-      s + results[i].score,
-      0
-    );
-
-
-    const c =
-    idx.filter(
-      i =>
-      results[i].correct
-    ).length;
-
-
-    const w =
-    idx.filter(
-      i =>
-      results[i].attempted &&
-      !results[i].correct
-    ).length;
-
-
-    const tr =
-    document.createElement(
-      "tr"
-    );
-
-
-    tr.innerHTML =
-    "<td>" +
-    sec.name +
-    "</td>" +
-
-    "<td>" +
-    idx.length +
-    "</td>" +
-
-    "<td>" +
-    marks +
-    "</td>" +
-
-    "<td>" +
-    sc.toFixed(2) +
-    "</td>" +
-
-    "<td>" +
-    c +
-    "</td>" +
-
-    "<td>" +
-    w +
-    "</td>";
-
-
-    $("sectionBody")
-    .appendChild(tr);
-
-  }
-
-
-  buildReviewList(
-    results
-  );
-
-
-  window.scrollTo({
-    top:0,
-    behavior:"instant"
-  });
-
-}
-
-
-/* REVIEW LIST */
-
-function buildReviewList(
-  results
-){
-
-  const box =
-  $("reviewList");
-
-
-  box.innerHTML = "";
-
-
-  questions.forEach(
-    function(q,i){
-
-      const r =
-      results[i];
-
-
-      const item =
-      document.createElement(
-        "div"
-      );
-
-
-      item.className =
-      "review-item";
-
-
-      const answerShown =
-      hasAnswer(i)
-      ? formatAnswer(
-          answers[i]
-        )
-      : "Not attempted";
-
-
-      const correctShown =
-      q.type === "MSQ"
-      ?
-      (
-        Array.isArray(q.answer)
-        ? q.answer.join(", ")
-        : "—"
-      )
-      :
-      q.type === "MCQ"
-      ?
-      (
-        q.answer || "—"
-      )
-      :
-      (
-        q.natRange
-        ?
-        q.natRange[0] +
-        " to " +
-        q.natRange[1]
-        :
-        String(
-          q.answer ?? "—"
-        )
-      );
-
-
-      item.innerHTML =
-
-      "<div class='review-head'>" +
-
-      "<b>Q" +
-      q.n +
-      " • " +
-      q.type +
-      " • " +
-      q.marks +
-      " Mark" +
-      (
-        q.marks === 1
-        ? ""
-        : "s"
-      ) +
-      "</b>" +
-
-      "<span>" +
-
-      (
-        r.correct
-        ? "Correct"
-        :
-        r.attempted
-        ? "Wrong"
-        : "Unattempted"
-      ) +
-
-      "</span>" +
-
-      "</div>" +
-
-
-      "<div class='small'>" +
-
-      "Your answer: " +
-      escapeHtml(
-        answerShown
-      ) +
-
-      " • Correct: " +
-      escapeHtml(
-        correctShown
-      ) +
-
-      " • Score: " +
-      r.score.toFixed(2) +
-
-      "</div>";
-
-
-      const btn =
-      document.createElement(
-        "button"
-      );
-
-
-      btn.className =
-      "primary";
-
-
-      btn.style.marginTop =
-      "8px";
-
-
-      btn.textContent =
-      "VIEW SOLUTION";
-
-
-      const sol =
-      document.createElement(
-        "div"
-      );
-
-
-      sol.className =
-      "solution-box hidden";
-
-
-      btn.addEventListener(
-        "click",
-        async function(){
-
-          sol.classList
-          .toggle("hidden");
-
-
-          if(
-            !sol.dataset.loaded &&
-            !sol.classList.contains(
-              "hidden"
-            )
-          ){
-
-            sol.dataset.loaded =
-            "1";
-
-
-            await renderSolutionsForQuestion(
-              i,
-              sol
-            );
-
-          }
-
-        }
-      );
-
-
-      item.appendChild(
-        btn
-      );
-
-
-      item.appendChild(
-        sol
-      );
-
-
-      box.appendChild(
-        item
-      );
-
-    }
-  );
-
-}
-
-
-/* FORMAT ANSWER */
-
-function formatAnswer(a){
-
-  if(Array.isArray(a))
-    return a.join(", ");
-
-
-  return String(a);
-
-}
-
-
-/* HTML SAFE */
-
-function escapeHtml(s){
-
-  return String(s)
-  .replace(
-    /[&<>"']/g,
-    function(c){
-
-      return {
-
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        "\"":"&quot;",
-        "'":"&#39;"
-
-      }[c];
-
-    }
-  );
-
-}
-
-
-/* FIND QUESTION */
-
-function findQuestionStartOnPage(
-  pageNum,
-  qn
-){
-
-  const pm =
-  pageMeta[
-    pageNum - 1
-  ];
-
-
-  const it =
-  pm.items.find(
-    x =>
-    x.text ===
-    "Q" + qn
-  );
-
-
-  return it
-  ? it.top
-  : null;
-
-}
-
-
-/* SOLUTIONS */
-
-async function renderSolutionsForQuestion(
-  index,
-  container
-){
-
-  const q =
-  questions[index];
-
-
-  const next =
-  getNextQuestion(index);
-
-
-  const nextPage =
-  next
-  ? next.page
-  : pageMeta.length;
-
-
-  let added = false;
-
-
-  const qpm =
-  pageMeta[
-    q.page - 1
-  ];
-
-
-  const solItem =
-  qpm.items.find(
-    x =>
-    x.top >
-    q.answerTop &&
-    /^Solution$/i.test(
-      x.text
-    )
-  );
-
-
-  /* SAME PAGE SOLUTION */
-
-  if(solItem){
-
-    const nextQItem =
-    next &&
-    next.page === q.page
-    ?
-    qpm.items.find(
-      x =>
-      x.text ===
-      "Q" + next.n
-    )
-    : null;
-
-
-    const end =
-    next &&
-    next.page === q.page
-    ?
-    Math.max(
-      nextQItem
-      ? nextQItem.top
-      : qpm.height,
-      solItem.top + 10
-    )
-    :
-    qpm.height;
-
-
-    await renderCrop(
-      q.page,
-      Math.max(
-        0,
-        solItem.top - 5
-      ),
-      end,
-      container,
-      true
-    );
-
-
-    added = true;
-
-  }
-
-
-  /* FOLLOWING PAGES */
-
-  const startPage =
-  q.page + 1;
-
-
-  for(
-    let pn = startPage;
-    pn <= nextPage;
-    pn++
-  ){
-
-    if(
-      next &&
-      pn === next.page
-    )
-      break;
-
-
-    const pm =
-    pageMeta[pn - 1];
-
-
-    if(
-      pm.items.length === 0
-    )
-      continue;
-
-
-    await renderCrop(
-      pn,
-      0,
-      pm.height,
-      container,
-      true
-    );
-
-
-    added = true;
-
-  }
-
-
-  /* FALLBACK */
-
-  if(!added){
-
-    const p =
-    pageMeta[
-      q.page - 1
-    ];
-
-
-    await renderCrop(
-      q.page,
-      q.answerTop + 5,
-      p.height,
-      container,
-      true
-    );
-
-  }
-
-}
-
-
-/* ==================================
-   CALCULATOR
-================================== */
-
-let calcExpr = "";
-
-
-document
-.querySelectorAll(
-  ".calc-grid button"
-)
-.forEach(
-  function(b){
-
-    b.addEventListener(
-      "click",
-      function(){
-
-        const c =
-        b.dataset.c;
-
-        const f =
-        b.dataset.f;
-
-
-        if(c !== undefined){
-
-          calcExpr += c;
-
-          showCalc();
-
-          return;
-
-        }
-
-
-        if(f === "clear"){
-
-          calcExpr = "";
-
-          showCalc();
-
-          return;
-
-        }
-
-
-        if(f === "back"){
-
-          calcExpr =
-          calcExpr.slice(
-            0,
-            -1
-          );
-
-          showCalc();
-
-          return;
-
-        }
-
-
-        if(f === "neg"){
-
-          calcExpr =
-          calcExpr.startsWith("-")
-          ?
-          calcExpr.slice(1)
-          :
-          "-(" +
-          calcExpr +
-          ")";
-
-          showCalc();
-
-          return;
-
-        }
-
-
-        if(f === "pi"){
-
-          calcExpr +=
-          "Math.PI";
-
-          showCalc();
-
-          return;
-
-        }
-
-
-        if(f === "sqrt"){
-
-          calcExpr =
-          "Math.sqrt(" +
-          calcExpr +
-          ")";
-
-          showCalc();
-
-          return;
-
-        }
-
-
-        if(
-          [
-            "sin",
-            "cos",
-            "tan",
-            "log",
-            "ln"
-          ].includes(f)
-        ){
-
-          const fn =
-          f === "ln"
-          ? "Math.log"
-          :
-          f === "log"
-          ? "Math.log10"
-          :
-          "Math." + f;
-
-
-          calcExpr =
-          fn +
-          "(" +
-          calcExpr +
-          ")";
-
-
-          showCalc();
-
-          return;
-
-        }
-
-
-        if(f === "equal"){
-
-          try{
-
-            if(
-              !/^[0-9+\-*/().\sA-Za-z_]+$/
-              .test(calcExpr)
-            ){
-
-              throw new Error();
-
-            }
-
-
-            const v =
-            Function(
-              '"use strict";return (' +
-              calcExpr +
-              ')'
-            )();
-
-
-            calcExpr =
-            String(v);
-
-          }
-
-          catch(e){
-
-            calcExpr =
-            "Error";
-
-          }
-
-
-          showCalc();
-
-        }
-
-      }
-    );
-
-  }
-);
-
-
-/* SHOW CALCULATOR */
-
-function showCalc(){
-
-  $("calcDisplay")
-  .value =
-  calcExpr;
-
-}
-
-</script>
+    <script
+        src="js/app.js"
+        defer>
+    </script>
 
 </body>
+
 </html>
