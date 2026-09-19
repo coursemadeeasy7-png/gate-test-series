@@ -2,7 +2,7 @@
    GATE TEST SERIES
    FILE: js/pdf-loader.js
 
-   Stable PDF.js loader for GitHub Pages
+   Stable PDF.js loader
 ========================================================= */
 
 (function () {
@@ -20,11 +20,13 @@
         PDFJS_VERSION +
         "/pdf.worker.min.js";
 
+
     class PDFLoaderClass {
 
         constructor() {
             this.readyPromise = null;
         }
+
 
         /* =====================================================
            LOAD PDF.JS
@@ -32,7 +34,7 @@
 
         async loadPDFJS() {
 
-            /* Already available */
+            /* Already loaded */
             if (
                 window.pdfjsLib &&
                 typeof window.pdfjsLib.getDocument === "function"
@@ -44,10 +46,12 @@
                 return window.pdfjsLib;
             }
 
+
             /* Already loading */
             if (this.readyPromise) {
                 return this.readyPromise;
             }
+
 
             this.readyPromise = new Promise(
                 (resolve, reject) => {
@@ -60,6 +64,7 @@
                     script.async = true;
 
                     script.crossOrigin = "anonymous";
+
 
                     script.onload = () => {
 
@@ -78,17 +83,23 @@
                             return;
                         }
 
-                        window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+
+                        window.pdfjsLib
+                            .GlobalWorkerOptions
+                            .workerSrc =
                             WORKER_URL;
+
 
                         console.log(
                             "PDF.js loaded successfully."
                         );
 
+
                         resolve(
                             window.pdfjsLib
                         );
                     };
+
 
                     script.onerror = () => {
 
@@ -99,12 +110,15 @@
                         );
                     };
 
+
                     document.head.appendChild(script);
                 }
             );
 
+
             return this.readyPromise;
         }
+
 
         /* =====================================================
            READ FILE
@@ -119,12 +133,18 @@
                 );
             }
 
+
+            /* Browser File / Blob */
+
             if (
                 typeof file.arrayBuffer === "function"
             ) {
 
                 return await file.arrayBuffer();
             }
+
+
+            /* ArrayBuffer */
 
             if (
                 file instanceof ArrayBuffer
@@ -133,6 +153,9 @@
                 return file;
             }
 
+
+            /* Uint8Array */
+
             if (
                 file instanceof Uint8Array
             ) {
@@ -140,10 +163,12 @@
                 return file;
             }
 
+
             throw new Error(
                 "Invalid PDF file."
             );
         }
+
 
         /* =====================================================
            LOAD ONE PDF
@@ -158,30 +183,42 @@
                     : "PDF"
             );
 
+
             try {
 
                 const pdfjs =
                     await this.loadPDFJS();
 
+
                 const data =
                     await this.readFile(file);
+
+
+                console.log(
+                    "PDFLoader: file read successfully."
+                );
+
 
                 const loadingTask =
                     pdfjs.getDocument({
                         data: data
                     });
 
+
                 const pdf =
                     await loadingTask.promise;
 
-                console.log(
-                    "PDF loaded successfully."
-                );
 
                 console.log(
-                    "Total pages:",
+                    "PDFLoader: PDF loaded successfully."
+                );
+
+
+                console.log(
+                    "PDF pages:",
                     pdf.numPages
                 );
+
 
                 return pdf;
 
@@ -196,8 +233,9 @@
             }
         }
 
+
         /* =====================================================
-           LOAD MULTIPLE
+           LOAD MULTIPLE PDFs
         ===================================================== */
 
         async loadMultiple(files) {
@@ -205,7 +243,9 @@
             const list =
                 Array.from(files || []);
 
+
             const output = [];
+
 
             for (
                 const file of list
@@ -215,6 +255,7 @@
 
                     const pdf =
                         await this.load(file);
+
 
                     output.push({
 
@@ -233,6 +274,13 @@
                     });
 
                 } catch (error) {
+
+                    console.error(
+                        "Failed:",
+                        file.name,
+                        error
+                    );
+
 
                     output.push({
 
@@ -255,11 +303,13 @@
                 }
             }
 
+
             return output;
         }
 
+
         /* =====================================================
-           VALIDATE
+           VALIDATE PDF
         ===================================================== */
 
         async validate(file) {
@@ -268,6 +318,7 @@
 
                 const pdf =
                     await this.load(file);
+
 
                 return {
 
@@ -297,6 +348,7 @@
             }
         }
 
+
         /* =====================================================
            GET PAGE
         ===================================================== */
@@ -313,22 +365,27 @@
                 );
             }
 
+
             const number =
                 Number(pageNumber);
 
+
             if (
+                !Number.isInteger(number) ||
                 number < 1 ||
                 number > pdf.numPages
             ) {
 
                 throw new Error(
-                    "Invalid PDF page."
+                    "Invalid PDF page number."
                 );
             }
+
 
             return await pdf.getPage(number);
         }
     }
+
 
     /* =========================================================
        GLOBAL INSTANCE
@@ -337,8 +394,11 @@
     window.PDFLoader =
         new PDFLoaderClass();
 
+
+    /* Expose class */
     window.PDFLoaderClass =
         PDFLoaderClass;
+
 
     console.log(
         "PDFLoader ready."
